@@ -10,7 +10,9 @@
 //
 // A drawing sets its width in its <head>, for example
 //   <meta name="render-width" content="390" />
-// and the default is 1440. The height is the whole page, taken at 2x.
+// and the default is 1440. A drawing wider than that, such as a long swimlane, is
+// widened to fit rather than cut off. The height is the whole page, but never less
+// than its render-height (default 800), and the picture is taken at 2x.
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -18,6 +20,7 @@ import { chromium } from 'playwright-core'
 
 const FOLDERS = ['02-swimlanes', '03-low-fidelity', '04-high-fidelity']
 const DEFAULT_WIDTH = 1440
+const DEFAULT_HEIGHT = 800
 
 function drawingsIn(path) {
   if (!existsSync(path)) {
@@ -32,10 +35,18 @@ function drawingsIn(path) {
   })
 }
 
-function widthOf(file) {
+function sizeOf(file) {
   const html = readFileSync(file, 'utf8')
-  const meta = html.match(/<meta\s+name=["']render-width["']\s+content=["'](\d+)["']/i)
-  return meta ? Number(meta[1]) : DEFAULT_WIDTH
+  const read = (name, fallback) => {
+    const meta = html.match(
+      new RegExp(`<meta\\s+name=["']${name}["']\\s+content=["'](\\d+)["']`, 'i'),
+    )
+    return meta ? Number(meta[1]) : fallback
+  }
+  return {
+    width: read('render-width', DEFAULT_WIDTH),
+    height: read('render-height', DEFAULT_HEIGHT),
+  }
 }
 
 async function launchBrowser() {
@@ -68,14 +79,21 @@ if (files.length === 0) {
 const browser = await launchBrowser()
 try {
   for (const file of files) {
-    const page = await browser.newPage({
-      viewport: { width: widthOf(file), height: 800 },
-      deviceScaleFactor: 2,
-    })
+    const size = sizeOf(file)
+    const page = await browser.newPage({ viewport: size, deviceScaleFactor: 2 })
     await page.goto(pathToFileURL(resolve(file)).href, { waitUntil: 'networkidle' })
     await page.evaluate(async () => {
       await document.fonts.ready
     })
+    const fullWidth = await page.evaluate(() => document.documentElement.scrollWidth)
+    if (fullWidth > size.width) {
+      await page.setViewportSize({ width: fullWidth, height: size.height })
+      // Let the page lay itself out again, and redraw anything it draws on resize.
+      await page.evaluate(
+        () =>
+          new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done))),
+      )
+    }
     const png = file.replace(/\.html$/, '.png')
     await page.screenshot({ path: png, fullPage: true })
     await page.close()
