@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Requirement names · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="coordinator" data-nav="coordinator-requirement-names">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">CIT-U</p>
+          <h1>Requirement names</h1>
+          <p class="lead">
+            DOST's requirements in the school's own words. Scholars see your name, with
+            DOST's under it.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid cols-2">
+        <section class="card stack">
+          <p class="eyebrow">DOST: Registration Form</p>
+          <div class="field">
+            <label class="label" for="field-1">CIT-U calls it</label>
+            <input type="text" value="Study Load" class="input" id="field-1" />
+          </div>
+          <div class="field">
+            <label class="label" for="field-2">Instructions for scholars</label>
+            <textarea rows="3" class="input" id="field-2">
+Download your Study Load from the student portal once you are enrolled, and file the whole page.</textarea>
+          </div>
+        </section>
+
+        <section class="card stack">
+          <p class="eyebrow">DOST: Certified Report of Grades</p>
+          <div class="field">
+            <label class="label" for="field-3">CIT-U calls it</label>
+            <input
+              type="text"
+              value="Certified True Copy of Grades"
+              class="input"
+              id="field-3"
+            />
+          </div>
+          <div class="field">
+            <label class="label" for="field-4">Instructions for scholars</label>
+            <textarea rows="3" class="input" id="field-4">
+Ask the Registrar's Office for a certified true copy, then scan or photograph the whole page, with the registrar's signature and dry seal.</textarea>
+          </div>
+        </section>
+      </div>
+
+      <div class="actions">
+        <button
+          class="btn primary"
+          type="button"
+          data-toast="Saved. CIT-U's scholars see these names."
+        >
+          Save the names
+        </button>
+      </div>
+    </main>
+  </body>
+</html>

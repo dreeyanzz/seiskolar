@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portal settings · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="coordinator" data-nav="coordinator-portal-settings">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">CIT-U</p>
+          <h1>Portal settings</h1>
+          <p class="lead">
+            How the school's portal looks to its scholars, and how its grades read.
+          </p>
+        </div>
+      </div>
+
+      <div class="split">
+        <section class="card stack">
+          <h2>Branding</h2>
+          <div class="field">
+            <span class="label">Logo</span>
+            <div class="row">
+              <span class="logo" data-mark="school"></span>
+              <button
+                class="btn"
+                type="button"
+                data-toast="In SEIskolar this opens your files, to choose the logo."
+              >
+                Upload a new logo
+              </button>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="field-1">Primary colour</label>
+            <div class="row">
+              <span
+                class="swatch"
+                aria-hidden="true"
+                style="background: rgb(128, 0, 0)"
+              ></span
+              ><input type="text" value="#800000" class="input" id="field-1" />
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="field-2">Secondary colour</label>
+            <div class="row">
+              <span
+                class="swatch"
+                aria-hidden="true"
+                style="background: rgb(242, 194, 0)"
+              ></span
+              ><input type="text" value="#F2C200" class="input" id="field-2" />
+            </div>
+          </div>
+        </section>
+
+        <section class="card stack">
+          <h2>Grading</h2>
+          <div class="grid cols-2">
+            <div class="field">
+              <label class="label" for="field-3">Lowest grade</label>
+              <input type="text" value="1.00" class="input" id="field-3" />
+            </div>
+            <div class="field">
+              <label class="label" for="field-4">Highest grade</label>
+              <input type="text" value="5.00" class="input" id="field-4" />
+            </div>
+          </div>
+          <fieldset class="field">
+            <legend class="label">Which end is best?</legend>
+
+            <label class="check"
+              ><input type="radio" checked="" name="choice-1" />The highest grade</label
+            >
+            <label class="check"
+              ><input type="radio" name="choice-1" />The lowest grade</label
+            >
+          </fieldset>
+          <div class="field">
+            <label class="label" for="field-5">Passing grade</label>
+            <input type="text" value="3.00" class="input" id="field-5" />
+          </div>
+          <div class="field">
+            <label class="label" for="field-6">Agreement §VII.A threshold</label>
+            <input
+              type="text"
+              value="3.50, set by DOST-SEI Central Office"
+              readonly=""
+              class="input"
+              id="field-6"
+            />
+          </div>
+        </section>
+      </div>
+
+      <div class="actions">
+        <button
+          class="btn primary"
+          type="button"
+          data-toast="Saved. Scholars see the portal in these colours."
+        >
+          Save the settings
+        </button>
+      </div>
+    </main>
+  </body>
+</html>

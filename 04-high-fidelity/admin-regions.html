@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Regions · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="admin" data-nav="admin-regions">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">System administration</p>
+          <h1>Regions</h1>
+          <p class="lead">
+            Reference data: the regions, and the office that supervises each.
+          </p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="card">
+          <h2>Regions</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Region</th>
+                <th>Office</th>
+                <th>In use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Code">VII</td>
+                <td data-label="Region">Central Visayas</td>
+                <td data-label="Office">DOST-VII Regional Office</td>
+                <td data-label="In use"><span class="badge ok">Yes</span></td>
+              </tr>
+              <tr>
+                <td data-label="Code">VI</td>
+                <td data-label="Region">Western Visayas</td>
+                <td data-label="Office">DOST-VI Regional Office</td>
+                <td data-label="In use"><span class="badge ok">Yes</span></td>
+              </tr>
+              <tr>
+                <td data-label="Code">X</td>
+                <td data-label="Region">Northern Mindanao</td>
+                <td data-label="Office">DOST-X Regional Office</td>
+                <td data-label="In use"><span class="badge ok">Yes</span></td>
+              </tr>
+              <tr>
+                <td data-label="Code">NCR</td>
+                <td data-label="Region">National Capital Region</td>
+                <td data-label="Office">DOST-NCR Regional Office</td>
+                <td data-label="In use"><span class="badge ok">Yes</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card stack">
+          <h2>Add a region</h2>
+          <div class="grid cols-2">
+            <div class="field">
+              <label class="label" for="field-1">Code</label>
+              <input type="text" placeholder="e.g. VIII" class="input" id="field-1" />
+            </div>
+            <div class="field">
+              <label class="label" for="field-2">Name</label>
+              <input
+                type="text"
+                placeholder="e.g. Eastern Visayas"
+                class="input"
+                id="field-2"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="field-3">Office name</label>
+            <input
+              type="text"
+              placeholder="e.g. DOST-VIII Regional Office"
+              class="input"
+              id="field-3"
+            />
+          </div>
+          <div class="field">
+            <label class="label" for="field-4">Office address</label>
+            <textarea rows="3" class="input" id="field-4"></textarea>
+          </div>
+          <fieldset class="field">
+            <legend class="label">Run by</legend>
+
+            <label class="check"
+              ><input type="radio" checked="" name="choice-1" />A DOST Regional
+              Office</label
+            >
+            <label class="check"
+              ><input type="radio" name="choice-1" />An autonomous ministry</label
+            >
+          </fieldset>
+          <div class="grid cols-2">
+            <div class="field">
+              <label class="label" for="field-5">In use from</label>
+              <input type="date" class="input" id="field-5" />
+            </div>
+            <div class="field">
+              <label class="label" for="field-6">Until (optional)</label>
+              <input type="date" class="input" id="field-6" />
+            </div>
+          </div>
+          <button class="btn primary" type="button" data-toast="The region is saved.">
+            Save the region
+          </button>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

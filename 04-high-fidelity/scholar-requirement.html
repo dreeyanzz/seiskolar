@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="not-started returned verified" />
+    <title>A requirement · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="scholar" data-nav="scholar-dashboard">
+    <main class="page">
+      <p class="crumbs">
+        <a href="scholar-dashboard.html">Home</a> › 1st Semester, AY 2026–2027
+      </p>
+      <div class="page-head">
+        <div>
+          <h1>Certified True Copy of Grades</h1>
+          <p class="lead">DOST calls it the Certified Report of Grades · Mandatory</p>
+        </div>
+        <span class="badge off" data-state="not-started">Not started</span>
+        <span class="badge bad" data-state="returned">Returned</span>
+        <span class="badge ok" data-state="verified">Verified</span>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <section class="banner bad" data-state="returned">
+            <span data-icon="alert"></span>
+            <div>
+              <strong>Returned on 20 September: illegible</strong>
+              <p>
+                “The bottom-right corner is cut off, so the last two subjects can't be
+                read.” File a corrected copy. Your first copy stays on record.
+              </p>
+            </div>
+          </section>
+          <section class="banner ok" data-state="verified">
+            <span data-icon="check"></span>
+            <div>
+              <strong>Verified on 24 September</strong>
+              <p>Nothing more to do for this requirement. It can no longer be changed.</p>
+            </div>
+          </section>
+
+          <section class="card stack" data-state="not-started returned">
+            <h2>The file</h2>
+            <p class="small muted">
+              From CIT-U: ask the Registrar's Office for a certified true copy, then scan
+              or photograph the whole page, with the registrar's signature and dry seal.
+            </p>
+            <div class="dropzone">
+              <span class="dropzone-icon"><span data-icon="upload"></span></span>
+              <p class="label">Choose a file</p>
+              <p class="hint">PDF, JPEG, PNG, HEIC or WebP · up to 10 MB</p>
+            </div>
+          </section>
+
+          <section class="card stack">
+            <div class="card-head">
+              <h2>Your grades, subject by subject</h2>
+              <span class="small muted"
+                >CIT-U's scale: 1.00 to 5.00, higher is better</span
+              >
+            </div>
+            <!-- While it can still be filed, the scholar types each line. -->
+            <table
+              class="table lines"
+              data-state="not-started returned"
+              data-grades
+              data-passing="3.00"
+              data-higher-is-better
+            >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Subject code</th>
+                  <th class="num">Units</th>
+                  <th class="num">Grade</th>
+                  <th>Passes?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Line">1</td>
+                  <td data-label="Subject code">
+                    <input
+                      class="input cell"
+                      value="CS 311"
+                      aria-label="Line 1, subject code"
+                    />
+                  </td>
+                  <td class="num" data-label="Units">
+                    <input
+                      class="input cell num"
+                      inputmode="decimal"
+                      value="3"
+                      aria-label="Line 1, units"
+                      data-units
+                    />
+                  </td>
+                  <td class="num" data-label="Grade">
+                    <input
+                      class="input cell num"
+                      inputmode="decimal"
+                      value="4.50"
+                      aria-label="Line 1, grade"
+                      data-grade
+                    />
+                  </td>
+                  <td data-label="Passes?">
+                    <span class="badge ok" data-passes>Yes</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Line">2</td>
+                  <td data-label="Subject code">
+                    <input
+                      class="input cell"
+                      value="CS 312"
+                      aria-label="Line 2, subject code"
+                    />
+                  </td>
+                  <td class="num" data-label="Units">
+                    <input
+                      class="input cell num"
+                      inputmode="decimal"
+                      value="3"
+                      aria-label="Line 2, units"
+                      data-units
+                    />
+                  </td>
+                  <td class="num" data-label="Grade">
+                    <input
+                      class="input cell num"
+                      inputmode="decimal"
+                      value="4.20"
+                      aria-label="Line 2, grade"
+                      data-grade
+                    />
+                  </td>
+                  <td data-label="Passes?">
+                    <span class="badge ok" data-passes>Yes</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Line">3</td>
+                  <td data-label="Subject code">
+                    <input
+                      class="input cell"
+                      value="MATH 301"
+                      aria-label="Line 3, subject code"
+                    />
+                  </td>
+                  <td class="num" data-label="Units">
+                    <input
+                      class="input cell num"
+                      inputmode="decimal"
+                      value="3"
+                      aria-label="Line 3, units"
+                      data-units
+                    />
+                  </td>
+                  <td class="num" data-label="Grade">
+                    <input
+                      class="input cell num"
+                      inputmode="decimal"
+                      value="4.80"
+                      aria-label="Line 3, grade"
+                      data-grade
+                    />
+                  </td>
+                  <td data-label="Passes?">
+                    <span class="badge ok" data-passes>Yes</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Line">4</td>
+                  <td data-label="Subject code">
+                    <input
+                      class="input cell"
+                      value="GE 105"
+                      aria-label="Line 4, subject code"
+                    />
+                  </td>
+                  <td class="num" data-label="Units">
+                    <input
+                      class="input cell num"
+                      inputmode="decimal"
+                      value="3"
+                      aria-label="Line 4, units"
+                      data-units
+                    />
+                  </td>
+                  <td class="num" data-label="Grade">
+                    <input
+                      class="input cell num"
+                      inputmode="decimal"
+                      value="4.00"
+                      aria-label="Line 4, grade"
+                      data-grade
+                    />
+                  </td>
+                  <td data-label="Passes?">
+                    <span class="badge ok" data-passes>Yes</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Once verified, the lines are kept as filed. -->
+            <table class="table keep" data-state="verified">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Subject code</th>
+                  <th class="num">Units</th>
+                  <th class="num">Grade</th>
+                  <th>Passes?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>CS 311</td>
+                  <td class="num">3</td>
+                  <td class="num">4.50</td>
+                  <td><span class="badge ok">Yes</span></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>CS 312</td>
+                  <td class="num">3</td>
+                  <td class="num">4.20</td>
+                  <td><span class="badge ok">Yes</span></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>MATH 301</td>
+                  <td class="num">3</td>
+                  <td class="num">4.80</td>
+                  <td><span class="badge ok">Yes</span></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>GE 105</td>
+                  <td class="num">3</td>
+                  <td class="num">4.00</td>
+                  <td><span class="badge ok">Yes</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <button
+              class="btn"
+              data-state="not-started returned"
+              type="button"
+              data-add-line
+            >
+              <span data-icon="plus"></span>Add a subject
+            </button>
+            <div class="row spread">
+              <span class="label">Weighted average</span>
+              <span class="label" data-average>4.3750 · 12 units</span>
+            </div>
+            <p class="hint">
+              Worked out as you type: each grade times its units, added up, divided by all
+              the units. CIT-U's Agreement §VII.A threshold is 3.50; this average meets
+              it.
+            </p>
+          </section>
+
+          <div class="actions" data-state="not-started returned">
+            <button
+              class="btn primary"
+              type="button"
+              data-toast="Filed. It is submitted, and waits for DOST-VII to check it."
+            >
+              File it
+            </button>
+            <a class="btn" href="scholar-dashboard.html">Cancel</a>
+          </div>
+        </div>
+
+        <aside class="stack">
+          <section class="card">
+            <h2>Versions</h2>
+            <p class="small muted" data-state="not-started">Nothing filed yet.</p>
+            <div class="list-item" data-state="returned verified">
+              <div class="what">
+                <h3>Version 1</h3>
+                <p class="small muted">Filed 15 Sep · Returned 20 Sep: illegible</p>
+              </div>
+              <span class="badge bad">Returned</span>
+            </div>
+            <div class="list-item" data-state="verified">
+              <div class="what">
+                <h3>Version 2</h3>
+                <p class="small muted">Filed 21 Sep · Verified 24 Sep</p>
+              </div>
+              <span class="badge ok">Verified</span>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>

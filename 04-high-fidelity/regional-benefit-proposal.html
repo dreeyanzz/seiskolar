@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Benefit proposals · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-benefit-proposal">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII</p>
+          <h1>Benefit proposals</h1>
+          <p class="lead">
+            Ask Central Office to change a benefit, a rule, or one scholar's benefits.
+            Nothing changes until Central Office approves.
+          </p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="card stack">
+          <h2>Propose a change</h2>
+          <fieldset class="field">
+            <legend class="label">What to change</legend>
+
+            <label class="check"
+              ><input type="radio" checked="" name="choice-1" />One scholar's
+              benefits</label
+            >
+            <label class="check">
+              <input type="radio" name="choice-1" />A benefit: its name, ceiling, or how
+              often it is paid
+            </label>
+            <label class="check">
+              <input type="radio" name="choice-1" />A rule: which award years and
+              scholarship types get a benefit
+            </label>
+          </fieldset>
+          <div class="field">
+            <label class="label" for="field-1">Scholar</label>
+            <input
+              type="text"
+              value="Joy Pacaña · Mabini State College · 2025-07-00090"
+              class="input"
+              id="field-1"
+            />
+          </div>
+          <div class="field">
+            <label class="label" for="field-2">Change</label>
+            <select class="input" id="field-2">
+              <option>Remove Monthly living allowance</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label" for="field-3">Reason</label>
+            <textarea rows="3" class="input" id="field-3" aria-describedby="hint-4">
+On an approved leave of absence this semester.</textarea>
+            <span class="hint" id="hint-4"
+              >Needed. Central Office reads it before deciding.</span
+            >
+          </div>
+          <div class="actions">
+            <button
+              class="btn primary"
+              type="button"
+              data-toast="Sent. Nothing changes until Central Office approves it."
+            >
+              Send to Central Office
+            </button>
+          </div>
+        </section>
+
+        <aside class="card">
+          <h2>DOST-VII's proposals</h2>
+          <div class="list-item">
+            <div class="what">
+              <h3>Joy Pacaña: remove Monthly living allowance</h3>
+              <p class="small muted">Sent 7 Oct</p>
+            </div>
+            <span class="badge wait">Pending review</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>Learning materials and connectivity: paid each term</h3>
+              <p class="small muted">Sent 1 Oct</p>
+            </div>
+            <span class="badge wait">Pending review</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>Carlo Abellana: add Transportation allowance</h3>
+              <p class="small muted">
+                Rejected 30 Sep: “Home region is Central Visayas, the same as the
+                school's.”
+              </p>
+            </div>
+            <span class="badge bad">Rejected</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>Nico Villamor: add Thesis allowance</h3>
+              <p class="small muted">Approved 12 Sep</p>
+            </div>
+            <span class="badge ok">Approved</span>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>

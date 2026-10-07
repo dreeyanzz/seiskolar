@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thresholds · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="central" data-nav="central-thresholds">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-SEI Central Office</p>
+          <h1>Thresholds</h1>
+          <p class="lead">
+            The Agreement §VII.A threshold for each school, in that school's own grading
+            scale.
+          </p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <section class="card stack">
+          <div class="card-head">
+            <h2>DOST-VII's schools</h2>
+            <select class="input" id="field-1" aria-label="DOST-VII">
+              <option>DOST-VII</option>
+            </select>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>School</th>
+                <th>Grading scale</th>
+                <th>Passing</th>
+                <th>§VII.A threshold</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="School">CIT-U</td>
+                <td data-label="Grading scale">1.00 to 5.00, higher is better</td>
+                <td data-label="Passing">3.00</td>
+                <td data-label="Threshold">
+                  <input
+                    type="text"
+                    value="3.50"
+                    class="input short"
+                    id="field-2"
+                    aria-label="Threshold"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td data-label="School">Lapu Science College</td>
+                <td data-label="Grading scale">1.00 to 5.00, lower is better</td>
+                <td data-label="Passing">3.00</td>
+                <td data-label="Threshold">
+                  <input
+                    type="text"
+                    value="2.50"
+                    class="input short"
+                    id="field-3"
+                    aria-label="Threshold"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td data-label="School">San Isidro Institute of Technology</td>
+                <td data-label="Grading scale">0 to 100, higher is better</td>
+                <td data-label="Passing">75</td>
+                <td data-label="Threshold">
+                  <input
+                    type="text"
+                    value="85"
+                    class="input short"
+                    id="field-4"
+                    aria-label="Threshold"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td data-label="School">Mabini State College</td>
+                <td data-label="Grading scale">1.00 to 5.00, higher is better</td>
+                <td data-label="Passing">3.00</td>
+                <td data-label="Threshold">
+                  <input
+                    type="text"
+                    placeholder="Not set"
+                    class="input short"
+                    id="field-5"
+                    aria-label="Threshold"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="actions">
+            <button
+              class="btn primary"
+              type="button"
+              data-toast="Saved. Scholars see whether their term's average meets it."
+            >
+              Save the thresholds
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

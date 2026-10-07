@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="draft returned" />
+    <title>Release batches · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-release-batch">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII</p>
+          <h1>Release batches</h1>
+          <p class="lead">
+            Lists of cleared scholars, sent to Central Office for release.
+          </p>
+        </div>
+        <button class="btn" type="button" data-toast="A new draft batch is started.">
+          Start a batch
+        </button>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <!-- A batch being built -->
+          <section class="card stack" data-state="draft">
+            <div class="card-head">
+              <div>
+                <h2>Batch VII-2026-014</h2>
+                <p class="small muted">
+                  1st Semester, AY 2026–2027 · started 2 Oct by Ana Villareal
+                </p>
+              </div>
+              <span class="badge off">Draft</span>
+            </div>
+            <div class="field">
+              <span class="label">Benefits in this batch</span>
+              <div class="chips">
+                <button class="chip" type="button" aria-pressed="true">
+                  Monthly living allowance
+                </button>
+                <button class="chip" type="button" aria-pressed="false">
+                  Learning materials and connectivity
+                </button>
+                <button class="chip" type="button" aria-pressed="false">
+                  Tuition and other school fees
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- A batch Central Office sent back -->
+          <section class="banner bad" data-state="returned">
+            <span data-icon="alert"></span>
+            <div>
+              <strong>Returned by Central Office on 5 Oct</strong>
+              <p>
+                “The amounts for Jomar Dela Cruz and Nico Villamor don't match the rate
+                for their award year.” Correct the batch, then send it again.
+              </p>
+            </div>
+          </section>
+          <section class="card stack" data-state="returned">
+            <div class="card-head">
+              <div>
+                <h2>Batch VII-2026-013</h2>
+                <p class="small muted">AY 2026–2027 · sent 1 Oct by Ana Villareal</p>
+              </div>
+              <span class="badge bad">Returned</span>
+            </div>
+            <div class="field">
+              <span class="label">Benefits in this batch</span>
+              <div class="chips">
+                <button class="chip" type="button" aria-pressed="false">
+                  Monthly living allowance
+                </button>
+                <button class="chip" type="button" aria-pressed="true">
+                  Learning materials and connectivity
+                </button>
+                <button class="chip" type="button" aria-pressed="false">
+                  Tuition and other school fees
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="card stack">
+            <div class="card-head">
+              <h2>Scholars and amounts</h2>
+              <span class="small muted" data-state="draft">46 scholars</span>
+              <span class="small muted" data-state="returned">40 scholars</span>
+            </div>
+            <div class="field">
+              <label class="label" for="field-1">Add a cleared scholar</label>
+              <input
+                type="text"
+                placeholder="Search by name or scholar number"
+                class="input"
+                id="field-1"
+                aria-describedby="hint-2"
+              />
+              <span class="hint" id="hint-2">
+                Only scholars with every mandatory document verified for the term can be
+                added.
+              </span>
+            </div>
+
+            <div data-state="draft">
+              <div class="list-item">
+                <div class="what">
+                  <h3>Bea Santiago</h3>
+                  <p class="small muted">CIT-U · 2024-07-00001</p>
+                </div>
+                <div class="row">
+                  <input
+                    type="text"
+                    value="₱32,000"
+                    class="input short"
+                    id="field-3"
+                    aria-label="₱32,000"
+                  />
+                  <button
+                    class="link"
+                    type="button"
+                    data-toast="Give the reason. The scholar moves to a later batch, and loses nothing."
+                  >
+                    Take off
+                  </button>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Jomar Dela Cruz</h3>
+                  <p class="small muted">CIT-U · 2024-07-00002</p>
+                </div>
+                <div class="row">
+                  <input
+                    type="text"
+                    value="₱32,000"
+                    class="input short"
+                    id="field-4"
+                    aria-label="₱32,000"
+                  />
+                  <button
+                    class="link"
+                    type="button"
+                    data-toast="Give the reason. The scholar moves to a later batch, and loses nothing."
+                  >
+                    Take off
+                  </button>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Marites Ocampo</h3>
+                  <p class="small muted">Lapu Science College · 2024-07-00041</p>
+                </div>
+                <div class="row">
+                  <input
+                    type="text"
+                    value="₱32,000"
+                    class="input short"
+                    id="field-5"
+                    aria-label="₱32,000"
+                  />
+                  <button
+                    class="link"
+                    type="button"
+                    data-toast="Give the reason. The scholar moves to a later batch, and loses nothing."
+                  >
+                    Take off
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div data-state="returned">
+              <div class="list-item">
+                <div class="what">
+                  <h3>Jomar Dela Cruz</h3>
+                  <p class="small muted">CIT-U · 2024-07-00002</p>
+                </div>
+                <div class="row">
+                  <input
+                    type="text"
+                    value="₱12,000"
+                    class="input short"
+                    id="field-6"
+                    aria-label="₱12,000"
+                  />
+                  <button
+                    class="link"
+                    type="button"
+                    data-toast="Give the reason. The scholar moves to a later batch, and loses nothing."
+                  >
+                    Take off
+                  </button>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Nico Villamor</h3>
+                  <p class="small muted">CIT-U · 2023-07-00018</p>
+                </div>
+                <div class="row">
+                  <input
+                    type="text"
+                    value="₱12,000"
+                    class="input short"
+                    id="field-7"
+                    aria-label="₱12,000"
+                  />
+                  <button
+                    class="link"
+                    type="button"
+                    data-toast="Give the reason. The scholar moves to a later batch, and loses nothing."
+                  >
+                    Take off
+                  </button>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Bea Santiago</h3>
+                  <p class="small muted">CIT-U · 2024-07-00001</p>
+                </div>
+                <div class="row">
+                  <input
+                    type="text"
+                    value="₱10,000"
+                    class="input short"
+                    id="field-8"
+                    aria-label="₱10,000"
+                  />
+                  <button
+                    class="link"
+                    type="button"
+                    data-toast="Give the reason. The scholar moves to a later batch, and loses nothing."
+                  >
+                    Take off
+                  </button>
+                </div>
+              </div>
+            </div>
+            <p class="hint" data-state="draft">Showing 3 of 46</p>
+            <p class="hint" data-state="returned">Showing 3 of 40</p>
+          </section>
+
+          <section class="card stack" data-state="draft">
+            <h2>Taken off this batch</h2>
+            <div class="list-item">
+              <div class="what">
+                <h3>Kristine Uy</h3>
+                <p class="small muted">
+                  CIT-U · taken off 4 Oct: “Amount still being confirmed with the school.”
+                </p>
+              </div>
+              <span class="badge off">Later batch</span>
+            </div>
+          </section>
+
+          <div class="actions" data-state="draft">
+            <button
+              class="btn primary"
+              type="button"
+              data-toast="Sent to Central Office."
+            >
+              Send to Central Office
+            </button>
+            <button class="btn" type="button" data-toast="The draft is saved.">
+              Save the draft
+            </button>
+          </div>
+          <div class="actions" data-state="returned">
+            <button
+              class="btn primary"
+              type="button"
+              data-toast="Sent to Central Office again."
+            >
+              Send it again
+            </button>
+          </div>
+        </div>
+
+        <aside class="card">
+          <h2>Batches</h2>
+          <a class="list-item" href="regional-release-batch.html?state=draft">
+            <div class="what">
+              <h3>VII-2026-014</h3>
+              <p class="small muted">Monthly living allowance</p>
+            </div>
+            <span class="badge off">Draft</span>
+          </a>
+          <a class="list-item" href="regional-release-batch.html?state=returned">
+            <div class="what">
+              <h3>VII-2026-013</h3>
+              <p class="small muted">Learning materials and connectivity</p>
+            </div>
+            <span class="badge bad">Returned</span>
+          </a>
+          <div class="list-item">
+            <div class="what">
+              <h3>VII-2026-011</h3>
+              <p class="small muted">2nd Semester, AY 2025–2026 · two benefits</p>
+            </div>
+            <span class="badge ok">Released 14 Jul</span>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>

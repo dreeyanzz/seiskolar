@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DOST staff accounts · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="admin" data-nav="admin-staff-accounts">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">System administration</p>
+          <h1>DOST staff accounts</h1>
+          <p class="lead">Accounts for the Regional Offices and Central Office.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="card">
+          <h2>5 accounts</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Region</th>
+                <th>Account</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Name">Ana Villareal</td>
+                <td data-label="Role">Regional Office</td>
+                <td data-label="Region">DOST-VII</td>
+                <td data-label="Account"><span class="badge ok">Signed in</span></td>
+              </tr>
+              <tr>
+                <td data-label="Name">Leo Bautista</td>
+                <td data-label="Role">Regional Office</td>
+                <td data-label="Region">DOST-VII</td>
+                <td data-label="Account"><span class="badge ok">Signed in</span></td>
+              </tr>
+              <tr>
+                <td data-label="Name">Grace Lim</td>
+                <td data-label="Role">Regional Office</td>
+                <td data-label="Region">DOST-VI</td>
+                <td data-label="Account"><span class="badge ok">Signed in</span></td>
+              </tr>
+              <tr>
+                <td data-label="Name">Paolo Reyes</td>
+                <td data-label="Role">Central Office</td>
+                <td data-label="Region">Every region</td>
+                <td data-label="Account"><span class="badge ok">Signed in</span></td>
+              </tr>
+              <tr>
+                <td data-label="Name">Mia Cortez</td>
+                <td data-label="Role">Central Office</td>
+                <td data-label="Region">Every region</td>
+                <td data-label="Account">
+                  <span class="badge off">Not signed in yet</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card stack">
+          <h2>Add a staff account</h2>
+          <div class="field">
+            <label class="label" for="field-1">Email</label>
+            <input
+              type="email"
+              value="mia.cortez@example.test"
+              class="input"
+              id="field-1"
+            />
+          </div>
+          <div class="field">
+            <label class="label" for="field-2">Full name</label>
+            <input type="text" value="Mia Cortez" class="input" id="field-2" />
+          </div>
+          <fieldset class="field">
+            <legend class="label">Role</legend>
+
+            <label class="check"
+              ><input type="radio" name="choice-1" />Regional Office</label
+            >
+            <label class="check"
+              ><input type="radio" checked="" name="choice-1" />Central Office</label
+            >
+          </fieldset>
+          <div class="field">
+            <label class="label" for="field-3">Region</label>
+            <select disabled="" class="input" id="field-3" aria-describedby="hint-4">
+              <option>Every region, for Central Office</option>
+            </select>
+            <span class="hint" id="hint-4"
+              >A Regional Office account belongs to one region.</span
+            >
+          </div>
+          <button
+            class="btn primary"
+            type="button"
+            data-toast="The staff account is created."
+          >
+            Create the account
+          </button>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
