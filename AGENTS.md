@@ -24,7 +24,8 @@ Nothing else belongs here.
 - **Nothing is implemented, and nothing will be.** There is no app, database, API or
   test suite in this repository. Do not look for one, and do not write one.
 - **The drawings are HTML on purpose.** Each swimlane, wireframe and screen is an HTML
-  file with a PNG beside it. The HTML, and the small shared files that style and lay it
+  file with its PNG pictures beside it: one for a swimlane, and one for each device and
+  state of a screen (phone, tablet and desktop). The HTML, and the small shared files that style and lay it
   out (such as `02-swimlanes/_swimlane.js`), make a picture you can open in a browser,
   not the product. The only other code is `scripts/render.mjs`, which takes the pictures.
 - **The SRS names things that are not here.** It was written against an earlier
@@ -85,7 +86,7 @@ only at the 🛑 points:
 3. **Branch** from a fresh `main`: `<scope>/short-desc`, for example
    `swimlanes/report-filing`.
 4. **Build it**, following the folder README. Touch only the files the task names.
-5. **Look at it.** Run `npm run render -- <file>`, open the PNG, and compare it with its
+5. **Look at it.** Run `npm run render -- <file>`, open every PNG it makes, and compare it with its
    source. Fix and repeat until they agree. Then set its row in the folder's index to
    done.
 6. **Explain it.** 🛑 Walk your human through it: what each part shows, which line of the

@@ -17,8 +17,9 @@ Software Design, Cebu Institute of Technology – University. Team **Asph**.
 | 4   | [High-fidelity screens](04-high-fidelity/)  | The wireframe with the same name |
 
 Each folder's README lists every item, what it is built from, who owns it, and whether it
-is done. There is no application code here: each drawing is an HTML file with a PNG
-beside it, so you can view it on GitHub or open it in a browser.
+is done. There is no application code here: each drawing is an HTML file with its PNG
+pictures beside it, so you can view it on GitHub or open it in a browser. Every screen is
+drawn for a phone, a tablet and a desktop.
 
 Earlier work, including the prototype and the documents the SRS links to, is in the
 archived repository [`dreeyanzz/seiskolar-archive`](https://github.com/dreeyanzz/seiskolar-archive).
@@ -49,5 +50,6 @@ Who owns which swimlane and screen is in each folder's index.
 - Every item is a task issue, assigned to its owner.
 - Every change is a pull request to `main` with one approval: Adrian approves everyone's,
   and a teammate approves his. Only Adrian merges.
-- `npm run render` turns each drawing into its PNG.
+- `npm run render` turns each drawing into its PNGs: a screen into one per device and
+  state.
 - [`AGENTS.md`](AGENTS.md) has the rules every member and every AI tool follows.
