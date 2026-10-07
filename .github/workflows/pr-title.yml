@@ -1,0 +1,71 @@
+# Checks what lands on main. With squash merges, the pull request's title becomes the
+# commit subject and its body becomes the commit body, so both are checked here,
+# together with the branch name. The job name `pr-title` is a required status check
+# on main; renaming it blocks every pull request until the ruleset is updated.
+name: PR title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  pr-title:
+    name: pr-title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
+          requireScope: true
+          scopes: |
+            srs
+            swimlanes
+            low-fi
+            hi-fi
+            repo
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            Start the summary with a lowercase letter, e.g. "feat(swimlanes): add the filing workflow".
+
+      - name: Check the branch name and the body
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          fail=0
+          err() { echo "::error::$1"; fail=1; }
+          if ! printf '%s' "$HEAD_REF" | grep -Eq '^(srs|swimlanes|low-fi|hi-fi|repo)/[a-z0-9-]+$'; then
+            err "Branch '$HEAD_REF' must be <scope>/short-desc, e.g. swimlanes/report-filing. Scopes: srs swimlanes low-fi hi-fi repo."
+          fi
+          if [ -z "$BODY" ]; then
+            err "The body is empty. Use the template; it becomes the commit message on main."
+          fi
+          if printf '%s' "$BODY" | grep -q '<!--'; then
+            err "Remove HTML comments from the body; they would land in the commit on main."
+          fi
+          if printf '%s' "$BODY" | grep -Eq '^Closes #[[:space:]]*$'; then
+            err "Fill in 'Closes #<issue>', or delete that line."
+          fi
+          if printf '%s' "$BODY" | grep -Eq '^Co-Authored-By:[[:space:]]*$'; then
+            err "Fill in the Co-Authored-By line, or delete it if no AI was used."
+          fi
+          if [ "$(printf '%s' "$BODY" | head -c 3 | od -An -tx1 | tr -d ' \n')" = "efbbbf" ]; then
+            err "The body starts with a byte-order mark. Write it with Git Bash, or a UTF-8 file without BOM."
+          fi
+          exit $fail

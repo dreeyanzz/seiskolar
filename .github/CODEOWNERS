@@ -1,0 +1,4 @@
+# Requests Adrian's review on every pull request. It does not make his approval a
+# requirement: the ruleset asks for one approval from anyone, because Adrian cannot
+# approve his own pull requests, and a teammate approves those.
+* @dreeyanzz

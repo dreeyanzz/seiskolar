@@ -1,0 +1,26 @@
+name: Question
+description: Something the SRS does not answer that blocks or shapes a drawing. Adrian decides.
+title: 'Question: '
+labels: ['question']
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Ask it in plain words.
+    validations:
+      required: true
+  - type: textarea
+    id: what-depends
+    attributes:
+      label: What depends on the answer
+      description: Which drawings change, or wait, depending on the answer.
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options
+      description: Two or three concrete answers, with your recommendation marked.
+    validations:
+      required: true

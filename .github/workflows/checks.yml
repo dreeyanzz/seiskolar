@@ -1,0 +1,41 @@
+# The job name `checks` is a required status check on main; renaming it blocks every
+# pull request until the ruleset is updated. There are no `paths:` filters on
+# purpose: a required check that never runs leaves a pull request waiting forever.
+name: Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      # A commit made without the hooks (a lab PC, the GitHub web editor) still
+      # gets its formatting checked here.
+      - run: npm run format:check
+      - name: Every drawing has its picture
+        run: |
+          missing=0
+          for f in $(git ls-files '02-swimlanes/*.html' '03-low-fidelity/*.html' '04-high-fidelity/*.html'); do
+            if [ ! -f "${f%.html}.png" ]; then
+              echo "::error file=$f::No ${f%.html}.png. Run: npm run render -- $f, then commit the PNG."
+              missing=1
+            fi
+          done
+          exit $missing

@@ -1,0 +1,24 @@
+{
+  "name": "seiskolar",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SEIskolar software design: the SRS, swimlanes, low-fidelity wireframes and high-fidelity screens",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "render": "node scripts/render.mjs",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{md,json,yml,yaml,html,css,js,mjs}": "prettier --write"
+  },
+  "devDependencies": {
+    "husky": "9.1.7",
+    "lint-staged": "17.6.0",
+    "playwright-core": "1.63.0",
+    "prettier": "3.9.9"
+  }
+}

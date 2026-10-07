@@ -1,0 +1,14 @@
+# Line endings: the repository stores LF everywhere, whatever core.autocrlf says on
+# the machine. Hooks must be LF, or Git's sh fails with "sh\r".
+* text=auto eol=lf
+.husky/* text eol=lf
+
+# Binary files are never diffed or normalised.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.docx binary

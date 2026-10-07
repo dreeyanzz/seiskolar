@@ -1,0 +1,42 @@
+name: Task
+description: One swimlane, or one group of screens, for one person.
+labels: ['task']
+body:
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Stage
+      options: ['Swimlane', 'Low-fidelity', 'High-fidelity', 'SRS', 'Repository']
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What
+      description: What should exist when this is done, in plain words. Name the files.
+    validations:
+      required: true
+  - type: textarea
+    id: built-from
+    attributes:
+      label: Built from
+      description: >-
+        The SRS requirement IDs for a swimlane, the swimlane steps for a wireframe, or the
+        wireframe for a high-fidelity screen.
+    validations:
+      required: true
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when
+      value: |
+        - [ ] The drawing and its PNG are merged
+        - [ ] Its row in the folder's README index says done
+    validations:
+      required: true
+  - type: input
+    id: waits-for
+    attributes:
+      label: Waits for
+      description: The task whose item this one is built from, if that item is not done yet.
+      placeholder: '#'
