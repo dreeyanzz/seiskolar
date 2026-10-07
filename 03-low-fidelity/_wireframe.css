@@ -1,0 +1,1051 @@
+/* The shared look of every wireframe: grey boxes and real words, no colour or branding.
+   _wireframe.js builds the frame around each screen. A phone is narrower than 600 px,
+   a tablet is 600 to 1023 px, and a desktop is 1024 px or wider. */
+
+:root {
+  --ink: #1f1f1f;
+  --soft: #555;
+  --faint: #8a8a8a;
+  --line: #2b2b2b;
+  --rule: #c9c9c9;
+  --fill: #f3f3f3;
+  --fill-2: #e2e2e2;
+  --radius: 6px;
+  --gap: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink);
+  font:
+    15px/1.45 'Segoe UI',
+    system-ui,
+    -apple-system,
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 15px;
+}
+
+a {
+  color: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---- The frame ---------------------------------------------------------------- */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 56px;
+  padding: 0 16px;
+  border-bottom: 1.5px solid var(--line);
+  background: #fff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mark,
+.img {
+  border: 1.5px solid var(--line);
+  background:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      var(--faint) 50%,
+      transparent calc(50% + 1px)
+    ),
+    linear-gradient(
+      to bottom right,
+      transparent calc(50% - 1px),
+      var(--faint) 50%,
+      transparent calc(50% + 1px)
+    );
+}
+
+.mark {
+  flex: none;
+  width: 32px;
+  height: 32px;
+}
+
+.brand-text,
+.user-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.brand-name {
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.brand-sub,
+.user-role {
+  color: var(--soft);
+  font-size: 12px;
+}
+
+.brand-name .short {
+  display: none;
+}
+
+@media (max-width: 599px) {
+  .brand-name .long {
+    display: none;
+  }
+
+  .brand-name .short {
+    display: inline;
+  }
+}
+
+.user {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-text {
+  text-align: right;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.frame {
+  display: flex;
+  flex: 1;
+}
+
+.nav {
+  display: flex;
+  background: #fff;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  border-radius: var(--radius);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--line);
+  border-radius: 4px;
+}
+
+.nav-item.active {
+  background: var(--fill-2);
+  font-weight: 700;
+}
+
+.nav-item.active .nav-icon {
+  background: var(--ink);
+}
+
+.page {
+  flex: 1;
+  min-width: 0;
+  max-width: 1180px;
+  padding: 28px 32px 48px;
+}
+
+/* A desktop has a sidebar. */
+@media (min-width: 1024px) {
+  .nav {
+    flex: none;
+    flex-direction: column;
+    gap: 4px;
+    width: 232px;
+    padding: 16px 12px;
+    border-right: 1.5px solid var(--line);
+  }
+
+  .nav-item {
+    padding: 10px 12px;
+  }
+
+  .nav-item.more {
+    display: none;
+  }
+}
+
+/* A tablet has a rail of icons with short labels. */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .nav {
+    flex: none;
+    flex-direction: column;
+    gap: 4px;
+    width: 92px;
+    padding: 12px 6px;
+    border-right: 1.5px solid var(--line);
+  }
+
+  .nav-item {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-height: 60px;
+    padding: 8px 4px;
+    font-size: 11px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .nav-item.more {
+    display: none;
+  }
+
+  .page {
+    padding: 22px 24px 40px;
+  }
+}
+
+/* A phone has a bar of tabs along the bottom. */
+@media (max-width: 599px) {
+  .topbar {
+    height: 52px;
+    padding: 0 12px;
+  }
+
+  .user-text {
+    display: none;
+  }
+
+  .frame {
+    flex-direction: column;
+  }
+
+  .nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    height: 64px;
+    border-top: 1.5px solid var(--line);
+  }
+
+  .nav-item {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    padding: 6px 2px;
+    border-radius: 0;
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .nav-item.overflow {
+    display: none;
+  }
+
+  /* A long label takes a second line rather than being cut off. */
+  .nav-label {
+    display: -webkit-box;
+    max-width: 100%;
+    overflow: hidden;
+    line-height: 1.15;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .page {
+    padding: 18px 16px 92px;
+  }
+}
+
+/* ---- Layout ------------------------------------------------------------------- */
+
+.page-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  margin-bottom: 4px;
+  color: var(--soft);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lead {
+  margin-top: 6px;
+  color: var(--soft);
+}
+
+.crumbs {
+  margin-bottom: 8px;
+  color: var(--soft);
+  font-size: 13px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.spread {
+  justify-content: space-between;
+}
+
+/* A note or a row of buttons placed straight on the page keeps its distance. */
+.page > .note,
+.page > .actions {
+  margin-top: var(--gap);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap);
+}
+
+.layout,
+.split {
+  display: grid;
+  align-items: start;
+  gap: 20px;
+}
+
+@media (min-width: 600px) {
+  .grid.cols-2,
+  .grid.cols-3,
+  .grid.cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid.cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .grid.cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+
+  .split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- Parts -------------------------------------------------------------------- */
+
+.card {
+  padding: 16px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.card > h2,
+.card > h3 {
+  margin-bottom: 10px;
+}
+
+.card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.muted {
+  color: var(--soft);
+}
+
+.small {
+  font-size: 13px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn.primary {
+  background: var(--ink);
+  color: #fff;
+}
+
+.btn.danger {
+  border-style: dashed;
+}
+
+.btn.block {
+  width: 100%;
+}
+
+.link {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge.ok {
+  background: var(--ink);
+  color: #fff;
+}
+
+.badge.wait {
+  background: var(--fill-2);
+}
+
+.badge.bad {
+  border-width: 3px;
+}
+
+.badge.off {
+  border-style: dashed;
+  border-color: var(--faint);
+  color: var(--soft);
+}
+
+.banner {
+  padding: 14px 16px;
+  border: 1.5px solid var(--line);
+  border-left-width: 8px;
+  border-radius: var(--radius);
+}
+
+.banner strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 17px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--soft);
+}
+
+.input.filled {
+  color: var(--ink);
+}
+
+.input.select::after {
+  margin-left: auto;
+  padding-left: 8px;
+  content: '▾';
+}
+
+.input.area {
+  align-items: flex-start;
+  min-height: 92px;
+}
+
+.input.read {
+  border-style: dashed;
+  background: var(--fill);
+}
+
+.hint {
+  color: var(--soft);
+  font-size: 12px;
+}
+
+.error {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.error::before {
+  content: '! ';
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 32px;
+}
+
+.box,
+.radio {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border: 1.5px solid var(--line);
+}
+
+.box {
+  border-radius: 4px;
+}
+
+.radio {
+  border-radius: 50%;
+}
+
+.box.on,
+.radio.on {
+  background: var(--ink);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+/* Cannot be ticked, such as a scholar already credited. */
+.box.off {
+  border-style: dashed;
+  border-color: var(--faint);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th {
+  padding: 8px 12px;
+  border-bottom: 1.5px solid var(--line);
+  color: var(--soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: middle;
+}
+
+.table .num {
+  text-align: right;
+}
+
+/* On a phone each row of a table becomes a box of label and value pairs. */
+@media (max-width: 599px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 10px;
+    padding: 6px 0;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 12px;
+    border: 0;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+
+  .table td::before {
+    flex: none;
+    color: var(--soft);
+    font-weight: 600;
+    text-align: left;
+    content: attr(data-label);
+  }
+
+  .table td.num {
+    text-align: right;
+  }
+}
+
+.list-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 14px 0;
+}
+
+.list-item + .list-item {
+  border-top: 1px solid var(--rule);
+}
+
+a.list-item {
+  color: inherit;
+  text-decoration: none;
+}
+
+.list-item .what {
+  min-width: 0;
+}
+
+.kpi {
+  padding: 14px 16px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.kpi .value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.kpi .label {
+  color: var(--soft);
+  font-weight: 400;
+}
+
+.bar {
+  height: 12px;
+  overflow: hidden;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+}
+
+.bar > span {
+  display: block;
+  height: 100%;
+  background: var(--soft);
+}
+
+/* A release's stages, one below the other. */
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  position: relative;
+  padding: 0 0 18px 32px;
+}
+
+.steps li::before {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  content: '';
+}
+
+.steps li::after {
+  position: absolute;
+  top: 22px;
+  bottom: 0;
+  left: 8.5px;
+  width: 1.5px;
+  background: var(--rule);
+  content: '';
+}
+
+.steps li:last-child::after {
+  display: none;
+}
+
+.steps li.done::before {
+  background: var(--ink);
+}
+
+.steps li.now::before {
+  background: var(--fill-2);
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 4.5px var(--line);
+}
+
+.steps li.todo {
+  color: var(--faint);
+}
+
+.steps li.off::before {
+  border-style: dashed;
+}
+
+.steps .when {
+  color: var(--soft);
+  font-size: 13px;
+}
+
+.dropzone {
+  padding: 22px 16px;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.doc {
+  aspect-ratio: 8.5 / 11;
+  padding: 10%;
+  border: 1.5px solid var(--line);
+  background: repeating-linear-gradient(transparent 0 22px, var(--fill-2) 22px 30px)
+    content-box;
+}
+
+.img {
+  min-height: 72px;
+}
+
+.ph {
+  display: block;
+  height: 10px;
+  margin: 6px 0;
+  border-radius: 4px;
+  background: var(--fill-2);
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  border-bottom: 1.5px solid var(--line);
+}
+
+.tab {
+  padding: 10px 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tab.active {
+  margin-bottom: -1.5px;
+  border-bottom: 3px solid var(--ink);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.chip.on {
+  background: var(--ink);
+  color: #fff;
+}
+
+.swatch {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--line);
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+/* An annotation: what a reviewer should know that the screen itself does not say. */
+.note {
+  padding: 10px 12px;
+  border: 1.5px dashed var(--faint);
+  border-radius: var(--radius);
+  background: #fafafa;
+  color: var(--soft);
+  font-size: 13px;
+}
+
+.note::before {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  content: 'Note';
+}
+
+/* A gap the SRS leaves that we filled. Each one is listed in the pull request. */
+.assumed {
+  display: inline-block;
+  padding: 1px 6px;
+  border: 1.5px dashed var(--line);
+  border-radius: 4px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+/* A short input, such as an amount in a list. */
+.input.short {
+  width: 140px;
+}
+
+/* Where the screen comes from: its swimlane steps and the SRS. */
+.trace {
+  margin-top: 28px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+  color: var(--faint);
+  font-size: 12px;
+}
+
+/* Sign-in sits alone in the middle of the screen. */
+.alone {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+  background: var(--fill);
+}
+
+.alone .panel {
+  width: 100%;
+  max-width: 420px;
+}
+
+.narrow {
+  max-width: 620px;
+}
+
+/* A logo is a box with a cross through it, as every image is here. */
+.img.logo {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  min-height: 0;
+}
+
+/* A table of many columns, such as the queue, is a table on a desktop only. */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .table.wide thead {
+    display: none;
+  }
+
+  .table.wide,
+  .table.wide tbody,
+  .table.wide tr,
+  .table.wide td {
+    display: block;
+    width: 100%;
+  }
+
+  .table.wide tr {
+    margin-bottom: 10px;
+    padding: 6px 0;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .table.wide td {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 12px;
+    border: 0;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+
+  .table.wide td::before {
+    flex: none;
+    color: var(--soft);
+    font-weight: 600;
+    text-align: left;
+    content: attr(data-label);
+  }
+}
+
+/* A table of a few short columns, such as grade lines, stays a table on a phone. */
+@media (max-width: 599px) {
+  .table.keep {
+    display: table;
+  }
+
+  .table.keep thead {
+    display: table-header-group;
+  }
+
+  .table.keep tbody {
+    display: table-row-group;
+  }
+
+  .table.keep tr {
+    display: table-row;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .table.keep th,
+  .table.keep td {
+    display: table-cell;
+    width: auto;
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--rule);
+    text-align: left;
+  }
+
+  .table.keep th {
+    border-bottom: 1.5px solid var(--line);
+  }
+
+  .table.keep .num {
+    text-align: right;
+  }
+
+  .table.keep td::before {
+    content: none;
+  }
+}
+
+/* Takes a whole line of its row, such as a form opened inside a list item. */
+.full {
+  flex-basis: 100%;
+}

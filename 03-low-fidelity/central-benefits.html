@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="benefits rules scholar" />
+    <title>Benefits · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="central" data-nav="central-benefits">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-SEI Central Office</p>
+          <h1>Benefits</h1>
+          <p class="lead">
+            What scholars receive, and who receives it. Your changes take effect at once.
+          </p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <nav class="tabs" data-state="benefits">
+          <span class="tab active">The benefits</span>
+          <a class="tab" href="central-benefits.html?state=rules">Rules</a>
+          <a class="tab" href="central-benefits.html?state=scholar">One scholar</a>
+        </nav>
+        <nav class="tabs" data-state="rules">
+          <a class="tab" href="central-benefits.html?state=benefits">The benefits</a>
+          <span class="tab active">Rules</span>
+          <a class="tab" href="central-benefits.html?state=scholar">One scholar</a>
+        </nav>
+        <nav class="tabs" data-state="scholar">
+          <a class="tab" href="central-benefits.html?state=benefits">The benefits</a>
+          <a class="tab" href="central-benefits.html?state=rules">Rules</a>
+          <span class="tab active">One scholar</span>
+        </nav>
+
+        <!-- The benefit list -->
+        <div class="layout" data-state="benefits">
+          <section class="card">
+            <h2>6 benefits</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Benefit</th>
+                  <th class="num">Ceiling</th>
+                  <th>How often</th>
+                  <th>Basis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Benefit">Tuition and other school fees</td>
+                  <td class="num" data-label="Ceiling">₱40,000</td>
+                  <td data-label="How often">Each academic year</td>
+                  <td data-label="Basis">Agreement §VI</td>
+                </tr>
+                <tr>
+                  <td data-label="Benefit">Monthly living allowance</td>
+                  <td class="num" data-label="Ceiling">₱8,000</td>
+                  <td data-label="How often">Monthly</td>
+                  <td data-label="Basis">Agreement §VI</td>
+                </tr>
+                <tr>
+                  <td data-label="Benefit">Learning materials and connectivity</td>
+                  <td class="num" data-label="Ceiling">₱10,000</td>
+                  <td data-label="How often">Each academic year</td>
+                  <td data-label="Basis">Agreement §VI</td>
+                </tr>
+                <tr>
+                  <td data-label="Benefit">Clothing allowance</td>
+                  <td class="num" data-label="Ceiling">₱1,000</td>
+                  <td data-label="How often">Once</td>
+                  <td data-label="Basis">Agreement §VI</td>
+                </tr>
+                <tr>
+                  <td data-label="Benefit">Thesis allowance</td>
+                  <td class="num" data-label="Ceiling">₱10,000</td>
+                  <td data-label="How often">On an event: the thesis</td>
+                  <td data-label="Basis">Agreement §VI</td>
+                </tr>
+                <tr>
+                  <td data-label="Benefit">Transportation allowance</td>
+                  <td class="num" data-label="Ceiling">₱5,000</td>
+                  <td data-label="How often">Each academic year</td>
+                  <td data-label="Basis">Agreement §VI</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="card stack">
+            <h2>Change a benefit</h2>
+            <div class="field">
+              <span class="label">Benefit</span>
+              <span class="input select filled">Learning materials and connectivity</span>
+            </div>
+            <div class="field">
+              <span class="label">Ceiling</span>
+              <span class="input filled">₱10,000</span>
+            </div>
+            <div class="field">
+              <span class="label">How often</span>
+              <span class="input select filled">Each academic year</span>
+              <span class="hint"
+                >Monthly, each term, each academic year, once, or on an event</span
+              >
+            </div>
+            <div class="field">
+              <span class="label">Reason</span>
+              <span class="input area">Needed. It is kept with the change.</span>
+            </div>
+            <span class="btn primary">Save the change</span>
+          </section>
+        </div>
+
+        <!-- Rules -->
+        <div class="layout" data-state="rules">
+          <section class="card">
+            <h2>Rules</h2>
+            <div class="list-item">
+              <div class="what">
+                <h3>Award year 2024 · RA 7687</h3>
+                <p class="small muted">
+                  Tuition and other school fees, Monthly living allowance, Learning
+                  materials and connectivity · Clothing allowance: 1st semester of 1st
+                  year only · Thesis allowance: final year · Transportation allowance:
+                  studying outside the home province or region
+                </p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="what">
+                <h3>Award year 2024 · Merit</h3>
+                <p class="small muted">The same six, with the same conditions</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card stack">
+            <h2>Change a rule</h2>
+            <div class="grid cols-2">
+              <div class="field">
+                <span class="label">Award year</span>
+                <span class="input filled">2024</span>
+              </div>
+              <div class="field">
+                <span class="label">Scholarship type</span>
+                <span class="input select filled">RA 7687</span>
+              </div>
+            </div>
+            <div class="field">
+              <span class="label">Benefit</span>
+              <span class="input select filled">Thesis allowance</span>
+            </div>
+            <div class="field">
+              <span class="label">Only when (optional)</span>
+              <div class="check">
+                <span class="radio on"></span>In a year level or term
+              </div>
+              <div class="check">
+                <span class="radio"></span>Studying outside the home province or region
+              </div>
+              <div class="check">
+                <span class="radio"></span>The programme requires it
+              </div>
+            </div>
+            <div class="field">
+              <span class="label">Which year level or term</span>
+              <span class="input filled">Final year</span>
+            </div>
+            <div class="field">
+              <span class="label">Reason</span>
+              <span class="input area">Needed. It is kept with the change.</span>
+            </div>
+            <span class="btn primary">Save the rule</span>
+          </section>
+        </div>
+
+        <!-- One scholar -->
+        <div class="layout" data-state="scholar">
+          <section class="card stack">
+            <div>
+              <h2>Nico Villamor</h2>
+              <p class="small muted">CIT-U · 2023-07-00018 · award year 2023 · RA 7687</p>
+            </div>
+            <div>
+              <h3>From the rule</h3>
+              <div class="list-item">
+                <span>Tuition and other school fees</span>
+              </div>
+              <div class="list-item">
+                <span>Monthly living allowance</span>
+              </div>
+              <div class="list-item">
+                <span>Learning materials and connectivity</span>
+              </div>
+            </div>
+            <div>
+              <h3>Added for this scholar</h3>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Thesis allowance</h3>
+                  <p class="small muted">
+                    12 Sep, Paolo Reyes: “The programme's thesis falls in 4th year, a year
+                    before its final year.”
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card stack">
+            <h2>Change this scholar's benefits</h2>
+            <div class="field">
+              <span class="label">Change</span>
+              <div class="check"><span class="radio on"></span>Add a benefit</div>
+              <div class="check"><span class="radio"></span>Remove a benefit</div>
+            </div>
+            <div class="field">
+              <span class="label">Benefit</span>
+              <span class="input select">Choose a benefit</span>
+            </div>
+            <div class="field">
+              <span class="label">Reason</span>
+              <span class="input area">Needed. It is kept with the change.</span>
+            </div>
+            <span class="btn primary">Save the change</span>
+          </section>
+        </div>
+
+        <p class="note">
+          Every change keeps who made it and the reason (S07.8). Ceilings here are sample
+          values; the real list starts from the Agreement's §VI. A Regional Office can
+          only propose a change (FR-BEN-002).
+        </p>
+      </div>
+
+      <p class="trace">Serves S07.7, S07.8 · FR-BEN-001, FR-BEN-002</p>
+    </main>
+  </body>
+</html>

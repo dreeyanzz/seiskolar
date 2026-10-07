@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DOST staff accounts · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="admin" data-nav="admin-staff-accounts">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">System administration</p>
+          <h1>DOST staff accounts</h1>
+          <p class="lead">Accounts for the Regional Offices and Central Office.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="card">
+          <h2>5 accounts</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Region</th>
+                <th>Account</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Name">Ana Villareal</td>
+                <td data-label="Role">Regional Office</td>
+                <td data-label="Region">DOST-VII</td>
+                <td data-label="Account"><span class="badge ok">Signed in</span></td>
+              </tr>
+              <tr>
+                <td data-label="Name">Leo Bautista</td>
+                <td data-label="Role">Regional Office</td>
+                <td data-label="Region">DOST-VII</td>
+                <td data-label="Account"><span class="badge ok">Signed in</span></td>
+              </tr>
+              <tr>
+                <td data-label="Name">Grace Lim</td>
+                <td data-label="Role">Regional Office</td>
+                <td data-label="Region">DOST-VI</td>
+                <td data-label="Account"><span class="badge ok">Signed in</span></td>
+              </tr>
+              <tr>
+                <td data-label="Name">Paolo Reyes</td>
+                <td data-label="Role">Central Office</td>
+                <td data-label="Region">Every region</td>
+                <td data-label="Account"><span class="badge ok">Signed in</span></td>
+              </tr>
+              <tr>
+                <td data-label="Name">Mia Cortez</td>
+                <td data-label="Role">Central Office</td>
+                <td data-label="Region">Every region</td>
+                <td data-label="Account">
+                  <span class="badge off">Not signed in yet</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card stack">
+          <h2>Add a staff account</h2>
+          <div class="field">
+            <span class="label">Email</span>
+            <span class="input filled">mia.cortez@example.test</span>
+          </div>
+          <div class="field">
+            <span class="label">Full name</span>
+            <span class="input filled">Mia Cortez</span>
+          </div>
+          <div class="field">
+            <span class="label">Role</span>
+            <div class="check"><span class="radio"></span>Regional Office</div>
+            <div class="check"><span class="radio on"></span>Central Office</div>
+          </div>
+          <div class="field">
+            <span class="label">Region</span>
+            <span class="input select read">Every region, for Central Office</span>
+            <span class="hint">A Regional Office account belongs to one region.</span>
+          </div>
+          <span class="btn primary">Create the account</span>
+        </section>
+      </div>
+
+      <p class="note">
+        The system administrator creates DOST staff accounts only. Schools, coordinators
+        and scholars are the Regional Office's (FR-ADM-001), and the administrator makes
+        no program decision (SRS §1.3).
+      </p>
+      <p class="trace">Serves S08.2, S08.3 · FR-ADM-001</p>
+    </main>
+  </body>
+</html>

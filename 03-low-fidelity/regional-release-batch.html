@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="draft returned" />
+    <title>Release batches · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-release-batch">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII</p>
+          <h1>Release batches</h1>
+          <p class="lead">
+            Lists of cleared scholars, sent to Central Office for release.
+          </p>
+        </div>
+        <span class="btn">Start a batch</span>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <!-- A batch being built -->
+          <section class="card stack" data-state="draft">
+            <div class="card-head">
+              <div>
+                <h2>Batch VII-2026-014</h2>
+                <p class="small muted">
+                  1st Semester, AY 2026–2027 · started 2 Oct by Ana Villareal
+                </p>
+              </div>
+              <span class="badge off">Draft</span>
+            </div>
+            <div class="field">
+              <span class="label">Benefits in this batch</span>
+              <div class="chips">
+                <span class="chip on">Monthly living allowance</span>
+                <span class="chip">Learning materials and connectivity</span>
+                <span class="chip">Tuition and other school fees</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- A batch Central Office sent back -->
+          <section class="banner" data-state="returned">
+            <strong>Returned by Central Office on 5 Oct</strong>
+            <p>
+              “The amounts for Jomar Dela Cruz and Nico Villamor don't match the rate for
+              their award year.” Correct the batch, then send it again.
+            </p>
+          </section>
+          <section class="card stack" data-state="returned">
+            <div class="card-head">
+              <div>
+                <h2>Batch VII-2026-013</h2>
+                <p class="small muted">AY 2026–2027 · sent 1 Oct by Ana Villareal</p>
+              </div>
+              <span class="badge bad">Returned</span>
+            </div>
+            <div class="field">
+              <span class="label">Benefits in this batch</span>
+              <div class="chips">
+                <span class="chip">Monthly living allowance</span>
+                <span class="chip on">Learning materials and connectivity</span>
+                <span class="chip">Tuition and other school fees</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="card stack">
+            <div class="card-head">
+              <h2>Scholars and amounts</h2>
+              <span class="small muted" data-state="draft">46 scholars</span>
+              <span class="small muted" data-state="returned">40 scholars</span>
+            </div>
+            <div class="field">
+              <span class="label">Add a cleared scholar</span>
+              <span class="input">Search by name or scholar number</span>
+              <span class="hint">
+                Only scholars with every mandatory document verified for the term can be
+                added (S05.2).
+              </span>
+            </div>
+
+            <div data-state="draft">
+              <div class="list-item">
+                <div class="what">
+                  <h3>Bea Santiago</h3>
+                  <p class="small muted">CIT-U · 2024-07-00001</p>
+                </div>
+                <div class="row">
+                  <span class="input filled short">₱32,000</span>
+                  <span class="link">Take off</span>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Jomar Dela Cruz</h3>
+                  <p class="small muted">CIT-U · 2024-07-00002</p>
+                </div>
+                <div class="row">
+                  <span class="input filled short">₱32,000</span>
+                  <span class="link">Take off</span>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Marites Ocampo</h3>
+                  <p class="small muted">Lapu Science College · 2024-07-00041</p>
+                </div>
+                <div class="row">
+                  <span class="input filled short">₱32,000</span>
+                  <span class="link">Take off</span>
+                </div>
+              </div>
+            </div>
+
+            <div data-state="returned">
+              <div class="list-item">
+                <div class="what">
+                  <h3>Jomar Dela Cruz</h3>
+                  <p class="small muted">CIT-U · 2024-07-00002</p>
+                </div>
+                <div class="row">
+                  <span class="input filled short">₱12,000</span>
+                  <span class="link">Take off</span>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Nico Villamor</h3>
+                  <p class="small muted">CIT-U · 2023-07-00018</p>
+                </div>
+                <div class="row">
+                  <span class="input filled short">₱12,000</span>
+                  <span class="link">Take off</span>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Bea Santiago</h3>
+                  <p class="small muted">CIT-U · 2024-07-00001</p>
+                </div>
+                <div class="row">
+                  <span class="input filled short">₱10,000</span>
+                  <span class="link">Take off</span>
+                </div>
+              </div>
+            </div>
+            <p class="hint" data-state="draft">Showing 3 of 46</p>
+            <p class="hint" data-state="returned">Showing 3 of 40</p>
+          </section>
+
+          <section class="card stack" data-state="draft">
+            <h2>Taken off this batch</h2>
+            <div class="list-item">
+              <div class="what">
+                <h3>Kristine Uy</h3>
+                <p class="small muted">
+                  CIT-U · taken off 4 Oct: “Amount still being confirmed with the school.”
+                </p>
+              </div>
+              <span class="badge off">Later batch</span>
+            </div>
+          </section>
+
+          <div class="actions" data-state="draft">
+            <span class="btn primary">Send to Central Office</span>
+            <span class="btn">Save the draft</span>
+          </div>
+          <div class="actions" data-state="returned">
+            <span class="btn primary">Send it again</span>
+          </div>
+
+          <p class="note" data-state="draft">
+            SEIskolar offers only cleared scholars and works out no amount: each one is
+            typed here, and nothing is added up (FR-REL-001). A scholar taken off moves to
+            a later batch, with the reason, and loses nothing (S05.13).
+          </p>
+          <p class="note" data-state="returned">
+            A returned batch is a draft again: correct it, and send it again (S05.8,
+            FR-REL-001).
+          </p>
+        </div>
+
+        <aside class="card">
+          <h2>Batches</h2>
+          <div class="list-item">
+            <div class="what">
+              <h3>VII-2026-014</h3>
+              <p class="small muted">Monthly living allowance</p>
+            </div>
+            <span class="badge off">Draft</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>VII-2026-013</h3>
+              <p class="small muted">Learning materials and connectivity</p>
+            </div>
+            <span class="badge bad">Returned</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>VII-2026-011</h3>
+              <p class="small muted">2nd Semester, AY 2025–2026 · two benefits</p>
+            </div>
+            <span class="badge ok">Released 14 Jul</span>
+          </div>
+        </aside>
+      </div>
+
+      <p class="trace">Serves S05.1 to S05.5, S05.8, S05.13 · FR-REL-001</p>
+    </main>
+  </body>
+</html>
