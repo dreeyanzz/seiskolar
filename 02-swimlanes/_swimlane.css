@@ -77,6 +77,7 @@ header + .part {
   grid-template-columns: var(--label) repeat(var(--cols, 6), var(--col));
   grid-auto-rows: minmax(var(--row), auto);
   column-gap: var(--gap);
+  width: max-content; /* the frame ends at its last column, even on a page with wider parts */
   border: 1px solid var(--rule);
   border-top: 0;
 }
