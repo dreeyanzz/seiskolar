@@ -121,14 +121,23 @@ async function renderScreen(browser, file, html, problems) {
         waitUntil: 'networkidle',
       })
       await settle(page)
-      const fullWidth = await page.evaluate(() => document.documentElement.scrollWidth)
-      if (fullWidth > device.width) {
+      const full = await page.evaluate(() => ({
+        width: document.documentElement.scrollWidth,
+        height: document.documentElement.scrollHeight,
+      }))
+      if (full.width > device.width) {
         problems.push(
-          `${relative('.', file)}${state ? ` (${state})` : ''} scrolls sideways on a ${device.name}: ${fullWidth} px wide`,
+          `${relative('.', file)}${state ? ` (${state})` : ''} scrolls sideways on a ${device.name}: ${full.width} px wide`,
         )
       }
+      // Make the screen as tall as the page, so a bar fixed to the bottom of the screen
+      // is drawn at the bottom of the picture, not over the middle of a long page.
+      if (full.height > device.height) {
+        await page.setViewportSize({ width: device.width, height: full.height })
+        await settle(page)
+      }
       const png = `${base}${state ? `--${state}` : ''}.${device.name}.png`
-      await page.screenshot({ path: png, fullPage: true })
+      await page.screenshot({ path: png })
       await page.close()
       console.log(`${relative('.', file)}${query} -> ${relative('.', png)}`)
     }
