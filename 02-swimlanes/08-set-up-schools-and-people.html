@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>Swimlane 08: Set up a school and its people, and record a transfer</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane 08: Set up a school and its people, and record a transfer</h1>
+        <p class="covers">
+          Covers FR-ADM-001, FR-ADM-002; §4.1 “Maintain Reference Data”
+        </p>
+        <p class="scope">
+          Part A starts with the system administrator and ends when a new account signs
+          in. Part B starts when a scholar changes school.
+        </p>
+      </header>
+      <h2 class="part">A. Setting up a school and its people</h2>
+      <section class="swimlane" data-cols="10">
+        <div class="lane" data-lane="1">System administrator</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">DOST Regional Office</div>
+        <div class="lane" data-lane="4">New coordinator or scholar</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S08.1" data-lane="1" data-col="2">
+          <b>S08.1</b> Keeps the reference data, such as the list of regions
+        </div>
+        <div class="node step" id="S08.2" data-lane="1" data-col="3">
+          <b>S08.2</b> Creates DOST staff accounts, for the Regional Office and Central
+          Office
+        </div>
+        <div class="node record" id="S08.3" data-lane="2" data-col="4">
+          <b>S08.3</b> Saved: each staff account, with its role and region
+        </div>
+        <div class="node step" id="S08.4" data-lane="3" data-col="5">
+          <b>S08.4</b> Creates a school in its region: name, code and portal address
+        </div>
+        <div class="node step" id="S08.5" data-lane="3" data-col="6">
+          <b>S08.5</b> Creates the school coordinator's account
+        </div>
+        <div class="node step" id="S08.6" data-lane="3" data-col="7">
+          <b>S08.6</b> Creates scholar accounts from applicants' emails, each with a first
+          school
+        </div>
+        <div class="node record" id="S08.7" data-lane="2" data-col="8">
+          <b>S08.7</b> Saved: the school and its accounts
+        </div>
+        <div class="node final" id="S08.8" data-lane="4" data-col="9">
+          <b>S08.8</b> Has an account, and signs in (swimlane 01)
+        </div>
+        <div class="node end" id="end" data-lane="4" data-col="10"></div>
+        <ol class="flows">
+          <li data-from="start" data-to="S08.1"></li>
+          <li data-from="S08.1" data-to="S08.2"></li>
+          <li data-from="S08.2" data-to="S08.3"></li>
+          <li data-from="S08.3" data-to="S08.4"></li>
+          <li data-from="S08.4" data-to="S08.5"></li>
+          <li data-from="S08.5" data-to="S08.6"></li>
+          <li data-from="S08.6" data-to="S08.7"></li>
+          <li data-from="S08.7" data-to="S08.8"></li>
+          <li data-from="S08.8" data-to="end"></li>
+        </ol>
+      </section>
+      <h2 class="part">B. Recording a transfer</h2>
+      <section class="swimlane" data-cols="6">
+        <div class="lane" data-lane="1">DOST Regional Office</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">Scholar</div>
+        <div class="node start" id="start-2" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S08.9" data-lane="1" data-col="2">
+          <b>S08.9</b> Records a transfer: an amendment of type “transfer of school”, with
+          its date
+        </div>
+        <div class="node decision" id="S08.10" data-lane="2" data-col="3">
+          <b>S08.10</b> New school in this office's region?
+        </div>
+        <div class="node record" id="S08.11" data-lane="2" data-col="4">
+          <b>S08.11</b> Saved: the scholar's current school changes. Every earlier filing
+          keeps the school it was filed at
+        </div>
+        <div class="node final" id="S08.12" data-lane="3" data-col="5">
+          <b>S08.12</b> Files the next term's report at the new school
+        </div>
+        <div class="node end" id="end-2" data-lane="3" data-col="6"></div>
+        <div class="node final assumed" id="S08.13" data-lane="1" data-col="4">
+          <b>S08.13</b> Not settled by the SRS: which Regional Office records a move
+          between regions (open question 26)
+        </div>
+        <div class="node end" id="end-3" data-lane="1" data-col="5"></div>
+        <ol class="flows">
+          <li data-from="start-2" data-to="S08.9"></li>
+          <li data-from="S08.9" data-to="S08.10"></li>
+          <li data-from="S08.10" data-to="S08.11">Yes</li>
+          <li data-from="S08.11" data-to="S08.12"></li>
+          <li data-from="S08.12" data-to="end-2"></li>
+          <li data-from="S08.10" data-to="S08.13">No</li>
+          <li data-from="S08.13" data-to="end-3"></li>
+        </ol>
+      </section>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>

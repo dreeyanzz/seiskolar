@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>Swimlane 01: Sign in, and reach only your own screens</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane 01: Sign in, and reach only your own screens</h1>
+        <p class="covers">Covers FR-IAM-001, FR-IAM-002, FR-IAM-003</p>
+        <p class="scope">
+          Starts when someone opens SEIskolar's address. Ends when they see their own
+          records, or nothing.
+        </p>
+      </header>
+      <main class="swimlane" data-cols="12">
+        <div class="lane" data-lane="1">
+          Anyone signing in: a scholar, a coordinator or DOST staff
+        </div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S01.1" data-lane="1" data-col="2">
+          <b>S01.1</b> Opens their school's portal address, or the DOST console's
+        </div>
+        <div class="node system" id="S01.2" data-lane="2" data-col="3">
+          <b>S01.2</b> Shows that school's portal, or the DOST console. The address picks
+          the screens, never the data
+        </div>
+        <div class="node step" id="S01.3" data-lane="1" data-col="4">
+          <b>S01.3</b> Enters email and password
+        </div>
+        <div class="node decision" id="S01.4" data-lane="2" data-col="5">
+          <b>S01.4</b> Email and password correct?
+        </div>
+        <div class="node decision" id="S01.5" data-lane="2" data-col="6">
+          <b>S01.5</b> Active account, with a profile?
+        </div>
+        <div class="node final" id="S01.6" data-lane="1" data-col="6">
+          <b>S01.6</b> Signed in with no role, region or school: every list is empty
+        </div>
+        <div class="node end" id="end" data-lane="1" data-col="7"></div>
+        <div class="node system" id="S01.7" data-lane="2" data-col="7">
+          <b>S01.7</b> Puts the account's role, region and school in the session
+        </div>
+        <div class="node system" id="S01.8" data-lane="2" data-col="8">
+          <b>S01.8</b> Opens that role's home: the school portal for scholars and
+          coordinators, the DOST console for DOST staff
+        </div>
+        <div class="node step" id="S01.9" data-lane="1" data-col="9">
+          <b>S01.9</b> Opens a record, or types the address of someone else's
+        </div>
+        <div class="node decision" id="S01.10" data-lane="2" data-col="10">
+          <b>S01.10</b> Within the session's role, region and school?
+        </div>
+        <div class="node final" id="S01.11" data-lane="1" data-col="11">
+          <b>S01.11</b> Sees the record
+        </div>
+        <div class="node final" id="S01.12" data-lane="2" data-col="11">
+          <b>S01.12</b> Gets nothing back: no rows, and no error
+        </div>
+        <div class="node end" id="end-2" data-lane="1" data-col="12"></div>
+        <div class="node end" id="end-3" data-lane="2" data-col="12"></div>
+        <ol class="flows">
+          <li data-from="start" data-to="S01.1"></li>
+          <li data-from="S01.1" data-to="S01.2"></li>
+          <li data-from="S01.2" data-to="S01.3"></li>
+          <li data-from="S01.3" data-to="S01.4"></li>
+          <li data-from="S01.4" data-to="S01.3" class="back">
+            No: “Wrong email or password”
+          </li>
+          <li data-from="S01.4" data-to="S01.5">Yes</li>
+          <li data-from="S01.5" data-to="S01.6">No</li>
+          <li data-from="S01.6" data-to="end"></li>
+          <li data-from="S01.5" data-to="S01.7">Yes</li>
+          <li data-from="S01.7" data-to="S01.8"></li>
+          <li data-from="S01.8" data-to="S01.9"></li>
+          <li data-from="S01.9" data-to="S01.10"></li>
+          <li data-from="S01.10" data-to="S01.11">Yes</li>
+          <li data-from="S01.10" data-to="S01.12">No</li>
+          <li data-from="S01.11" data-to="end-2"></li>
+          <li data-from="S01.12" data-to="end-3"></li>
+        </ol>
+      </main>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>

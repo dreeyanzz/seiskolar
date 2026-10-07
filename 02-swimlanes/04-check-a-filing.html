@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>Swimlane 04: Check a filing: claim, verify or return, then resubmit</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane 04: Check a filing: claim, verify or return, then resubmit</h1>
+        <p class="covers">
+          Covers FR-CHK-001, FR-CHK-002, FR-CHK-003, FR-CHK-004, FR-MON-001
+        </p>
+        <p class="scope">
+          Starts when a Regional Office checker opens the console. Ends when a filing is
+          verified, or returned and filed again.
+        </p>
+      </header>
+      <main class="swimlane" data-cols="10">
+        <div class="lane" data-lane="1">DOST Regional Office</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">Scholar</div>
+        <div class="lane" data-lane="4">School Coordinator</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S04.1" data-lane="1" data-col="2">
+          <b>S04.1</b> Opens the console: each school's burn-down of cleared and
+          outstanding scholars
+        </div>
+        <div class="node step" id="S04.2" data-lane="1" data-col="3">
+          <b>S04.2</b> Filters the queue by school, state, requirement, or unchecked only.
+          Oldest filing first, with days to the deadline; nothing hidden after it
+        </div>
+        <div class="node step" id="S04.3" data-lane="1" data-col="4">
+          <b>S04.3</b> Claims a submitted filing
+        </div>
+        <div class="node record" id="S04.4" data-lane="2" data-col="5">
+          <b>S04.4</b> Saved: under review, claimed by this checker
+        </div>
+        <div class="node step" id="S04.5" data-lane="1" data-col="6">
+          <b>S04.5</b> Compares the document with the typed grade lines and the weighted
+          average
+        </div>
+        <div class="node decision" id="S04.6" data-lane="1" data-col="7">
+          <b>S04.6</b> Correct and complete?
+        </div>
+        <div class="node record" id="S04.7" data-lane="2" data-col="8">
+          <b>S04.7</b> Saved: verified. Final: no one can change it
+        </div>
+        <div class="node step" id="S04.8" data-lane="1" data-col="8">
+          <b>S04.8</b> Returns it with one of eight reasons. “Other” needs remarks of 10
+          characters or more
+        </div>
+        <div class="node record" id="S04.9" data-lane="2" data-col="9">
+          <b>S04.9</b> Saved: returned, with the reason
+        </div>
+        <div class="node final" id="S04.10" data-lane="3" data-col="8">
+          <b>S04.10</b> Status: verified
+        </div>
+        <div class="node end" id="end" data-lane="3" data-col="9"></div>
+        <div class="node step" id="S04.11" data-lane="3" data-col="10">
+          <b>S04.11</b> Reads the reason, and files a correction as a new version
+          (swimlane 03)
+        </div>
+        <div class="node start" id="start-2" data-lane="4" data-col="1"></div>
+        <div class="node step" id="S04.12" data-lane="4" data-col="2">
+          <b>S04.12</b> Follows the school's burn-down: cleared, outstanding, oldest
+          unsubmitted
+        </div>
+        <div class="node end" id="end-2" data-lane="4" data-col="3"></div>
+        <ol class="flows">
+          <li data-from="start" data-to="S04.1"></li>
+          <li data-from="S04.1" data-to="S04.2"></li>
+          <li data-from="S04.2" data-to="S04.3"></li>
+          <li data-from="S04.3" data-to="S04.4"></li>
+          <li data-from="S04.4" data-to="S04.5"></li>
+          <li data-from="S04.5" data-to="S04.6"></li>
+          <li data-from="S04.6" data-to="S04.7">Yes: verifies it</li>
+          <li data-from="S04.6" data-to="S04.8">No</li>
+          <li data-from="S04.6" data-to="S04.2">Neither: releases the claim</li>
+          <li data-from="S04.7" data-to="S04.10"></li>
+          <li data-from="S04.10" data-to="end"></li>
+          <li data-from="S04.8" data-to="S04.9"></li>
+          <li data-from="S04.9" data-to="S04.11"></li>
+          <li data-from="S04.11" data-to="S04.3">Submitted again: back in the queue</li>
+          <li data-from="start-2" data-to="S04.12"></li>
+          <li data-from="S04.12" data-to="end-2"></li>
+        </ol>
+      </main>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>
+      Swimlane 02: Set up a term: calendar, requirement names, checklist, deadline
+    </title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>
+          Swimlane 02: Set up a term: calendar, requirement names, checklist, deadline
+        </h1>
+        <p class="covers">
+          Covers §1.3 (who sets what); §4.1 “Configure Campus Terms” and “Customize
+          Requirement Labels”; the deadline FR-SCH-001 shows
+        </p>
+        <p class="scope">
+          Starts when a school's coordinator adds a term. Ends when the school's scholars
+          see the term's checklist.
+        </p>
+      </header>
+      <main class="swimlane" data-cols="12">
+        <div class="lane" data-lane="1">School Coordinator</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">DOST Regional Office</div>
+        <div class="lane" data-lane="4">Scholar</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S02.1" data-lane="1" data-col="2">
+          <b>S02.1</b> Adds the term to the school's calendar: its name, type (semester,
+          trimester, quarter or mid-year) and dates
+        </div>
+        <div class="node step" id="S02.2" data-lane="1" data-col="3">
+          <b>S02.2</b> Sets when filing opens
+        </div>
+        <div class="node step" id="S02.3" data-lane="1" data-col="4">
+          <b>S02.3</b> Names each DOST requirement in the school's own words, with
+          instructions, if not named yet
+        </div>
+        <div class="node record" id="S02.4" data-lane="2" data-col="5">
+          <b>S02.4</b> Saved: the term, and the school's requirement names
+        </div>
+        <div class="node step" id="S02.5" data-lane="3" data-col="6">
+          <b>S02.5</b> Chooses the term's checklist: which requirements, and which are
+          mandatory
+        </div>
+        <div class="node step" id="S02.6" data-lane="3" data-col="7">
+          <b>S02.6</b> Sets the term's compliance deadline
+        </div>
+        <div class="node record" id="S02.7" data-lane="2" data-col="8">
+          <b>S02.7</b> Saved: the checklist and the deadline
+        </div>
+        <div class="node step" id="S02.8" data-lane="4" data-col="9">
+          <b>S02.8</b> Opens the dashboard
+        </div>
+        <div class="node decision" id="S02.9" data-lane="2" data-col="10">
+          <b>S02.9</b> Deadline set for the term?
+        </div>
+        <div class="node final" id="S02.10" data-lane="4" data-col="11">
+          <b>S02.10</b> Sees the checklist in the school's words, with the deadline
+          countdown
+        </div>
+        <div class="node final" id="S02.11" data-lane="2" data-col="11">
+          <b>S02.11</b> Shows the checklist with no countdown
+        </div>
+        <div class="node end" id="end" data-lane="4" data-col="12"></div>
+        <div class="node end" id="end-2" data-lane="2" data-col="12"></div>
+        <ol class="flows">
+          <li data-from="start" data-to="S02.1"></li>
+          <li data-from="S02.1" data-to="S02.2"></li>
+          <li data-from="S02.2" data-to="S02.3"></li>
+          <li data-from="S02.3" data-to="S02.4"></li>
+          <li data-from="S02.4" data-to="S02.5"></li>
+          <li data-from="S02.5" data-to="S02.6"></li>
+          <li data-from="S02.6" data-to="S02.7"></li>
+          <li data-from="S02.7" data-to="S02.8"></li>
+          <li data-from="S02.8" data-to="S02.9"></li>
+          <li data-from="S02.9" data-to="S02.10">Yes</li>
+          <li data-from="S02.9" data-to="S02.11">No</li>
+          <li data-from="S02.10" data-to="end"></li>
+          <li data-from="S02.11" data-to="end-2"></li>
+        </ol>
+      </main>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>

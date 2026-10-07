@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>Swimlane 09: Set up the school portal: branding, grading, thresholds</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane 09: Set up the school portal: branding, grading, thresholds</h1>
+        <p class="covers">Covers FR-ADM-003</p>
+        <p class="scope">
+          Starts when a coordinator sets up the school's portal, or Central Office sets
+          the school's threshold. Ends when scholars see both.
+        </p>
+      </header>
+      <main class="swimlane" data-cols="7">
+        <div class="lane" data-lane="1">School Coordinator</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">DOST Central Office</div>
+        <div class="lane" data-lane="4">Scholar</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S09.1" data-lane="1" data-col="2">
+          <b>S09.1</b> Sets the portal's branding: logo, primary and secondary colours
+        </div>
+        <div class="node step" id="S09.2" data-lane="1" data-col="3">
+          <b>S09.2</b> Sets the grading scale (lowest, highest, and which end is best) and
+          the passing grade
+        </div>
+        <div class="node record" id="S09.3" data-lane="2" data-col="4">
+          <b>S09.3</b> Saved: the school's branding, scale and passing grade
+        </div>
+        <div class="node start" id="start-2" data-lane="3" data-col="1"></div>
+        <div class="node step" id="S09.4" data-lane="3" data-col="2">
+          <b>S09.4</b> Sets the school's Agreement §VII.A threshold, in that school's own
+          scale
+        </div>
+        <div class="node record" id="S09.5" data-lane="2" data-col="2">
+          <b>S09.5</b> Saved: the school's threshold
+        </div>
+        <div class="node final" id="S09.6" data-lane="4" data-col="6">
+          <b>S09.6</b> Sees the portal in the school's colours. Each grade line shows
+          whether it passes, and each term's average whether it meets the threshold. Never
+          a verdict on standing
+        </div>
+        <div class="node end" id="end" data-lane="4" data-col="7"></div>
+        <ol class="flows">
+          <li data-from="start" data-to="S09.1"></li>
+          <li data-from="S09.1" data-to="S09.2"></li>
+          <li data-from="S09.2" data-to="S09.3"></li>
+          <li data-from="S09.3" data-to="S09.6"></li>
+          <li data-from="start-2" data-to="S09.4"></li>
+          <li data-from="S09.4" data-to="S09.5"></li>
+          <li data-from="S09.5" data-to="S09.6" data-turn="early"></li>
+          <li data-from="S09.6" data-to="end"></li>
+        </ol>
+      </main>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>

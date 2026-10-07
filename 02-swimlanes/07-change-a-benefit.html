@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>Swimlane 07: Change a benefit, or propose a change</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane 07: Change a benefit, or propose a change</h1>
+        <p class="covers">Covers FR-BEN-001, FR-BEN-002, FR-BEN-003</p>
+        <p class="scope">
+          Starts when Central Office changes a benefit, or the Regional Office proposes a
+          change. Ends when scholars see their benefits.
+        </p>
+      </header>
+      <main class="swimlane" data-cols="10">
+        <div class="lane" data-lane="1">DOST Regional Office</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">DOST Central Office</div>
+        <div class="lane" data-lane="4">Scholar</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S07.1" data-lane="1" data-col="3">
+          <b>S07.1</b> Proposes a change: to the benefit list, a rule, or one scholar's
+          benefits
+        </div>
+        <div class="node record" id="S07.2" data-lane="2" data-col="4">
+          <b>S07.2</b> Saved: pending review. It changes nothing yet
+        </div>
+        <div class="node decision" id="S07.3" data-lane="3" data-col="5">
+          <b>S07.3</b> Approve the proposal?
+        </div>
+        <div class="node record" id="S07.4" data-lane="2" data-col="5">
+          <b>S07.4</b> Saved: rejected, with the reason
+        </div>
+        <div class="node final" id="S07.5" data-lane="1" data-col="6">
+          <b>S07.5</b> Sees the proposal rejected, with the reason
+        </div>
+        <div class="node end" id="end" data-lane="1" data-col="7"></div>
+        <div class="node record" id="S07.6" data-lane="2" data-col="7">
+          <b>S07.6</b> Saved: approved. The change takes effect
+        </div>
+        <div class="node start" id="start-2" data-lane="3" data-col="1"></div>
+        <div class="node step" id="S07.7" data-lane="3" data-col="2">
+          <b>S07.7</b> Changes a benefit, a rule, or one scholar's benefits, with a
+          reason. It takes effect at once
+        </div>
+        <div class="node record" id="S07.8" data-lane="2" data-col="2">
+          <b>S07.8</b> Saved: the change, who made it, and the reason
+        </div>
+        <div class="node final" id="S07.9" data-lane="4" data-col="9">
+          <b>S07.9</b> Sees the benefits their award year, scholarship type and conditions
+          give them, each ceiling labelled “payable subject to availability of funds
+          (Agreement §VI)”
+        </div>
+        <div class="node end" id="end-2" data-lane="4" data-col="10"></div>
+        <ol class="flows">
+          <li data-from="start" data-to="S07.1"></li>
+          <li data-from="S07.1" data-to="S07.2"></li>
+          <li data-from="S07.2" data-to="S07.3"></li>
+          <li data-from="S07.3" data-to="S07.4">No</li>
+          <li data-from="S07.4" data-to="S07.5"></li>
+          <li data-from="S07.5" data-to="end"></li>
+          <li data-from="S07.3" data-to="S07.6">Yes</li>
+          <li data-from="S07.6" data-to="S07.9"></li>
+          <li data-from="start-2" data-to="S07.7"></li>
+          <li data-from="S07.7" data-to="S07.8"></li>
+          <li data-from="S07.8" data-to="S07.9" data-turn="early"></li>
+          <li data-from="S07.9" data-to="end-2"></li>
+        </ol>
+      </main>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>
