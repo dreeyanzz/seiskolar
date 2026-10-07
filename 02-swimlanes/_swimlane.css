@@ -103,10 +103,12 @@ header + .part {
 }
 
 /* The steps. */
+/* The band above every step is kept clear for the arrows that go back. */
 .node {
   position: relative;
   z-index: 2;
   place-self: center;
+  margin: 48px 0 18px;
   text-align: center;
 }
 
@@ -159,8 +161,8 @@ header + .part {
   flex-direction: column;
   justify-content: center;
   width: var(--col);
-  height: 104px;
-  padding: 10px 36px;
+  height: 120px;
+  padding: 12px 30px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' preserveAspectRatio='none'%3E%3Cpolygon points='50,1 99,30 50,59 1,30' fill='white' stroke='%23475569' stroke-width='1.5' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E")
     center / 100% 100% no-repeat;
   font-size: 14px;

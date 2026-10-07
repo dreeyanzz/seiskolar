@@ -119,14 +119,15 @@
       var top = Math.min(lanes[la].top, lanes[lb].top)
       var key = Math.min(la, lb)
       channels[key] = (channels[key] || 0) + 1
-      var y = top + 6 + 9 * channels[key]
+      var y = top + 8 + 10 * channels[key]
       points = [
         [a.cx, a.top],
         [a.cx, y],
         [b.cx, y],
         [b.cx, b.top],
       ]
-      label = [a.cx + 8, (a.top + y) / 2 + 4]
+      // Beside the line coming down into the target, in the band kept clear above it.
+      label = [b.cx + 7, y + 13]
     }
     return { points: points, label: label }
   }
