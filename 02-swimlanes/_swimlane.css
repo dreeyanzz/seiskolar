@@ -59,6 +59,17 @@ header .scope {
   color: var(--muted);
 }
 
+/* A heading for each part, when one swimlane page holds more than one diagram. */
+.part {
+  margin: 36px 0 12px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+header + .part {
+  margin-top: 0;
+}
+
 /* The lanes are rows of a grid; the steps are placed in it by lane and column. */
 .swimlane {
   position: relative;
