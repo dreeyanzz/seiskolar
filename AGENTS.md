@@ -17,6 +17,14 @@ for the Software Design course at Cebu Institute of Technology – University by
 4. [`04-high-fidelity/`](04-high-fidelity/): the finished, clickable screens, built from
    the wireframes.
 
+It also holds one course deliverable that plans the work rather than being built from the
+chain:
+
+5. [`05-risk-matrix-and-gantt/`](05-risk-matrix-and-gantt/RISK-MATRIX-AND-GANTT.md): the
+   risk matrix, the work breakdown structure and the Gantt chart. The team submitted it on
+   11 September 2026; this is the version updated for this repository, and the submitted
+   one is in the archive. Changes to it use the `repo` scope.
+
 Nothing else belongs here.
 
 ## There is no code here

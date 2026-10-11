@@ -9,17 +9,18 @@ Software Design, Cebu Institute of Technology – University. Team **Asph**.
 
 ## What is here
 
-| #   | Deliverable                                 | Built from                       |
-| --- | ------------------------------------------- | -------------------------------- |
-| 1   | [SRS](01-srs/SRS.md)                        | The baseline                     |
-| 2   | [Swimlanes](02-swimlanes/)                  | The SRS requirements each covers |
-| 3   | [Low-fidelity wireframes](03-low-fidelity/) | The swimlane steps each serves   |
-| 4   | [High-fidelity screens](04-high-fidelity/)  | The wireframe with the same name |
+| #   | Deliverable                                                                           | Built from                                      |
+| --- | ------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| 1   | [SRS](01-srs/SRS.md)                                                                  | The baseline                                    |
+| 2   | [Swimlanes](02-swimlanes/)                                                            | The SRS requirements each covers                |
+| 3   | [Low-fidelity wireframes](03-low-fidelity/)                                           | The swimlane steps each serves                  |
+| 4   | [High-fidelity screens](04-high-fidelity/)                                            | The wireframe with the same name                |
+| 5   | [Risk matrix, WBS and Gantt chart](05-risk-matrix-and-gantt/RISK-MATRIX-AND-GANTT.md) | The project's risks and schedule, not the chain |
 
-Each folder's README lists every item, what it is built from, who owns it, and whether it
-is done. There is no application code here: each drawing is an HTML file with its PNG
-pictures beside it, so you can view it on GitHub or open it in a browser. Every screen is
-drawn for a phone, a tablet and a desktop.
+The README of each drawing folder, 02 to 04, lists every item, what it is built from, who
+owns it, and whether it is done. There is no application code here: each drawing is an
+HTML file with its PNG pictures beside it, so you can view it on GitHub or open it in a
+browser. Every screen is drawn for a phone, a tablet and a desktop.
 
 Earlier work, including the prototype and the documents the SRS links to, is in the
 archived repository [`dreeyanzz/seiskolar-archive`](https://github.com/dreeyanzz/seiskolar-archive).
