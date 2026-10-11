@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="unclaimed claimed returning" />
+    <title>Check a filing · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-queue">
+    <main class="page">
+      <p class="crumbs"><a href="regional-queue.html">Queue</a> › Bea Santiago</p>
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">CIT-U · 1st Semester, AY 2026–2027</p>
+          <h1>Bea Santiago: Certified Report of Grades</h1>
+          <p class="lead">
+            CIT-U calls it Certified True Copy of Grades · version 1, filed 15 Sep ·
+            2024-07-00001
+          </p>
+        </div>
+        <span class="badge wait" data-state="unclaimed">Submitted</span>
+        <span class="badge wait" data-state="claimed returning"
+          >Under review: claimed by you</span
+        >
+      </div>
+
+      <div class="split">
+        <section class="card stack">
+          <div class="card-head">
+            <h2>The document</h2>
+            <span class="small muted">JPEG · 3.2 MB</span>
+          </div>
+          <div class="doc" data-doc="grades-cut"></div>
+          <p class="hint">Opened through a link that lasts five minutes.</p>
+        </section>
+
+        <div class="stack">
+          <section class="card stack">
+            <div class="card-head">
+              <h2>What Bea typed</h2>
+              <span class="small muted"
+                >CIT-U's scale: 1.00 to 5.00, higher is better</span
+              >
+            </div>
+            <table class="table keep">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Subject code</th>
+                  <th class="num">Units</th>
+                  <th class="num">Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>CS 311</td>
+                  <td class="num">3</td>
+                  <td class="num">4.50</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>CS 312</td>
+                  <td class="num">3</td>
+                  <td class="num">4.20</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>MATH 301</td>
+                  <td class="num">3</td>
+                  <td class="num">4.80</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>GE 105</td>
+                  <td class="num">3</td>
+                  <td class="num">4.00</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row spread">
+              <span class="label">Weighted average</span>
+              <span class="label">4.3750 · 12 units</span>
+            </div>
+          </section>
+
+          <section class="card stack" data-state="unclaimed">
+            <h2>Claim it to decide</h2>
+            <p class="small muted">
+              Claiming it stops anyone else in the office deciding it at the same time.
+            </p>
+            <a class="btn primary block" href="regional-review.html?state=claimed"
+              >Claim it</a
+            >
+          </section>
+
+          <section class="card stack" data-state="claimed">
+            <h2>Your decision</h2>
+            <p class="small muted">Compare the document with the lines Bea typed.</p>
+            <div class="actions">
+              <a class="btn primary" href="regional-queue.html">Verify</a>
+              <a class="btn danger" href="regional-review.html?state=returning"
+                >Return it</a
+              >
+            </div>
+            <a class="link" href="regional-queue.html"
+              >Release the claim without deciding</a
+            >
+          </section>
+
+          <section class="card stack" data-state="returning">
+            <h2>Return it to Bea</h2>
+            <fieldset class="field">
+              <legend class="label">Reason</legend>
+
+              <label class="check"
+                ><input type="radio" checked="" name="choice-1" />Illegible</label
+              >
+              <label class="check"
+                ><input type="radio" name="choice-1" />Wrong document</label
+              >
+              <label class="check"
+                ><input type="radio" name="choice-1" />Incomplete</label
+              >
+              <label class="check"
+                ><input type="radio" name="choice-1" />Wrong term</label
+              >
+              <label class="check"
+                ><input type="radio" name="choice-1" />Not certified</label
+              >
+              <label class="check"
+                ><input type="radio" name="choice-1" />Details don't match</label
+              >
+              <label class="check"
+                ><input type="radio" name="choice-1" />Superseded</label
+              >
+              <label class="check"><input type="radio" name="choice-1" />Other</label>
+            </fieldset>
+            <div class="field">
+              <label class="label" for="field-1">Remarks</label>
+              <textarea rows="3" class="input" id="field-1" aria-describedby="hint-2">
+The bottom-right corner is cut off, so the last two subjects can't be read.</textarea>
+              <span class="hint" id="hint-2"
+                >Needed for “Other”: 10 characters or more.</span
+              >
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="regional-queue.html">Return it</a>
+              <a class="btn" href="regional-review.html?state=claimed">Cancel</a>
+            </div>
+          </section>
+
+          <a class="link small" href="record-history.html">History of this filing</a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

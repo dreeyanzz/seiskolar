@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transfers · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-transfer">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII</p>
+          <h1>Transfers</h1>
+          <p class="lead">Record a scholar's move to another school.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="card stack">
+          <h2>Record a transfer</h2>
+          <div class="field">
+            <label class="label" for="field-1">Scholar</label>
+            <input
+              type="text"
+              value="Aira Castillo · 2025-07-00136"
+              class="input"
+              id="field-1"
+            />
+          </div>
+          <div class="list-item">
+            <span class="muted">Now at</span>
+            <span>Mabini State College</span>
+          </div>
+          <div class="field">
+            <label class="label" for="field-2">New school</label>
+            <select class="input" id="field-2" aria-describedby="hint-3">
+              <option>Lapu Science College</option>
+            </select>
+            <span class="hint" id="hint-3">DOST-VII's schools only</span>
+          </div>
+          <div class="field">
+            <label class="label" for="field-4">Date of the transfer</label>
+            <input type="text" value="1 October 2026" class="input" id="field-4" />
+          </div>
+          <div class="field">
+            <label class="label" for="field-5">Recorded as</label>
+            <input
+              type="text"
+              value="An amendment to the scholar's Agreement: transfer of school"
+              readonly=""
+              class="input"
+              id="field-5"
+            />
+          </div>
+          <div class="actions">
+            <button
+              class="btn primary"
+              type="button"
+              data-toast="Recorded. Aira files at Lapu Science College from the next term."
+            >
+              Record the transfer
+            </button>
+          </div>
+        </section>
+
+        <aside class="card">
+          <h2>Recent transfers</h2>
+          <div class="list-item">
+            <div class="what">
+              <h3>Ramon Tan</h3>
+              <p class="small muted">
+                Mabini State College to San Isidro Institute of Technology · 4 Aug 2026
+              </p>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>Liza Gomez</h3>
+              <p class="small muted">CIT-U to Lapu Science College · 9 Jan 2026</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>

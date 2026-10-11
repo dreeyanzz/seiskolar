@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schools · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-schools">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII</p>
+          <h1>Schools</h1>
+          <p class="lead">The schools DOST-VII supervises, each with its own portal.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="card">
+          <h2>5 schools</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>School</th>
+                <th>Code</th>
+                <th>Portal address</th>
+                <th>Coordinator</th>
+                <th class="num">Scholars</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="School">Cebu Institute of Technology – University</td>
+                <td data-label="Code">CITU</td>
+                <td data-label="Portal address">citu.seiskolar.example.test</td>
+                <td data-label="Coordinator">Ruel Mendoza</td>
+                <td class="num" data-label="Scholars">184</td>
+              </tr>
+              <tr>
+                <td data-label="School">Lapu Science College</td>
+                <td data-label="Code">LSC</td>
+                <td data-label="Portal address">lsc.seiskolar.example.test</td>
+                <td data-label="Coordinator">Dina Flores</td>
+                <td class="num" data-label="Scholars">96</td>
+              </tr>
+              <tr>
+                <td data-label="School">San Isidro Institute of Technology</td>
+                <td data-label="Code">SIIT</td>
+                <td data-label="Portal address">siit.seiskolar.example.test</td>
+                <td data-label="Coordinator">Ramil Ortega</td>
+                <td class="num" data-label="Scholars">52</td>
+              </tr>
+              <tr>
+                <td data-label="School">Mabini State College</td>
+                <td data-label="Code">MSC</td>
+                <td data-label="Portal address">msc.seiskolar.example.test</td>
+                <td data-label="Coordinator">Gina Sison</td>
+                <td class="num" data-label="Scholars">38</td>
+              </tr>
+              <tr>
+                <td data-label="School">Liloan Polytechnic College</td>
+                <td data-label="Code">LPC</td>
+                <td data-label="Portal address">lpc.seiskolar.example.test</td>
+                <td data-label="Coordinator">
+                  <a class="link" href="regional-accounts.html?state=coordinators"
+                    >None yet: add one</a
+                  >
+                </td>
+                <td class="num" data-label="Scholars">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card stack">
+          <h2>Add a school</h2>
+          <div class="field">
+            <label class="label" for="field-1">Name</label>
+            <input
+              type="text"
+              placeholder="e.g. Liloan Polytechnic College"
+              class="input"
+              id="field-1"
+            />
+          </div>
+          <div class="field">
+            <label class="label" for="field-2">Code</label>
+            <input type="text" placeholder="e.g. LPC" class="input" id="field-2" />
+          </div>
+          <div class="field">
+            <label class="label" for="field-3">Portal address</label>
+            <input
+              type="text"
+              placeholder="name.seiskolar.example.test"
+              class="input"
+              id="field-3"
+              aria-describedby="hint-4"
+            />
+            <span class="hint" id="hint-4"
+              >Where the school's scholars and coordinator sign in</span
+            >
+          </div>
+          <div class="field">
+            <label class="label" for="field-5">Region</label>
+            <input
+              type="text"
+              value="DOST-VII: this office's own"
+              readonly=""
+              class="input"
+              id="field-5"
+            />
+          </div>
+          <button
+            class="btn primary"
+            type="button"
+            data-toast="The school is created in DOST-VII."
+          >
+            Create the school
+          </button>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="check crediting" />
+    <title>Tuition remittances · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="coordinator" data-nav="coordinator-remittances">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">CIT-U</p>
+          <h1>Tuition remittances</h1>
+          <p class="lead">What DOST sends the school for its scholars' tuition.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <section class="card stack">
+            <div class="card-head">
+              <div>
+                <h2>LDDAP-ADA 2026-10-0412</h2>
+                <p class="small muted">
+                  1st Semester, AY 2026–2027 · sent 3 Oct by DOST-VII
+                </p>
+              </div>
+              <span class="badge wait" data-state="check">Sent</span>
+              <span class="badge wait" data-state="crediting">Received</span>
+            </div>
+            <div class="grid cols-3">
+              <div>
+                <p class="small muted">Amount</p>
+                <p class="label">₱920,000</p>
+              </div>
+              <div>
+                <p class="small muted">Scholars on the list</p>
+                <p class="label">46</p>
+              </div>
+              <div>
+                <p class="small muted">Proof</p>
+                <p class="label">
+                  <button
+                    class="link"
+                    type="button"
+                    data-toast="In SEIskolar this opens the file, from private storage."
+                  >
+                    LDDAP-ADA, 2 pages
+                  </button>
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card stack" data-state="check">
+            <h2>Does it match the school's records?</h2>
+            <p class="small muted">
+              Check the amount, the term and every scholar on the list against the
+              school's billing.
+            </p>
+            <div class="actions">
+              <a class="btn primary" href="coordinator-remittances.html?state=crediting"
+                >It matches</a
+              >
+              <button
+                class="btn danger"
+                type="button"
+                data-toast="Disputed. DOST-VII sees your reason and corrects the remittance."
+              >
+                Dispute it
+              </button>
+            </div>
+            <div class="field">
+              <label class="label" for="field-4"
+                >Why it doesn't match (needed to dispute)</label
+              >
+              <textarea
+                rows="3"
+                placeholder="e.g. Three scholars on our billing are not on the list."
+                class="input"
+                id="field-4"
+              ></textarea>
+            </div>
+          </section>
+
+          <section class="card stack" data-state="crediting">
+            <div class="card-head">
+              <h2>Credit scholars' accounts</h2>
+              <span class="small muted">40 of 46 credited</span>
+            </div>
+            <div>
+              <div class="list-item">
+                <div class="check">
+                  <input type="checkbox" checked="" aria-labelledby="item-1" />
+                  <div class="what">
+                    <h3 id="item-1">Jomar Dela Cruz</h3>
+                    <p class="small muted">2024-07-00002</p>
+                  </div>
+                </div>
+                <span class="badge wait">Not yet</span>
+              </div>
+              <div class="list-item">
+                <div class="check">
+                  <input type="checkbox" checked="" aria-labelledby="item-2" />
+                  <div class="what">
+                    <h3 id="item-2">Kristine Uy</h3>
+                    <p class="small muted">2024-07-00003</p>
+                  </div>
+                </div>
+                <span class="badge wait">Not yet</span>
+              </div>
+              <div class="list-item">
+                <div class="check">
+                  <input type="checkbox" disabled="" aria-labelledby="item-3" />
+                  <div class="what">
+                    <h3 id="item-3">Bea Santiago</h3>
+                    <p class="small muted">2024-07-00001</p>
+                  </div>
+                </div>
+                <span class="badge ok">Credited 8 Oct</span>
+              </div>
+            </div>
+            <p class="hint">Showing 3 of 46</p>
+            <div class="actions">
+              <button
+                class="btn"
+                type="button"
+                data-toast="Credited: Jomar Dela Cruz and Kristine Uy."
+              >
+                Credit the 2 selected
+              </button>
+              <button
+                class="btn primary"
+                type="button"
+                data-toast="Everyone on the list is credited. The remittance is settled."
+              >
+                Credit everyone left
+              </button>
+              <button
+                class="btn danger"
+                type="button"
+                data-toast="Disputed. DOST-VII sees your reason and corrects the remittance."
+              >
+                Dispute it
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <aside class="card">
+          <h2>All remittances</h2>
+          <a class="list-item" href="coordinator-remittances.html?state=check">
+            <div class="what">
+              <h3>2026-10-0412</h3>
+              <p class="small muted">1st Sem, AY 2026–27</p>
+            </div>
+            <span class="badge wait" data-state="check">Sent</span>
+            <span class="badge wait" data-state="crediting">Received</span>
+          </a>
+          <div class="list-item">
+            <div class="what">
+              <h3>2026-06-0187</h3>
+              <p class="small muted">2nd Sem, AY 2025–26</p>
+            </div>
+            <span class="badge ok">Settled</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>2026-01-0033</h3>
+              <p class="small muted">1st Sem, AY 2025–26</p>
+            </div>
+            <span class="badge ok">Settled</span>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>

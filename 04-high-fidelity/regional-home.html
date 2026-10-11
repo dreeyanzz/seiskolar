@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Regional Office home · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-home">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII · 20 September 2026</p>
+          <h1>Schools in the region</h1>
+          <p class="lead">
+            Each school's current term: who is cleared, and who is not yet.
+          </p>
+        </div>
+        <a class="btn primary" href="regional-queue.html">Open the queue</a>
+      </div>
+
+      <div class="stack">
+        <div class="grid cols-3">
+          <div class="kpi">
+            <div class="value">370</div>
+            <div class="label">Scholars this term</div>
+          </div>
+          <div class="kpi">
+            <div class="value">250</div>
+            <div class="label">Cleared</div>
+          </div>
+          <div class="kpi">
+            <div class="value">37</div>
+            <div class="label">Filings waiting for a check</div>
+          </div>
+        </div>
+
+        <section class="card">
+          <h2>By school</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>School</th>
+                <th>Term and deadline</th>
+                <th>Cleared</th>
+                <th class="num">Outstanding</th>
+                <th class="num">Not yet verified</th>
+                <th class="num">Oldest not filed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="School">
+                  <a class="link" href="regional-queue.html">CIT-U</a>
+                </td>
+                <td data-label="Term">1st Semester · 30 Sep, 10 days left</td>
+                <td data-label="Cleared">121 of 184</td>
+                <td class="num" data-label="Outstanding">63</td>
+                <td class="num" data-label="Not yet verified">78</td>
+                <td class="num" data-label="Oldest not filed">34 days</td>
+              </tr>
+              <tr>
+                <td data-label="School">
+                  <a class="link" href="regional-queue.html">Lapu Science College</a>
+                </td>
+                <td data-label="Term">1st Semester · 25 Sep, 5 days left</td>
+                <td data-label="Cleared">70 of 96</td>
+                <td class="num" data-label="Outstanding">26</td>
+                <td class="num" data-label="Not yet verified">31</td>
+                <td class="num" data-label="Oldest not filed">30 days</td>
+              </tr>
+              <tr>
+                <td data-label="School">
+                  <a class="link" href="regional-queue.html"
+                    >San Isidro Institute of Technology</a
+                  >
+                </td>
+                <td data-label="Term">1st Trimester · 18 Sep, 2 days past</td>
+                <td data-label="Cleared">47 of 52</td>
+                <td class="num" data-label="Outstanding">5</td>
+                <td class="num" data-label="Not yet verified">6</td>
+                <td class="num" data-label="Oldest not filed">41 days</td>
+              </tr>
+              <tr>
+                <td data-label="School">
+                  <a class="link" href="regional-queue.html">Mabini State College</a>
+                </td>
+                <td data-label="Term">1st Semester · no deadline set</td>
+                <td data-label="Cleared">12 of 38</td>
+                <td class="num" data-label="Outstanding">26</td>
+                <td class="num" data-label="Not yet verified">40</td>
+                <td class="num" data-label="Oldest not filed">20 days</td>
+              </tr>
+              <tr>
+                <td data-label="School">Liloan Polytechnic College</td>
+                <td data-label="Term">No term on its calendar yet</td>
+                <td data-label="Cleared">No scholars yet</td>
+                <td class="num" data-label="Outstanding">–</td>
+                <td class="num" data-label="Not yet verified">–</td>
+                <td class="num" data-label="Oldest not filed">–</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Queue · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-queue">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII · 20 September 2026</p>
+          <h1>Queue</h1>
+          <p class="lead">Filings from the region's schools, oldest first.</p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <section class="card">
+          <div class="grid cols-4">
+            <div class="field">
+              <label class="label" for="field-1">School</label>
+              <select class="input" id="field-1">
+                <option>All schools</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label" for="field-2">State</label>
+              <select class="input" id="field-2">
+                <option>Submitted, under review</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label" for="field-3">Requirement</label>
+              <select class="input" id="field-3">
+                <option>All requirements</option>
+              </select>
+            </div>
+            <fieldset class="field">
+              <legend class="label">Scholars</legend>
+
+              <label class="check"
+                ><input type="checkbox" checked="" />Not yet cleared only</label
+              >
+            </fieldset>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h2>37 filings</h2>
+            <span class="small muted">Oldest first</span>
+          </div>
+          <table class="table wide">
+            <thead>
+              <tr>
+                <th>Filed</th>
+                <th>Scholar</th>
+                <th>School</th>
+                <th>Requirement</th>
+                <th>State</th>
+                <th>Deadline</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Filed">2 Sep</td>
+                <td data-label="Scholar">Ramon Tan</td>
+                <td data-label="School">San Isidro Institute of Technology</td>
+                <td data-label="Requirement">Registration Form</td>
+                <td data-label="State"><span class="badge wait">Submitted</span></td>
+                <td data-label="Deadline">2 days past</td>
+                <td data-label="">
+                  <a class="btn" href="regional-review.html?state=claimed">Claim</a>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="Filed">9 Sep</td>
+                <td data-label="Scholar">Liza Gomez</td>
+                <td data-label="School">Lapu Science College</td>
+                <td data-label="Requirement">Certified Report of Grades</td>
+                <td data-label="State">
+                  <span class="badge wait">Under review: Leo Bautista</span>
+                </td>
+                <td data-label="Deadline">5 days left</td>
+                <td data-label=""><a class="btn" href="regional-review.html">View</a></td>
+              </tr>
+              <tr>
+                <td data-label="Filed">15 Sep</td>
+                <td data-label="Scholar">Bea Santiago</td>
+                <td data-label="School">CIT-U</td>
+                <td data-label="Requirement">Certified Report of Grades</td>
+                <td data-label="State"><span class="badge wait">Submitted</span></td>
+                <td data-label="Deadline">10 days left</td>
+                <td data-label="">
+                  <a class="btn" href="regional-review.html?state=unclaimed">Claim</a>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="Filed">16 Sep</td>
+                <td data-label="Scholar">Jomar Dela Cruz</td>
+                <td data-label="School">CIT-U</td>
+                <td data-label="Requirement">Registration Form</td>
+                <td data-label="State"><span class="badge wait">Submitted</span></td>
+                <td data-label="Deadline">10 days left</td>
+                <td data-label="">
+                  <a class="btn" href="regional-review.html?state=claimed">Claim</a>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="Filed">18 Sep</td>
+                <td data-label="Scholar">Joy Pacaña</td>
+                <td data-label="School">Mabini State College</td>
+                <td data-label="Requirement">Registration Form</td>
+                <td data-label="State"><span class="badge wait">Submitted</span></td>
+                <td data-label="Deadline">No deadline set</td>
+                <td data-label="">
+                  <a class="btn" href="regional-review.html?state=claimed">Claim</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="hint">Showing 5 of 37</p>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

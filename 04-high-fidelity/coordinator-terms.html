@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Academic calendar · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="coordinator" data-nav="coordinator-terms">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">CIT-U</p>
+          <h1>Academic calendar</h1>
+          <p class="lead">The school's terms, and when filing opens in each.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="card">
+          <h2>Terms</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Term</th>
+                <th>Dates</th>
+                <th>Filing opens</th>
+                <th>Deadline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Term">1st Semester, AY 2026–2027</td>
+                <td data-label="Dates">10 Aug to 12 Dec 2026</td>
+                <td data-label="Filing opens">17 Aug</td>
+                <td data-label="Deadline">30 Sep · DOST-VII</td>
+              </tr>
+              <tr>
+                <td data-label="Term">2nd Semester, AY 2026–2027</td>
+                <td data-label="Dates">11 Jan to 21 May 2027</td>
+                <td data-label="Filing opens">18 Jan</td>
+                <td data-label="Deadline">Not set yet</td>
+              </tr>
+              <tr>
+                <td data-label="Term">Mid-year, AY 2026–2027</td>
+                <td data-label="Dates">7 Jun to 23 Jul 2027</td>
+                <td data-label="Filing opens">Not set</td>
+                <td data-label="Deadline">Not set yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card stack">
+          <h2>Add a term</h2>
+          <div class="field">
+            <label class="label" for="field-1">Name</label>
+            <input
+              type="text"
+              placeholder="e.g. 2nd Semester, AY 2026–2027"
+              class="input"
+              id="field-1"
+            />
+          </div>
+          <div class="field">
+            <label class="label" for="field-2">Type</label>
+            <select class="input" id="field-2" aria-describedby="hint-3">
+              <option>Semester</option>
+            </select>
+            <span class="hint" id="hint-3">Semester, trimester, quarter or mid-year</span>
+          </div>
+          <div class="grid cols-2">
+            <div class="field">
+              <label class="label" for="field-4">Starts</label>
+              <input type="date" class="input" id="field-4" />
+            </div>
+            <div class="field">
+              <label class="label" for="field-5">Ends</label>
+              <input type="date" class="input" id="field-5" />
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="field-6">Filing opens</label>
+            <input type="date" class="input" id="field-6" />
+          </div>
+          <div class="field">
+            <label class="label" for="field-7">Compliance deadline</label>
+            <input
+              type="text"
+              value="Set by DOST-VII for each term"
+              readonly=""
+              class="input"
+              id="field-7"
+            />
+          </div>
+          <button
+            class="btn primary"
+            type="button"
+            data-toast="The term is saved to the calendar."
+          >
+            Save the term
+          </button>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

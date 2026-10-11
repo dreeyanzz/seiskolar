@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="scholars coordinators" />
+    <title>Accounts · SEIskolar</title>
+    <link rel="stylesheet" href="_style.css" />
+    <script src="_app.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-accounts">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII</p>
+          <h1>Accounts</h1>
+          <p class="lead">Scholar and coordinator accounts for the region's schools.</p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <nav class="tabs" data-state="scholars">
+          <span class="tab active" aria-current="page">Scholars</span>
+          <a class="tab" href="regional-accounts.html?state=coordinators">Coordinators</a>
+        </nav>
+        <nav class="tabs" data-state="coordinators">
+          <a class="tab" href="regional-accounts.html?state=scholars">Scholars</a>
+          <span class="tab active" aria-current="page">Coordinators</span>
+        </nav>
+
+        <!-- Scholars -->
+        <div class="layout" data-state="scholars">
+          <section class="card">
+            <div class="card-head">
+              <h2>370 scholars</h2>
+              <select class="input" id="field-1" aria-label="All schools">
+                <option>All schools</option>
+              </select>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Scholar</th>
+                  <th>Scholar number</th>
+                  <th>School</th>
+                  <th>Award year</th>
+                  <th>Account</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Scholar">Bea Santiago</td>
+                  <td data-label="Scholar number">2024-07-00001</td>
+                  <td data-label="School">CIT-U</td>
+                  <td data-label="Award year">2024</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Scholar">Marites Ocampo</td>
+                  <td data-label="Scholar number">2024-07-00041</td>
+                  <td data-label="School">Lapu Science College</td>
+                  <td data-label="Award year">2024</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Scholar">Ella Ramos</td>
+                  <td data-label="Scholar number">2026-07-00112</td>
+                  <td data-label="School">CIT-U</td>
+                  <td data-label="Award year">2026</td>
+                  <td data-label="Account">
+                    <span class="badge off">Not signed in yet</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="hint">Showing 3 of 370</p>
+          </section>
+
+          <section class="card stack">
+            <h2>Add a scholar</h2>
+            <div class="field">
+              <label class="label" for="field-2">Applicant's email</label>
+              <input
+                type="email"
+                value="ella.ramos@example.test"
+                class="input"
+                id="field-2"
+              />
+            </div>
+            <div class="field">
+              <label class="label" for="field-3">Full name</label>
+              <input type="text" value="Ella Ramos" class="input" id="field-3" />
+            </div>
+            <div class="field">
+              <label class="label" for="field-4">DOST scholar number</label>
+              <input type="text" value="2026-07-00112" class="input" id="field-4" />
+            </div>
+            <div class="field">
+              <label class="label" for="field-5">First school</label>
+              <select class="input" id="field-5" aria-describedby="hint-6">
+                <option>CIT-U</option>
+              </select>
+              <span class="hint" id="hint-6">DOST-VII's schools only</span>
+            </div>
+            <div class="grid cols-2">
+              <div class="field">
+                <label class="label" for="field-7">Award year</label>
+                <input type="text" value="2026" class="input" id="field-7" />
+              </div>
+              <div class="field">
+                <label class="label" for="field-8">Year level</label>
+                <select class="input" id="field-8">
+                  <option>1st year</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="field-9">Programme</label>
+              <input
+                type="text"
+                value="BS Civil Engineering"
+                class="input"
+                id="field-9"
+              />
+            </div>
+            <div class="field">
+              <label class="label" for="field-10">Scholarship type</label>
+              <select class="input" id="field-10">
+                <option>RA 7687</option>
+              </select>
+            </div>
+            <button
+              class="btn primary"
+              type="button"
+              data-toast="The account is created. Its owner can sign in now."
+            >
+              Create the account
+            </button>
+          </section>
+        </div>
+
+        <!-- Coordinators -->
+        <div class="layout" data-state="coordinators">
+          <section class="card">
+            <h2>4 coordinators</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Coordinator</th>
+                  <th>School</th>
+                  <th>Email</th>
+                  <th>Account</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Coordinator">Ruel Mendoza</td>
+                  <td data-label="School">CIT-U</td>
+                  <td data-label="Email">ruel.mendoza@example.test</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Coordinator">Dina Flores</td>
+                  <td data-label="School">Lapu Science College</td>
+                  <td data-label="Email">dina.flores@example.test</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Coordinator">Ramil Ortega</td>
+                  <td data-label="School">San Isidro Institute of Technology</td>
+                  <td data-label="Email">ramil.ortega@example.test</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Coordinator">Gina Sison</td>
+                  <td data-label="School">Mabini State College</td>
+                  <td data-label="Email">gina.sison@example.test</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="card stack">
+            <h2>Add a coordinator</h2>
+            <div class="field">
+              <label class="label" for="field-11">Email</label>
+              <input
+                type="email"
+                value="mark.villanueva@example.test"
+                class="input"
+                id="field-11"
+              />
+            </div>
+            <div class="field">
+              <label class="label" for="field-12">Full name</label>
+              <input type="text" value="Mark Villanueva" class="input" id="field-12" />
+            </div>
+            <div class="field">
+              <label class="label" for="field-13">School</label>
+              <select class="input" id="field-13" aria-describedby="hint-14">
+                <option>Liloan Polytechnic College</option>
+              </select>
+              <span class="hint" id="hint-14">DOST-VII's schools only</span>
+            </div>
+            <button
+              class="btn primary"
+              type="button"
+              data-toast="The account is created. Its owner can sign in now."
+            >
+              Create the account
+            </button>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
