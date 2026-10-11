@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>Swimlane 05: Release a batch, from cleared to released</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane 05: Release a batch, from cleared to released</h1>
+        <p class="covers">Covers FR-REL-001, FR-REL-002, FR-REL-003</p>
+        <p class="scope">
+          Starts when the Regional Office starts a release batch. Ends when the scholar
+          sees it released, or is moved to a later batch.
+        </p>
+      </header>
+      <main class="swimlane" data-cols="13">
+        <div class="lane" data-lane="1">DOST Regional Office</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">DOST Central Office</div>
+        <div class="lane" data-lane="4">Scholar</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S05.1" data-lane="1" data-col="2">
+          <b>S05.1</b> Starts a release batch for one benefit or several
+        </div>
+        <div class="node system" id="S05.2" data-lane="2" data-col="3">
+          <b>S05.2</b> Offers only cleared scholars: every mandatory requirement for the
+          term verified
+        </div>
+        <div class="node step" id="S05.3" data-lane="1" data-col="4">
+          <b>S05.3</b> Adds scholars, and records each one's amount per benefit. SEIskolar
+          calculates none of it
+        </div>
+        <div class="node step" id="S05.4" data-lane="1" data-col="5">
+          <b>S05.4</b> Sends the batch to Central Office
+        </div>
+        <div class="node record" id="S05.5" data-lane="2" data-col="6">
+          <b>S05.5</b> Saved: sent to Central Office, with the date
+        </div>
+        <div class="node step" id="S05.6" data-lane="3" data-col="7">
+          <b>S05.6</b> Reviews the batch. May remove one scholar, with a reason
+        </div>
+        <div class="node decision" id="S05.7" data-lane="3" data-col="8">
+          <b>S05.7</b> Approve the batch?
+        </div>
+        <div class="node record" id="S05.8" data-lane="2" data-col="8">
+          <b>S05.8</b> Saved: returned to the Regional Office, with the reason
+        </div>
+        <div class="node record" id="S05.9" data-lane="2" data-col="9">
+          <b>S05.9</b> Saved: approved, with the date
+        </div>
+        <div class="node step" id="S05.10" data-lane="3" data-col="10">
+          <b>S05.10</b> Records the release, once the funds are released
+        </div>
+        <div class="node record" id="S05.11" data-lane="2" data-col="11">
+          <b>S05.11</b> Saved: released, with the date
+        </div>
+        <div class="node final" id="S05.12" data-lane="4" data-col="12">
+          <b>S05.12</b> Sees “Released by Central Office” and its date. SEIskolar can't
+          see the money reach the account
+        </div>
+        <div class="node end" id="end" data-lane="4" data-col="13"></div>
+        <div class="node final" id="S05.13" data-lane="4" data-col="7">
+          <b>S05.13</b> Moved to a later batch, with the reason. Nothing is forfeited
+        </div>
+        <div class="node end" id="end-2" data-lane="4" data-col="8"></div>
+        <ol class="flows">
+          <li data-from="start" data-to="S05.1"></li>
+          <li data-from="S05.1" data-to="S05.2"></li>
+          <li data-from="S05.2" data-to="S05.3"></li>
+          <li data-from="S05.3" data-to="S05.4"></li>
+          <li data-from="S05.4" data-to="S05.5"></li>
+          <li data-from="S05.5" data-to="S05.6"></li>
+          <li data-from="S05.6" data-to="S05.7"></li>
+          <li data-from="S05.7" data-to="S05.8">No: returns it</li>
+          <li data-from="S05.8" data-to="S05.3" class="back">Corrects the batch</li>
+          <li data-from="S05.7" data-to="S05.9">Yes</li>
+          <li data-from="S05.9" data-to="S05.10"></li>
+          <li data-from="S05.10" data-to="S05.11"></li>
+          <li data-from="S05.11" data-to="S05.12"></li>
+          <li data-from="S05.12" data-to="end"></li>
+          <li data-from="S05.3" data-to="S05.13" data-turn="early">
+            Takes a scholar off
+          </li>
+          <li data-from="S05.6" data-to="S05.13">Removes a scholar</li>
+          <li data-from="S05.13" data-to="end-2"></li>
+        </ol>
+      </main>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>

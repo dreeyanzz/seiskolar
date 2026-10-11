@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>Swimlane 10: Look up who did what to a record</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane 10: Look up who did what to a record</h1>
+        <p class="covers">Covers NFR-SEC-003; §4.1 “Inspect Immutable Audit Logs”</p>
+        <p class="scope">
+          Starts when anyone changes a record. Ends when DOST staff read its history.
+          Scholars and coordinators cannot read it at all (§2.2).
+        </p>
+      </header>
+      <main class="swimlane" data-cols="9">
+        <div class="lane" data-lane="1">Anyone who changes a record</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">DOST Regional Office or Central Office</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S10.1" data-lane="1" data-col="2">
+          <b>S10.1</b> Changes a record: files, reviews, sets a deadline, credits tuition,
+          and so on
+        </div>
+        <div class="node system" id="S10.2" data-lane="2" data-col="3">
+          <b>S10.2</b> Writes an audit line by itself: who, what, when, and the record
+          before and after
+        </div>
+        <div class="node system" id="S10.3" data-lane="2" data-col="4">
+          <b>S10.3</b> Takes the line's region from the record's school, never from
+          whoever acted
+        </div>
+        <div class="node record" id="S10.4" data-lane="2" data-col="5">
+          <b>S10.4</b> Saved for good: no one can change or delete a line
+        </div>
+        <div class="node end" id="end" data-lane="2" data-col="6"></div>
+        <div class="node start" id="start-2" data-lane="3" data-col="5"></div>
+        <div class="node step" id="S10.5" data-lane="3" data-col="6">
+          <b>S10.5</b> Opens a record's history
+        </div>
+        <div class="node decision" id="S10.6" data-lane="2" data-col="7">
+          <b>S10.6</b> In the reader's region, or Central Office?
+        </div>
+        <div class="node final" id="S10.7" data-lane="3" data-col="8">
+          <b>S10.7</b> Sees every line for the record, oldest first
+        </div>
+        <div class="node final" id="S10.8" data-lane="2" data-col="8">
+          <b>S10.8</b> Shows nothing: no rows
+        </div>
+        <div class="node end" id="end-2" data-lane="3" data-col="9"></div>
+        <div class="node end" id="end-3" data-lane="2" data-col="9"></div>
+        <ol class="flows">
+          <li data-from="start" data-to="S10.1"></li>
+          <li data-from="S10.1" data-to="S10.2"></li>
+          <li data-from="S10.2" data-to="S10.3"></li>
+          <li data-from="S10.3" data-to="S10.4"></li>
+          <li data-from="S10.4" data-to="end"></li>
+          <li data-from="start-2" data-to="S10.5"></li>
+          <li data-from="S10.5" data-to="S10.6"></li>
+          <li data-from="S10.6" data-to="S10.7">Yes</li>
+          <li data-from="S10.6" data-to="S10.8">No</li>
+          <li data-from="S10.7" data-to="end-2"></li>
+          <li data-from="S10.8" data-to="end-3"></li>
+        </ol>
+      </main>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>

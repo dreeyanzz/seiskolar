@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>Swimlane 03: File a Periodic Report</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane 03: File a Periodic Report</h1>
+        <p class="covers">Covers FR-SCH-001, FR-SCH-002, FR-SCH-003, FR-SCH-004</p>
+        <p class="scope">
+          Starts when a scholar opens their dashboard. Ends when their filing is saved as
+          submitted.
+        </p>
+      </header>
+      <main class="swimlane" data-cols="12">
+        <div class="lane" data-lane="1">Scholar</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S03.1" data-lane="1" data-col="2">
+          <b>S03.1</b> Opens the dashboard
+        </div>
+        <div class="node system" id="S03.2" data-lane="2" data-col="3">
+          <b>S03.2</b> Shows the term's checklist, each requirement's status, and the
+          deadline banner in one of its four states
+        </div>
+        <div class="node step" id="S03.3" data-lane="1" data-col="4">
+          <b>S03.3</b> Opens a requirement that is not started, or was returned
+        </div>
+        <div class="node step" id="S03.4" data-lane="1" data-col="5">
+          <b>S03.4</b> Chooses the file: PDF, JPEG, PNG, HEIC or WebP, up to 10 MB. For
+          the Certified Report of Grades, types each subject's code, units and grade
+        </div>
+        <div class="node system" id="S03.5" data-lane="2" data-col="6">
+          <b>S03.5</b> For grades: works out the weighted average as each line is typed
+        </div>
+        <div class="node decision" id="S03.6" data-lane="2" data-col="7">
+          <b>S03.6</b> File and grade lines allowed?
+        </div>
+        <div class="node step" id="S03.7" data-lane="1" data-col="8">
+          <b>S03.7</b> Files it
+        </div>
+        <div class="node system" id="S03.8" data-lane="2" data-col="9">
+          <b>S03.8</b> Sends the file straight to private storage, through a link that
+          lasts five minutes
+        </div>
+        <div class="node record" id="S03.9" data-lane="2" data-col="10">
+          <b>S03.9</b> Saved: a new version, never replacing the last, with its grade
+          lines
+        </div>
+        <div class="node final" id="S03.10" data-lane="1" data-col="11">
+          <b>S03.10</b> Status: submitted
+        </div>
+        <div class="node end" id="end" data-lane="1" data-col="12"></div>
+        <ol class="flows">
+          <li data-from="start" data-to="S03.1"></li>
+          <li data-from="S03.1" data-to="S03.2"></li>
+          <li data-from="S03.2" data-to="S03.3"></li>
+          <li data-from="S03.3" data-to="S03.4"></li>
+          <li data-from="S03.4" data-to="S03.5"></li>
+          <li data-from="S03.5" data-to="S03.6"></li>
+          <li data-from="S03.6" data-to="S03.4" class="back">No: says what to fix</li>
+          <li data-from="S03.6" data-to="S03.7">Yes</li>
+          <li data-from="S03.7" data-to="S03.8"></li>
+          <li data-from="S03.8" data-to="S03.9"></li>
+          <li data-from="S03.9" data-to="S03.10"></li>
+          <li data-from="S03.10" data-to="end"></li>
+        </ol>
+      </main>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>

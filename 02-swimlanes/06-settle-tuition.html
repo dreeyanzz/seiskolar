@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="render-height" content="200" />
+    <title>Swimlane 06: Settle a school's tuition</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane 06: Settle a school's tuition</h1>
+        <p class="covers">Covers FR-TUI-001, FR-TUI-002, FR-TUI-003</p>
+        <p class="scope">
+          Starts when the Regional Office sends a school a tuition remittance. Ends when
+          every scholar on it is credited.
+        </p>
+      </header>
+      <main class="swimlane" data-cols="12">
+        <div class="lane" data-lane="1">DOST Regional Office</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">School Coordinator</div>
+        <div class="lane" data-lane="4">Scholar</div>
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="S06.1" data-lane="1" data-col="2">
+          <b>S06.1</b> Records a remittance for one school and term: its check or LDDAP
+          number, amount, proof and list of scholars
+        </div>
+        <div class="node record" id="S06.2" data-lane="2" data-col="3">
+          <b>S06.2</b> Saved: sent. The proof is kept in private storage
+        </div>
+        <div class="node step" id="S06.3" data-lane="3" data-col="4">
+          <b>S06.3</b> Compares the remittance with the school's own records
+        </div>
+        <div class="node decision" id="S06.4" data-lane="3" data-col="5">
+          <b>S06.4</b> Does it match?
+        </div>
+        <div class="node record" id="S06.5" data-lane="2" data-col="5">
+          <b>S06.5</b> Saved: disputed, with the reason
+        </div>
+        <div class="node record" id="S06.6" data-lane="2" data-col="6">
+          <b>S06.6</b> Saved: received
+        </div>
+        <div class="node step" id="S06.7" data-lane="3" data-col="7">
+          <b>S06.7</b> Credits scholars' accounts, one at a time or all at once
+        </div>
+        <div class="node record" id="S06.8" data-lane="2" data-col="8">
+          <b>S06.8</b> Saved: each scholar's credited date
+        </div>
+        <div class="node decision" id="S06.9" data-lane="2" data-col="9">
+          <b>S06.9</b> Everyone on the list credited?
+        </div>
+        <div class="node record" id="S06.10" data-lane="2" data-col="10">
+          <b>S06.10</b> Saved: settled
+        </div>
+        <div class="node final" id="S06.11" data-lane="3" data-col="10">
+          <b>S06.11</b> Stays received until the rest are credited
+        </div>
+        <div class="node end" id="end" data-lane="3" data-col="11"></div>
+        <div class="node final" id="S06.12" data-lane="4" data-col="11">
+          <b>S06.12</b> Tuition card: when DOST sent it, and when the school credited it.
+          No amount
+        </div>
+        <div class="node end" id="end-2" data-lane="4" data-col="12"></div>
+        <div class="node record" id="S06.13" data-lane="2" data-col="7">
+          <b>S06.13</b> Saved: disputed after all, with the reason
+        </div>
+        <ol class="flows">
+          <li data-from="start" data-to="S06.1"></li>
+          <li data-from="S06.1" data-to="S06.2"></li>
+          <li data-from="S06.2" data-to="S06.3"></li>
+          <li data-from="S06.3" data-to="S06.4"></li>
+          <li data-from="S06.4" data-to="S06.5">No: disputes it</li>
+          <li data-from="S06.5" data-to="S06.1" class="back"></li>
+          <li data-from="S06.4" data-to="S06.6">Yes</li>
+          <li data-from="S06.6" data-to="S06.7"></li>
+          <li data-from="S06.7" data-to="S06.13">Finds a mismatch</li>
+          <li data-from="S06.13" data-to="S06.1" class="back">
+            Corrects it, and sends it again
+          </li>
+          <li data-from="S06.7" data-to="S06.8"></li>
+          <li data-from="S06.8" data-to="S06.9"></li>
+          <li data-from="S06.9" data-to="S06.10">Yes</li>
+          <li data-from="S06.9" data-to="S06.11">Not yet</li>
+          <li data-from="S06.11" data-to="end"></li>
+          <li data-from="S06.10" data-to="S06.12"></li>
+          <li data-from="S06.12" data-to="end-2"></li>
+        </ol>
+      </main>
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>
