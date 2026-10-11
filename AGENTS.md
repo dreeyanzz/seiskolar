@@ -24,8 +24,9 @@ Nothing else belongs here.
 - **Nothing is implemented, and nothing will be.** There is no app, database, API or
   test suite in this repository. Do not look for one, and do not write one.
 - **The drawings are HTML on purpose.** Each swimlane, wireframe and screen is an HTML
-  file with a PNG beside it. The HTML is a picture you can open in a browser, not the
-  product. The only other code is `scripts/render.mjs`, which takes the pictures.
+  file with a PNG beside it. The HTML, and the small shared files that style and lay it
+  out (such as `02-swimlanes/_swimlane.js`), make a picture you can open in a browser,
+  not the product. The only other code is `scripts/render.mjs`, which takes the pictures.
 - **The SRS names things that are not here.** It was written against an earlier
   prototype, so it mentions database functions such as `app.my_scholar_id()`,
   migrations, file paths, test files, ADRs and design documents. None of them exist in

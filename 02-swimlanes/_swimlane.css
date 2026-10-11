@@ -1,0 +1,331 @@
+/* The shared look of every swimlane. _swimlane.js places the steps and draws the
+   arrows; see _template.html for how a swimlane is written. Change this file only in
+   its own pull request, and re-render every swimlane in the same one. */
+
+:root {
+  --ink: #1e293b;
+  --muted: #64748b;
+  --line: #475569;
+  --rule: #cbd5e1;
+  --shade: #f1f5f9;
+  --final: #0369a1;
+  --final-soft: #e0f2fe;
+  --back: #be123c;
+  --assumed: #b45309;
+  --assumed-soft: #fffbeb;
+
+  --label: 170px; /* the lane names */
+  --col: 190px; /* one step */
+  --gap: 56px; /* the space between steps, where arrows turn */
+  --row: 150px; /* the least height of a lane */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink);
+  font:
+    15px/1.35 'Segoe UI',
+    system-ui,
+    -apple-system,
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+.page {
+  width: max-content;
+  padding: 40px 48px;
+}
+
+header h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+header .covers {
+  margin: 0;
+  color: var(--line);
+  font-weight: 600;
+}
+
+header .scope {
+  margin: 4px 0 24px;
+  color: var(--muted);
+}
+
+/* A heading for each part, when one swimlane page holds more than one diagram. */
+.part {
+  margin: 36px 0 12px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+header + .part {
+  margin-top: 0;
+}
+
+/* The lanes are rows of a grid; the steps are placed in it by lane and column. */
+.swimlane {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--label) repeat(var(--cols, 6), var(--col));
+  grid-auto-rows: minmax(var(--row), auto);
+  column-gap: var(--gap);
+  width: max-content; /* the frame ends at its last column, even on a page with wider parts */
+  border: 1px solid var(--rule);
+  border-top: 0;
+}
+
+/* A lane is one full-width row. Its name sits in the shaded first column: the right
+   padding keeps the text inside that column, so a long name wraps there. */
+.lane {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  padding: 0 calc(100% - var(--label) + 16px) 0 16px;
+  border-top: 1px solid var(--rule);
+  background: linear-gradient(
+    to right,
+    var(--shade) 0 var(--label),
+    var(--rule) var(--label) calc(var(--label) + 1px),
+    transparent calc(var(--label) + 1px)
+  );
+  font-weight: 600;
+}
+
+.flows {
+  display: none;
+}
+
+/* The steps. */
+/* The band above every step is kept clear for the arrows that go back. */
+.node {
+  position: relative;
+  z-index: 2;
+  place-self: center;
+  margin: 48px 0 18px;
+  text-align: center;
+}
+
+.node b {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--muted);
+  font:
+    600 11px/1.2 ui-monospace,
+    Consolas,
+    monospace;
+  letter-spacing: 0.02em;
+}
+
+.node.step,
+.node.system,
+.node.record,
+.node.final {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: var(--col);
+  min-height: 64px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.node.system {
+  border-style: dashed;
+}
+
+.node.record {
+  border-radius: 4px;
+  background: var(--shade);
+}
+
+.node.final {
+  border: 2px solid var(--final);
+  box-shadow: 0 0 0 3px var(--final-soft);
+}
+
+.node.final b {
+  color: var(--final);
+}
+
+.node.decision {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: var(--col);
+  height: 120px;
+  padding: 12px 30px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' preserveAspectRatio='none'%3E%3Cpolygon points='50,1 99,30 50,59 1,30' fill='white' stroke='%23475569' stroke-width='1.5' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E")
+    center / 100% 100% no-repeat;
+  font-size: 14px;
+}
+
+.node.start,
+.node.end {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.node.start {
+  background: var(--ink);
+}
+
+.node.end {
+  border: 2px solid var(--ink);
+  background: radial-gradient(circle, var(--ink) 0 5px, #fff 6px);
+}
+
+/* A step the SRS does not state, which the drawing had to assume. */
+.assumed::after {
+  content: 'assumed';
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  padding: 3px 7px;
+  border: 1px solid #fcd34d;
+  border-radius: 99px;
+  background: var(--assumed-soft);
+  color: var(--assumed);
+  font:
+    700 10px/1 'Segoe UI',
+    system-ui,
+    sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* The arrows, drawn by _swimlane.js. */
+.arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.arrows path {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+
+.arrows path.back {
+  stroke: var(--back);
+  stroke-dasharray: 6 4;
+}
+
+.arrows text {
+  fill: var(--line);
+  font:
+    600 12px 'Segoe UI',
+    system-ui,
+    sans-serif;
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 4px;
+}
+
+.arrows text.back {
+  fill: var(--back);
+}
+
+/* The legend, filled in by _swimlane.js so that every swimlane has the same one. */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.legend .key {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.legend .shape {
+  display: inline-block;
+  flex: none;
+  width: 30px;
+  height: 18px;
+  border: 1.5px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+}
+
+.legend .shape.start,
+.legend .shape.end {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.legend .shape.start {
+  border: 0;
+  background: var(--ink);
+}
+
+.legend .shape.end {
+  border: 2px solid var(--ink);
+  background: radial-gradient(circle, var(--ink) 0 3px, #fff 4px);
+}
+
+.legend .shape.system {
+  border-style: dashed;
+}
+
+.legend .shape.record {
+  border-radius: 2px;
+  background: var(--shade);
+}
+
+.legend .shape.final {
+  border: 2px solid var(--final);
+}
+
+.legend .shape.decision {
+  border: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' preserveAspectRatio='none'%3E%3Cpolygon points='50,2 98,30 50,58 2,30' fill='white' stroke='%23475569' stroke-width='1.5' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E")
+    center / 100% 100% no-repeat;
+}
+
+.legend .shape.flow,
+.legend .shape.back {
+  height: 0;
+  border: 0;
+  border-top: 1.5px solid var(--line);
+  border-radius: 0;
+  background: none;
+}
+
+.legend .shape.back {
+  border-top: 1.5px dashed var(--back);
+}
+
+.legend .tag {
+  padding: 3px 7px;
+  border: 1px solid #fcd34d;
+  border-radius: 99px;
+  background: var(--assumed-soft);
+  color: var(--assumed);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

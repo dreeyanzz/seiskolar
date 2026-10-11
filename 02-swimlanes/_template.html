@@ -1,0 +1,82 @@
+<!doctype html>
+<!--
+  How to write a swimlane:
+
+  1. Copy this file to NN-short-name.html, where NN is the workflow's number in the
+     index (README.md). Change the <title> and the <header>.
+  2. One .lane per person who acts, in the order they first act, numbered by
+     data-lane. Use the names the SRS uses; SEIskolar's own lane is "SEIskolar".
+  3. One .node per step, placed by data-lane and data-col, and numbered SNN.n in the
+     order they happen. Kinds: start, end, step, system (SEIskolar does it by itself),
+     decision, record (saved by SEIskolar) and final (the status at the end). Add
+     "assumed" to a step the SRS does not state.
+  4. Set data-cols on the .swimlane to the number of columns you use.
+  5. One <li> in .flows per arrow, from data-from to data-to. Its text is its label.
+     class="back" for a path back to fix something; data-turn="early" if an arrow
+     between lanes should turn right after its source.
+  6. Run "npm run render -- 02-swimlanes/NN-short-name.html", then open the PNG and
+     look at it.
+  7. If a workflow has separate parts, put each in its own .swimlane, with an
+     <h2 class="part"> heading before it, in the same page.
+
+  Everything below is a placeholder showing each kind of step, not a real workflow.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- The picture is as tall as the drawing; it grows past this as needed. -->
+    <meta name="render-height" content="200" />
+    <title>Swimlane NN: the name of the workflow</title>
+    <link rel="stylesheet" href="_swimlane.css" />
+    <script src="_swimlane.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Swimlane NN: the name of the workflow</h1>
+        <p class="covers">Covers FR-XXX-001, FR-XXX-002</p>
+        <p class="scope">Starts when something happens. Ends when its status is saved.</p>
+      </header>
+
+      <main class="swimlane" data-cols="7">
+        <div class="lane" data-lane="1">Scholar</div>
+        <div class="lane" data-lane="2">SEIskolar</div>
+        <div class="lane" data-lane="3">DOST Regional Office</div>
+
+        <div class="node start" id="start" data-lane="1" data-col="1"></div>
+        <div class="node step" id="SNN.1" data-lane="1" data-col="2">
+          <b>SNN.1</b> The first step someone takes
+        </div>
+        <div class="node decision" id="SNN.2" data-lane="2" data-col="3">
+          <b>SNN.2</b> A check SEIskolar makes?
+        </div>
+        <div class="node system assumed" id="SNN.3" data-lane="2" data-col="4">
+          <b>SNN.3</b> Something SEIskolar does by itself
+        </div>
+        <div class="node record" id="SNN.4" data-lane="2" data-col="5">
+          <b>SNN.4</b> Saved: what SEIskolar records
+        </div>
+        <div class="node step" id="SNN.5" data-lane="3" data-col="5">
+          <b>SNN.5</b> A step the Regional Office takes
+        </div>
+        <div class="node final" id="SNN.6" data-lane="3" data-col="6">
+          <b>SNN.6</b> Status: where it ends
+        </div>
+        <div class="node end" id="end" data-lane="3" data-col="7"></div>
+
+        <ol class="flows">
+          <li data-from="start" data-to="SNN.1"></li>
+          <li data-from="SNN.1" data-to="SNN.2"></li>
+          <li data-from="SNN.2" data-to="SNN.3">Yes</li>
+          <li data-from="SNN.2" data-to="SNN.1" class="back">No, fix it</li>
+          <li data-from="SNN.3" data-to="SNN.4"></li>
+          <li data-from="SNN.4" data-to="SNN.5"></li>
+          <li data-from="SNN.5" data-to="SNN.6"></li>
+          <li data-from="SNN.6" data-to="end"></li>
+        </ol>
+      </main>
+
+      <footer class="legend"></footer>
+    </div>
+  </body>
+</html>

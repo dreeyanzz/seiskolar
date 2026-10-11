@@ -15,7 +15,10 @@ moment the workflow starts until it ends.
   these numbers, so renumbering a step means updating every wireframe that cites it.
 - **Every path ends.** Each branch of a decision reaches an end or rejoins the flow.
 - **Only what the SRS says.** A gap you had to fill is labelled "assumed".
-- **One look for all of them.** Every swimlane uses the shared `_swimlane.css`.
+- **Start from [`_template.html`](_template.html).** Its shared `_swimlane.css` and
+  `_swimlane.js` place the steps, draw the arrows and add the legend, so every swimlane
+  looks the same; [`_template.png`](_template.png) shows how. Change those two files only
+  in their own pull request, and re-render every swimlane in it.
 
 ## Index
 
