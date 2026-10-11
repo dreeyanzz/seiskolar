@@ -1,4 +1,23 @@
 <!doctype html>
+<!--
+  A record's history. A high-fidelity screen of SEIskolar.
+
+  Finishes 03-low-fidelity/record-history.html, with the same content and states. That
+  wireframe is this screen's source: change it first, then this file.
+  Serves swimlane steps S10.5 to S10.8, in 02-swimlanes/10-look-up-who-did-what.html.
+  SRS: NFR-SEC-003; SRS §4.1 “Inspect Immutable Audit Logs”.
+  It has one state.
+  Owner: @zedric-git.
+
+  What the wireframe's notes say:
+  - No one can change or delete a line (S10.4). Its region comes from the record's school,
+    never from whoever acted (S10.3). The Regional Office reads its own region's records
+    and Central Office reads all; a scholar or coordinator who opens this address gets
+    nothing back (S10.6, S10.8).
+
+  Its look and frame come from _style.css and _app.js (see README.md). Nothing here is
+  saved: a button that would save something shows a short message instead.
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8" />

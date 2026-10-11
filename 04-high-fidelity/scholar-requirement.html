@@ -1,4 +1,28 @@
 <!doctype html>
+<!--
+  Scholar: a requirement. A high-fidelity screen of SEIskolar.
+
+  Finishes 03-low-fidelity/scholar-requirement.html, with the same content and states.
+  That wireframe is this screen's source: change it first, then this file.
+  Serves swimlane steps S01.11, S03.3 to S03.10, S04.10, S04.11, S09.6, in
+  02-swimlanes/01-sign-in.html, 02-swimlanes/03-file-a-periodic-report.html,
+  02-swimlanes/04-check-a-filing.html and 02-swimlanes/09-set-up-the-school-portal.html.
+  SRS: FR-SCH-002, FR-SCH-003, FR-SCH-004, FR-ADM-003.
+  States: not-started, returned and verified; not-started is the default. Open another
+  with scholar-requirement.html?state=returned.
+  Owner: @gnthril.
+
+  What the wireframe's notes say:
+  - In the not-started and returned states: Up to 30 lines; units more than 0 and at most
+    15; grades inside the school's scale (FR-SCH-003). If the file or a line is not
+    allowed, the screen says what to fix (S03.6). A line may show that it passes, and the
+    average whether it meets the threshold, but never a verdict on standing (FR-ADM-003).
+  - Filing never replaces an earlier version (S03.9). The file goes straight to private
+    storage, through a link that lasts five minutes (S03.8).
+
+  Its look and frame come from _style.css and _app.js (see README.md). Nothing here is
+  saved: a button that would save something shows a short message instead.
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8" />

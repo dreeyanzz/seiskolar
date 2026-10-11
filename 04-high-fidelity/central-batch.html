@@ -1,4 +1,25 @@
 <!doctype html>
+<!--
+  Central Office: a release batch. A high-fidelity screen of SEIskolar.
+
+  Finishes 03-low-fidelity/central-batch.html, with the same content and states. That
+  wireframe is this screen's source: change it first, then this file.
+  Serves swimlane steps S05.6 to S05.11, in 02-swimlanes/05-release-a-batch.html.
+  SRS: FR-REL-002.
+  States: review and approved; review is the default. Open another with
+  central-batch.html?state=approved.
+  Owner: @dreeyanzz.
+
+  What the wireframe's notes say:
+  - In the review state: Removing one scholar needs a reason, which the scholar sees; the
+    scholar moves to a later batch and loses nothing (S05.6, S05.13). Returning the whole
+    batch needs a reason too (S05.8).
+  - In the approved state: SEIskolar records the release and its date. It cannot see the
+    money reach anyone's account (FR-REL-003).
+
+  Its look and frame come from _style.css and _app.js (see README.md). Nothing here is
+  saved: a button that would save something shows a short message instead.
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8" />

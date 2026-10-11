@@ -47,9 +47,15 @@ Who owns which swimlane and screen is in each folder's index.
 
 ## How work moves
 
-- Every item is a task issue, assigned to its owner.
+- Every item is a task issue, assigned to its owner. Why: each member, and their agent,
+  finds their own work with `gh issue list --assignee @me`, and the issue says what the
+  work is built from and when it is done.
 - Every change is a pull request to `main` with one approval: Adrian approves everyone's,
-  and a teammate approves his. Only Adrian merges.
+  and a teammate approves his. Only Adrian merges. Why: a second reader catches mistakes
+  before they reach the design the team submits; [`.github/rulesets/`](.github/rulesets/)
+  shows how GitHub enforces it.
 - `npm run render` turns each drawing into its PNGs: a screen into one per device and
-  state.
-- [`AGENTS.md`](AGENTS.md) has the rules every member and every AI tool follows.
+  state. Why: the pictures show on GitHub, so anyone can review a drawing without opening
+  a browser.
+- [`AGENTS.md`](AGENTS.md) has the rules every member and every AI tool follows. Why:
+  this repository is worked on mostly through AI agents, and they read that file first.

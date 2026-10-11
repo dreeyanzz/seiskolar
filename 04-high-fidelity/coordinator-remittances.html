@@ -1,4 +1,24 @@
 <!doctype html>
+<!--
+  Coordinator: tuition remittances. A high-fidelity screen of SEIskolar.
+
+  Finishes 03-low-fidelity/coordinator-remittances.html, with the same content and states.
+  That wireframe is this screen's source: change it first, then this file.
+  Serves swimlane steps S06.3 to S06.11, S06.13, in 02-swimlanes/06-settle-tuition.html.
+  SRS: FR-TUI-002.
+  States: check and crediting; check is the default. Open another with
+  coordinator-remittances.html?state=crediting.
+  Owner: @Tiamporado.
+
+  What the wireframe's notes say:
+  - In the check state: Disputing needs a reason. DOST-VII then corrects the remittance
+    and sends it again (S06.4, S06.5).
+  - In the crediting state: Once every scholar on the list is credited, the remittance is
+    settled (S06.9). A mismatch found now can still be disputed (S06.13).
+
+  Its look and frame come from _style.css and _app.js (see README.md). Nothing here is
+  saved: a button that would save something shows a short message instead.
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8" />

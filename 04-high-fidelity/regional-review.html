@@ -1,4 +1,25 @@
 <!doctype html>
+<!--
+  Regional Office: check a filing. A high-fidelity screen of SEIskolar.
+
+  Finishes 03-low-fidelity/regional-review.html, with the same content and states. That
+  wireframe is this screen's source: change it first, then this file.
+  Serves swimlane steps S04.3 to S04.9, in 02-swimlanes/04-check-a-filing.html.
+  SRS: FR-CHK-002, FR-CHK-003, FR-CHK-004.
+  States: unclaimed, claimed and returning; unclaimed is the default. Open another with
+  regional-review.html?state=claimed.
+  Owner: @zedric-git.
+
+  What the wireframe's notes say:
+  - In the claimed state: Verified is final: no one can change it afterwards (S04.7).
+    Releasing the claim puts the filing back in the queue for anyone (S04.6).
+  - In the returning state: One of the eight reasons in FR-CHK-004. Bea sees the reason
+    and the remarks, and files a corrected copy as version 2; version 1 stays on record
+    (S04.11).
+
+  Its look and frame come from _style.css and _app.js (see README.md). Nothing here is
+  saved: a button that would save something shows a short message instead.
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8" />

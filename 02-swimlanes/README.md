@@ -6,19 +6,34 @@ moment the workflow starts until it ends.
 ## Rules
 
 - **One file per workflow:** `NN-short-name.html`, with `NN-short-name.png` beside it
-  (`npm run render`). `NN` is its number in the index below.
+  (`npm run render`). `NN` is its number in the index below. Why: the number ties the
+  file to its index row and to its step numbers (steps `S06.n` are in `06-…`), and the
+  picture lets anyone see the swimlane on GitHub without opening a browser.
 - **Title and scope at the top:** "Swimlane NN: name", the SRS requirements it covers,
-  and one line saying where it starts and where it ends.
+  and one line saying where it starts and where it ends. Why: from its first three lines,
+  a reader knows what the drawing is for, which requirements to check it against, and
+  where its edges are.
 - **One lane per person who acts,** using the names the SRS uses, plus a **SEIskolar**
-  lane for what the system does or works out by itself.
+  lane for what the system does or works out by itself. Why: the SRS's names keep the
+  swimlane checkable against the SRS and the screens' labels the same as the SRS's; the
+  SEIskolar lane separates what a person does, which needs a screen, from what the system
+  does by itself, which does not.
 - **Every step and decision is numbered** `SNN.n` (`S02.3`), in order. Wireframes cite
-  these numbers, so renumbering a step means updating every wireframe that cites it.
-- **Every path ends.** Each branch of a decision reaches an end or rejoins the flow.
-- **Only what the SRS says.** A gap you had to fill is labelled "assumed".
+  these numbers, so renumbering a step means updating every wireframe that cites it. Why:
+  the numbers are how a wireframe shows which steps it serves, and how anyone checks that
+  every step a person takes has a screen.
+- **Every path ends.** Each branch of a decision reaches an end or rejoins the flow. Why:
+  a path that stops nowhere is a case the design forgot, and its screen would be missing
+  too.
+- **Only what the SRS says.** A gap you had to fill is labelled "assumed". Why: each
+  deliverable is built only from the one before it (AGENTS.md), and an unlabelled guess
+  would read as a requirement and be copied into every screen built from it.
 - **Start from [`_template.html`](_template.html).** Its shared `_swimlane.css` and
   `_swimlane.js` place the steps, draw the arrows and add the legend, so every swimlane
   looks the same; [`_template.png`](_template.png) shows how. Change those two files only
-  in their own pull request, and re-render every swimlane in it.
+  in their own pull request, and re-render every swimlane in it. Why: those two files
+  shape every swimlane's picture at once, so a change to them is reviewed on its own, and
+  every picture is refreshed together.
 
 ## Index
 
