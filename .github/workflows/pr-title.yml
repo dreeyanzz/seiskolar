@@ -56,8 +56,11 @@ jobs:
           if [ -z "$BODY" ]; then
             err "The body is empty. Use the template; it becomes the commit message on main."
           fi
+          # An HTML comment in the body would be copied into the commit on main. grep
+          # cannot tell a real comment from the marker quoted in backticks, so the
+          # marker fails this check anywhere in the body, even inside code.
           if printf '%s' "$BODY" | grep -q '<!--'; then
-            err "Remove HTML comments from the body; they would land in the commit on main."
+            err "The body contains '<!--', which starts an HTML comment, and an HTML comment would land in the commit on main. Remove every HTML comment, and do not quote the marker anywhere, not even in backticks or a code block. To write about it, describe it in words."
           fi
           if printf '%s' "$BODY" | grep -Eq '^Closes #[[:space:]]*$'; then
             err "Fill in 'Closes #<issue>', or delete that line."
