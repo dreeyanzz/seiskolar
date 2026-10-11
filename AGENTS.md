@@ -73,6 +73,57 @@ Use the SRS's words in every label:
 - Submission states are `not_started`, `submitted`, `under_review`, `verified` and
   `returned`, and the return reasons are the eight in FR-CHK-004.
 
+## Write everything in full
+
+**This repository is read mostly by AI agents, so be verbose.** An agent knows only what
+is written here. It cannot see your chats or meetings, and it does not remember what the
+last agent did. So everything written here carries its whole context, said outright:
+commits, pull requests, issues, reviews, READMEs, and the notes in drawings. Repeat a fact
+when the reader would otherwise have to hunt for it. A short text that leaves the next
+agent guessing is a defect. Verbose means complete, not padded: add context, never
+filler.
+
+Every time, say:
+
+- **What** it is, or what changed, in plain, full sentences. No shorthand only you
+  understand, and no "as discussed".
+- **Why:** the request, the problem or the requirement behind it.
+- **Where it comes from:** the SRS section and requirement IDs (`FR-SCH-001`), the
+  swimlane steps (`S03.4`), the wireframe, and the issue or pull request (`#12`), each
+  named so the next agent can open it.
+- **What was decided, and what was rejected,** with the reasons, so nobody reopens it.
+- **What is assumed or still open,** and who can settle it.
+- **How it was checked:** what you compared with what, and what you found.
+
+Where it goes:
+
+- **Commits:** every commit has a body under its subject, even a small one, with these
+  headings:
+
+  ```text
+  ## Why
+  ## Key Changes
+  ## Verification
+  ```
+
+- **Pull requests:** fill in every section of the template. A squash merge makes the
+  body the commit message on `main`, so it must make sense to someone who never saw the
+  conversation behind it.
+- **Issues:** what to build, from which source, what done looks like, what it waits for,
+  and who owns it.
+- **Reviews:** for each finding, what you saw, where, why it matters, and what would fix
+  it.
+- **READMEs:** each rule says why it exists, and each index row names what its item is
+  built from.
+- **Drawings:** a swimlane names what it covers and where it starts and ends; a wireframe
+  keeps its NOTE boxes and its trace line, which name its swimlane steps and SRS items;
+  a high-fidelity screen keeps its wireframe's file name.
+- **Shared files and scripts:** a comment at the top says what the file does and how to
+  use it, and a comment explains any choice that is not obvious.
+- **Decisions made outside the repository,** in a chat, a meeting or a message, do not
+  exist for agents until they are written here: in the pull request that acts on them,
+  in a folder README, or in the SRS with a new revision row.
+
 ## Doing a task
 
 When your human says **"Start my task"** or **"Continue my task"**, do this, and stop
@@ -93,9 +144,10 @@ only at the 🛑 points:
    source it comes from, and what you assumed. They present this work, so they must be
    able to explain all of it. Wait for their go-ahead.
 7. **Open the pull request** from the template, with `Closes #<task>` on the first line
-   and the AI assistance section filled in. Ask Adrian to review it; on Adrian's own
-   pull requests, ask a teammate. 🛑 Stop until it merges, or your human gives you the
-   next task.
+   and every section filled in, in full, including AI assistance (see
+   [Write everything in full](#write-everything-in-full)). Ask Adrian to review it; on
+   Adrian's own pull requests, ask a teammate. 🛑 Stop until it merges, or your human
+   gives you the next task.
 
 **Stop and ask** (your human asks Adrian) when the task or its source is unclear, when
 the work would change someone else's files or the SRS, or when the same step has failed
@@ -127,6 +179,8 @@ When your human says **"Review PR #N"**:
   - Scopes: `srs`, `swimlanes`, `low-fi`, `hi-fi`, `repo`.
   - The commit-msg hook checks commits. The `pr-title` check checks the title, the
     branch and the body, because they become the commit on `main`.
+- **Every commit has a body,** and every pull request fills in its whole template, as
+  [Write everything in full](#write-everything-in-full) says.
 - **One concern per pull request,** and every pull request targets `main`. Never base one
   on another pull request's branch: squash merges break it. To catch up, run
   `git merge origin/main` on your branch.
