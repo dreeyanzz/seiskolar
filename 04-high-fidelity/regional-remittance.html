@@ -1,4 +1,27 @@
 <!doctype html>
+<!--
+  Regional Office: tuition remittances. A high-fidelity screen of SEIskolar.
+
+  Finishes 03-low-fidelity/regional-remittance.html, with the same content and states.
+  That wireframe is this screen's source: change it first, then this file.
+  Serves swimlane steps S06.1, S06.2, S06.5, S06.13, in
+  02-swimlanes/06-settle-tuition.html.
+  SRS: FR-TUI-001.
+  States: record and disputed; record is the default. Open another with
+  regional-remittance.html?state=disputed.
+  Owner: @Tiamporado.
+
+  What the wireframe's notes say:
+  - In the record state: The proof goes to private storage (S06.2). CIT-U's coordinator
+    checks the remittance against the school's own records, then credits each scholar
+    (swimlane 06).
+  - In the disputed state: A school disputes with a reason, before or during crediting
+    (S06.5, S06.13). The corrected remittance goes back to the school as sent
+    (FR-TUI-001).
+
+  Its look and frame come from _style.css and _app.js (see README.md). Nothing here is
+  saved: a button that would save something shows a short message instead.
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8" />

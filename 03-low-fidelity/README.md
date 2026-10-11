@@ -8,26 +8,42 @@ of a swimlane, and names them at its foot.
 - **One file per screen:** `role-screen.html`. A screen that changes, such as a requirement
   before and after it is returned, lists its states in its `<head>`,
   `<meta name="render-states" content="not-started returned" />`, and marks what each
-  state shows with `data-state="returned"`. Open one state with `?state=returned`.
+  state shows with `data-state="returned"`. Open one state with `?state=returned`. Why:
+  one file keeps a screen's states in step, so a change reaches every state at once, and
+  the high-fidelity screen of the same name carries the same states.
 - **Three pictures of every state.** `npm run render` saves `name.phone.png` (360 px wide),
   `name.tablet.png` (768 px) and `name.desktop.png` (1440 px), or `name--state.phone.png`
   and so on for each state. Commit them with the screen. Nothing may scroll sideways on any
-  of the three; the renderer fails if it does.
+  of the three; the renderer fails if it does. Why: every screen must work on a phone, a
+  tablet and a desktop (Adrian asked for all three on 7 October 2026, and SRS NFR-ACC-001
+  asks for phones 360 px wide), and the pictures let a reviewer check all three on GitHub
+  without opening a browser.
 - **Grey boxes and real words.** No colour, images or branding: only the layout, the
   labels, and what each part holds. Every wireframe uses the shared `_wireframe.css`, and
   `_wireframe.js` draws its frame from `<body data-role="scholar" data-nav="...">`: the top
   bar, then a bar of tabs along the bottom of a phone, a rail on a tablet, and a sidebar on
-  a desktop. A screen holds only its own content, in `<main class="page">`.
+  a desktop. A screen holds only its own content, in `<main class="page">`. Why: a
+  wireframe settles what each screen holds and where, before anyone styles it, so review
+  stays on content; and with one shared frame, every screen's navigation is the same and
+  no screen repeats it.
 - **Real content, invented people.** The SRS's labels and states. CIT-U is the pilot
   school; every other school and every person is invented, with `@example.test` addresses.
-  Amounts and dates are sample values, not DOST's rates.
+  Amounts and dates are sample values, not DOST's rates. Why: real labels and states show
+  whether a screen matches the SRS; invented people keep real scholars' records out of a
+  student project, as the SRS's synthetic data mandate requires (§2.3); and sample amounts
+  must not read as DOST's actual rates.
 - **Only what the swimlane and the SRS say.** A gap you had to fill is labelled
-  `<span class="assumed">Assumed</span>` and listed in the pull request.
+  `<span class="assumed">Assumed</span>` and listed in the pull request. Why: a guess must
+  look like a guess, so the team settles it instead of building the high-fidelity screen
+  on it.
 - **Notes are for reviewers.** A dashed NOTE box says what the screen itself does not,
   citing the SRS, and the grey line at the foot names the steps served. Neither is part of
-  the screen.
+  the screen. Why: they carry what an agent or reviewer needs to judge the screen, such as
+  the rule behind it or the states not drawn, and they tie it to its swimlane steps. Each
+  high-fidelity screen repeats them in the comment at its top.
 - **Change `_wireframe.css` or `_wireframe.js` only in their own pull request,** and
-  re-render every wireframe in it.
+  re-render every wireframe in it. Why: those two files shape every wireframe at once, so
+  a change to them is reviewed on its own, and every picture is refreshed together.
 
 ## Index
 

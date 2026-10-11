@@ -1,2 +1,6 @@
 #!/usr/bin/env sh
+# Formats the files you are committing with Prettier before every commit, through
+# lint-staged, whose file patterns are in package.json ("lint-staged"). This is so every
+# file on main has one style, and the `checks` workflow's format check (npm run
+# format:check) passes. Installed by `npm install` (AGENTS.md, "Setting up a machine").
 npx lint-staged

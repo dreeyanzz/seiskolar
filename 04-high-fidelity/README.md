@@ -8,25 +8,42 @@ to the next screen its swimlane shows.
 
 - **Same name as its wireframe:** `04-high-fidelity/scholar-requirement.html` finishes
   `03-low-fidelity/scholar-requirement.html`, with the same content and states. Its
-  pictures, one for each device and state, sit beside it (`npm run render`).
+  pictures, one for each device and state, sit beside it (`npm run render`). Why: the
+  name is the link back. From a screen you find its wireframe, and from the wireframe its
+  swimlane steps and SRS items; change the wireframe first, then the screen.
+- **A comment at the top of each screen** names its wireframe, the swimlane steps it
+  serves and the swimlanes they are in, its SRS items, its states, its owner, and what the
+  wireframe's notes say. Why: a finished screen shows no notes or trace line, so without
+  the comment an agent that opens one file cannot see where it comes from. Keep it in step
+  with the wireframe.
 - **One look.** Every screen uses the shared `_style.css` for colour, type and spacing,
   and `_app.js` for its frame, as the wireframes use theirs. No colours of your own:
   inside a school's portal the brand colours are the school's, as its coordinator set them
-  (FR-ADM-003), and in the DOST console they are SEIskolar's.
+  (FR-ADM-003), and in the DOST console they are SEIskolar's. Why: one stylesheet keeps the
+  29 screens consistent and makes a change of colour or spacing in one place; FR-ADM-003
+  lets each school brand its own portal, so the colours there are the school's to choose.
 - **Shared parts are filled in for you.** `_app.js` puts an icon in
   `<span data-icon="upload">`, the school's crest or SEIskolar's mark in
   `<span data-mark="school">`, and a scanned grade report in `<div data-doc="grades">`.
-  Its comments list the rest.
+  Its comments list the rest. Why: copied into many files, icons and drawings would drift
+  apart; filled in from one place, they stay the same everywhere.
 - **Clickable.** Links and buttons open the screen that comes next in the swimlane. A
   button whose action would save something says what happened instead
   (`data-toast="Saved."`), because nothing is saved here. The grade lines work out their
-  weighted average as you type (FR-SCH-003).
+  weighted average as you type (FR-SCH-003). Why: the team presents the design by clicking
+  through it, so every button should go where a person would expect, and the message
+  makes clear when the prototype only pretends to save.
 - **Readable by everyone:** WCAG 2.1 AA (SRS NFR-ACC-001), so text contrast of at least
   4.5:1, borders of fields and buttons at 3:1, tap targets of at least 44 px, a visible
-  focus outline, and nothing that scrolls sideways at 360 px.
+  focus outline, and nothing that scrolls sideways at 360 px. Why: the SRS requires it,
+  and a design that fails it would pass the failure on to anything built from it.
 - **Static only.** HTML, CSS and a little browser JavaScript. No build step, no packages,
-  no server, and nothing saved anywhere.
-- **Invented people only.** CIT-U's crest here is a stand-in, not its seal.
+  no server, and nothing saved anywhere. Why: this repository holds the design, not an
+  implementation (AGENTS.md, "There is no code here"), and anyone can open a screen in a
+  browser with nothing to install.
+- **Invented people only.** CIT-U's crest here is a stand-in, not its seal. Why: real
+  scholars' records stay out of a student project (SRS §2.3), and a university's seal is
+  its own mark, not ours to reproduce.
 
 ## Index
 
