@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="review approved" />
+    <title>A release batch, Central Office · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="central" data-nav="central-batches">
+    <main class="page">
+      <p class="crumbs">
+        <a href="central-batches.html">Release batches</a> › VII-2026-014
+      </p>
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII · 1st Semester, AY 2026–2027</p>
+          <h1>Batch VII-2026-014</h1>
+          <p class="lead">
+            Monthly living allowance · 46 scholars · sent 6 Oct by Ana Villareal, DOST-VII
+          </p>
+        </div>
+        <span class="badge wait" data-state="review">Sent to Central Office</span>
+        <span class="badge ok" data-state="approved">Approved</span>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <section class="card stack">
+            <div class="card-head">
+              <h2>Scholars and amounts</h2>
+              <span class="small muted">As DOST-VII recorded them</span>
+            </div>
+            <div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Bea Santiago</h3>
+                  <p class="small muted">CIT-U · 2024-07-00001</p>
+                </div>
+                <div class="row">
+                  <span class="label">₱32,000</span>
+                  <span class="link" data-state="review">Remove</span>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="what">
+                  <h3>Jomar Dela Cruz</h3>
+                  <p class="small muted">CIT-U · 2024-07-00002</p>
+                </div>
+                <div class="row">
+                  <span class="label">₱32,000</span>
+                  <span class="link" data-state="review">Remove</span>
+                </div>
+              </div>
+              <div class="list-item" data-state="review">
+                <div class="what">
+                  <h3>Carlo Abellana</h3>
+                  <p class="small muted">
+                    San Isidro Institute of Technology · 2024-07-00063
+                  </p>
+                </div>
+                <span class="label">₱40,000</span>
+                <div class="field full">
+                  <span class="label">Why remove this scholar? (needed)</span>
+                  <span class="input filled"
+                    >The amount covers five months; this batch covers four.</span
+                  >
+                  <div class="actions">
+                    <span class="btn danger">Remove from the batch</span>
+                    <span class="btn">Cancel</span>
+                  </div>
+                </div>
+              </div>
+              <div class="list-item" data-state="approved">
+                <div class="what">
+                  <h3>Carlo Abellana</h3>
+                  <p class="small muted">
+                    San Isidro Institute of Technology · removed 8 Oct by Paolo Reyes:
+                    “The amount covers five months; this batch covers four.”
+                  </p>
+                </div>
+                <span class="badge off">Removed</span>
+              </div>
+            </div>
+            <p class="hint">Showing 3 of 46 · SEIskolar adds nothing up.</p>
+          </section>
+
+          <p class="note" data-state="review">
+            Removing one scholar needs a reason, which the scholar sees; the scholar moves
+            to a later batch and loses nothing (S05.6, S05.13). Returning the whole batch
+            needs a reason too (S05.8).
+          </p>
+          <p class="note" data-state="approved">
+            SEIskolar records the release and its date. It cannot see the money reach
+            anyone's account (FR-REL-003).
+          </p>
+        </div>
+
+        <aside class="stack">
+          <section class="card stack" data-state="review">
+            <h2>Your decision</h2>
+            <span class="btn primary block">Approve the batch</span>
+            <div class="field">
+              <span class="label">Why return it? (needed to return)</span>
+              <span class="input area"
+                >e.g. The amounts for two scholars don't match…</span
+              >
+            </div>
+            <span class="btn danger block">Return it to DOST-VII</span>
+          </section>
+
+          <section class="card stack" data-state="approved">
+            <h2>Approved 9 Oct</h2>
+            <p class="small muted">By Paolo Reyes</p>
+            <div class="field">
+              <span class="label">Funds released on</span>
+              <span class="input filled">14 October 2026</span>
+            </div>
+            <span class="btn primary block">Record the release</span>
+            <p class="hint">Record it once the funds are released (S05.10).</p>
+          </section>
+        </aside>
+      </div>
+
+      <p class="trace">Serves S05.6 to S05.11 · FR-REL-002</p>
+    </main>
+  </body>
+</html>

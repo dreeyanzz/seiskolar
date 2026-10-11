@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scholar dashboard · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="scholar" data-nav="scholar-dashboard">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Periodic Report</p>
+          <h1>1st Semester, AY 2026–2027</h1>
+          <p class="lead">RA 7687 · Award batch 2024 · BS Computer Science, 3rd year</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <section class="banner">
+            <strong>9 days left</strong>
+            <p>
+              Your Certified True Copy of Grades came back for correction. Documents not
+              cleared by 30 September are checked with a later batch.
+            </p>
+          </section>
+          <p class="note">
+            The banner has four states (FR-SCH-001): open with something outstanding, as
+            here; open with everything cleared; closed with something outstanding, which
+            says “Nothing is forfeited — file now, and what you are owed is released with
+            a later batch.”; and closed with everything cleared. With no deadline set
+            there is no banner (S02.11). Days count in Philippine time.
+          </p>
+
+          <section class="card">
+            <div class="card-head">
+              <h2>What to file this term</h2>
+              <span class="badge wait">1 of 2 cleared</span>
+            </div>
+            <div>
+              <a class="list-item" href="scholar-requirement.html?state=verified">
+                <div class="what">
+                  <h3>Study Load</h3>
+                  <p class="small muted">
+                    DOST calls it the Registration Form · Mandatory
+                  </p>
+                </div>
+                <span class="badge ok">Verified</span>
+              </a>
+              <a class="list-item" href="scholar-requirement.html?state=returned">
+                <div class="what">
+                  <h3>Certified True Copy of Grades</h3>
+                  <p class="small muted">
+                    DOST calls it the Certified Report of Grades · Mandatory · Returned 20
+                    Sep: illegible
+                  </p>
+                </div>
+                <span class="badge bad">Returned</span>
+              </a>
+            </div>
+          </section>
+          <p class="note">
+            Each requirement shows its school's name, with DOST's name under it (S02.3). A
+            requirement opens its own screen.
+          </p>
+        </div>
+
+        <aside class="stack">
+          <section class="card stack">
+            <h2>Where your stipend is</h2>
+            <p class="small muted">
+              Each release you are in, your tuition, and your benefits' ceilings.
+            </p>
+            <a class="btn block" href="scholar-status.html">Open Status</a>
+          </section>
+        </aside>
+      </div>
+
+      <p class="trace">
+        Serves S01.8, S02.8 to S02.11, S03.1 to S03.3, S08.12 · FR-SCH-001
+      </p>
+    </main>
+  </body>
+</html>

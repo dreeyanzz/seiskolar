@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="scholars coordinators" />
+    <title>Accounts · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-accounts">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII</p>
+          <h1>Accounts</h1>
+          <p class="lead">Scholar and coordinator accounts for the region's schools.</p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <nav class="tabs" data-state="scholars">
+          <span class="tab active">Scholars</span>
+          <a class="tab" href="regional-accounts.html?state=coordinators">Coordinators</a>
+        </nav>
+        <nav class="tabs" data-state="coordinators">
+          <a class="tab" href="regional-accounts.html?state=scholars">Scholars</a>
+          <span class="tab active">Coordinators</span>
+        </nav>
+
+        <!-- Scholars -->
+        <div class="layout" data-state="scholars">
+          <section class="card">
+            <div class="card-head">
+              <h2>370 scholars</h2>
+              <span class="input select filled">All schools</span>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Scholar</th>
+                  <th>Scholar number</th>
+                  <th>School</th>
+                  <th>Award year</th>
+                  <th>Account</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Scholar">Bea Santiago</td>
+                  <td data-label="Scholar number">2024-07-00001</td>
+                  <td data-label="School">CIT-U</td>
+                  <td data-label="Award year">2024</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Scholar">Marites Ocampo</td>
+                  <td data-label="Scholar number">2024-07-00041</td>
+                  <td data-label="School">Lapu Science College</td>
+                  <td data-label="Award year">2024</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Scholar">Ella Ramos</td>
+                  <td data-label="Scholar number">2026-07-00112</td>
+                  <td data-label="School">CIT-U</td>
+                  <td data-label="Award year">2026</td>
+                  <td data-label="Account">
+                    <span class="badge off">Not signed in yet</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="hint">Showing 3 of 370</p>
+          </section>
+
+          <section class="card stack">
+            <h2>Add a scholar</h2>
+            <div class="field">
+              <span class="label">Applicant's email</span>
+              <span class="input filled">ella.ramos@example.test</span>
+            </div>
+            <div class="field">
+              <span class="label">Full name</span>
+              <span class="input filled">Ella Ramos</span>
+            </div>
+            <div class="field">
+              <span class="label">DOST scholar number</span>
+              <span class="input filled">2026-07-00112</span>
+            </div>
+            <div class="field">
+              <span class="label">First school</span>
+              <span class="input select filled">CIT-U</span>
+              <span class="hint">DOST-VII's schools only</span>
+            </div>
+            <div class="grid cols-2">
+              <div class="field">
+                <span class="label">Award year</span>
+                <span class="input filled">2026</span>
+              </div>
+              <div class="field">
+                <span class="label">Year level</span>
+                <span class="input select filled">1st year</span>
+              </div>
+            </div>
+            <div class="field">
+              <span class="label">Programme</span>
+              <span class="input filled">BS Civil Engineering</span>
+            </div>
+            <div class="field">
+              <span class="label">Scholarship type</span>
+              <span class="input select filled">RA 7687</span>
+            </div>
+            <span class="btn primary">Create the account</span>
+          </section>
+        </div>
+
+        <!-- Coordinators -->
+        <div class="layout" data-state="coordinators">
+          <section class="card">
+            <h2>4 coordinators</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Coordinator</th>
+                  <th>School</th>
+                  <th>Email</th>
+                  <th>Account</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Coordinator">Ruel Mendoza</td>
+                  <td data-label="School">CIT-U</td>
+                  <td data-label="Email">ruel.mendoza@example.test</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Coordinator">Dina Flores</td>
+                  <td data-label="School">Lapu Science College</td>
+                  <td data-label="Email">dina.flores@example.test</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Coordinator">Ramil Ortega</td>
+                  <td data-label="School">San Isidro Institute of Technology</td>
+                  <td data-label="Email">ramil.ortega@example.test</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Coordinator">Gina Sison</td>
+                  <td data-label="School">Mabini State College</td>
+                  <td data-label="Email">gina.sison@example.test</td>
+                  <td data-label="Account"><span class="badge ok">Signed in</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="card stack">
+            <h2>Add a coordinator</h2>
+            <div class="field">
+              <span class="label">Email</span>
+              <span class="input filled">mark.villanueva@example.test</span>
+            </div>
+            <div class="field">
+              <span class="label">Full name</span>
+              <span class="input filled">Mark Villanueva</span>
+            </div>
+            <div class="field">
+              <span class="label">School</span>
+              <span class="input select filled">Liloan Polytechnic College</span>
+              <span class="hint">DOST-VII's schools only</span>
+            </div>
+            <span class="btn primary">Create the account</span>
+          </section>
+        </div>
+
+        <p class="note">
+          A Regional Office creates accounts for its own region's schools only; DOST staff
+          accounts are the system administrator's (FR-ADM-001). A new account signs in
+          with its email (swimlane 01).
+        </p>
+      </div>
+
+      <p class="trace">Serves S08.5 to S08.7 · FR-ADM-001</p>
+    </main>
+  </body>
+</html>

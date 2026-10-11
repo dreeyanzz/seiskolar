@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="record disputed" />
+    <title>Tuition remittances · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-remittance">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII</p>
+          <h1>Tuition remittances</h1>
+          <p class="lead">
+            What DOST sends each school for its scholars' tuition, with the proof.
+          </p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <!-- Recording a new remittance -->
+          <section class="card stack" data-state="record">
+            <h2>Record a remittance</h2>
+            <div class="grid cols-2">
+              <div class="field">
+                <span class="label">School</span>
+                <span class="input select filled">CIT-U</span>
+              </div>
+              <div class="field">
+                <span class="label">Term</span>
+                <span class="input select filled">1st Semester, AY 2026–2027</span>
+              </div>
+              <div class="field">
+                <span class="label">Check or LDDAP number</span>
+                <span class="input filled">LDDAP-ADA 2026-10-0412</span>
+              </div>
+              <div class="field">
+                <span class="label">Amount</span>
+                <span class="input filled">₱920,000</span>
+              </div>
+            </div>
+            <div class="field">
+              <span class="label">Proof</span>
+              <div class="dropzone">
+                <p class="label">Choose the scanned LDDAP-ADA or check</p>
+                <p class="hint">Kept in private storage</p>
+              </div>
+            </div>
+            <div class="field">
+              <span class="label">Scholars on the list</span>
+              <div class="row spread">
+                <span>46 of CIT-U's 184 scholars chosen</span>
+                <span class="btn">Choose scholars</span>
+              </div>
+            </div>
+            <div class="actions">
+              <span class="btn primary">Send to CIT-U</span>
+            </div>
+          </section>
+
+          <!-- Correcting one a school disputed -->
+          <section class="banner" data-state="disputed">
+            <strong>Disputed by Lapu Science College on 6 Oct</strong>
+            <p>
+              “Three scholars on our billing are not on the list.” Correct the remittance,
+              then send it again.
+            </p>
+          </section>
+          <section class="card stack" data-state="disputed">
+            <div class="card-head">
+              <h2>LDDAP-ADA 2026-10-0398</h2>
+              <span class="badge bad">Disputed</span>
+            </div>
+            <div class="grid cols-2">
+              <div class="field">
+                <span class="label">School</span>
+                <span class="input read">Lapu Science College</span>
+              </div>
+              <div class="field">
+                <span class="label">Term</span>
+                <span class="input read">1st Semester, AY 2026–2027</span>
+              </div>
+              <div class="field">
+                <span class="label">Check or LDDAP number</span>
+                <span class="input filled">LDDAP-ADA 2026-10-0398</span>
+              </div>
+              <div class="field">
+                <span class="label">Amount</span>
+                <span class="input filled">₱540,000</span>
+              </div>
+            </div>
+            <div class="field">
+              <span class="label">Proof</span>
+              <div class="row spread">
+                <span class="link">LDDAP-ADA, 1 page</span>
+                <span class="btn">Replace the proof</span>
+              </div>
+            </div>
+            <div class="field">
+              <span class="label">Scholars on the list</span>
+              <div class="row spread">
+                <span>27 of Lapu Science College's 96 scholars chosen</span>
+                <span class="btn">Choose scholars</span>
+              </div>
+            </div>
+            <div class="actions">
+              <span class="btn primary">Send the corrected remittance</span>
+            </div>
+          </section>
+
+          <p class="note" data-state="record">
+            The proof goes to private storage (S06.2). CIT-U's coordinator checks the
+            remittance against the school's own records, then credits each scholar
+            (swimlane 06).
+          </p>
+          <p class="note" data-state="disputed">
+            A school disputes with a reason, before or during crediting (S06.5, S06.13).
+            The corrected remittance goes back to the school as sent (FR-TUI-001).
+          </p>
+        </div>
+
+        <aside class="card">
+          <h2>Remittances</h2>
+          <div class="list-item">
+            <div class="what">
+              <h3>Lapu Science College</h3>
+              <p class="small muted">2026-10-0398 · 1st Sem, AY 2026–27</p>
+            </div>
+            <span class="badge bad">Disputed</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>San Isidro Institute of Technology</h3>
+              <p class="small muted">2026-09-0351 · 31 of 40 credited</p>
+            </div>
+            <span class="badge wait">Received</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>Mabini State College</h3>
+              <p class="small muted">2026-09-0344 · 1st Sem, AY 2026–27</p>
+            </div>
+            <span class="badge ok">Settled</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>CIT-U</h3>
+              <p class="small muted">2026-06-0187 · 2nd Sem, AY 2025–26</p>
+            </div>
+            <span class="badge ok">Settled</span>
+          </div>
+        </aside>
+      </div>
+
+      <p class="trace">Serves S06.1, S06.2, S06.5, S06.13 · FR-TUI-001</p>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portal settings · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="coordinator" data-nav="coordinator-portal-settings">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">CIT-U</p>
+          <h1>Portal settings</h1>
+          <p class="lead">
+            How the school's portal looks to its scholars, and how its grades read.
+          </p>
+        </div>
+      </div>
+
+      <div class="split">
+        <section class="card stack">
+          <h2>Branding</h2>
+          <div class="field">
+            <span class="label">Logo</span>
+            <div class="row">
+              <span class="img logo"></span>
+              <span class="btn">Upload a new logo</span>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Primary colour</span>
+            <div class="row">
+              <span class="swatch"></span><span class="input filled">#800000</span>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Secondary colour</span>
+            <div class="row">
+              <span class="swatch"></span><span class="input filled">#F2C200</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card stack">
+          <h2>Grading</h2>
+          <div class="grid cols-2">
+            <div class="field">
+              <span class="label">Lowest grade</span>
+              <span class="input filled">1.00</span>
+            </div>
+            <div class="field">
+              <span class="label">Highest grade</span>
+              <span class="input filled">5.00</span>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Which end is best?</span>
+            <div class="check"><span class="radio on"></span>The highest grade</div>
+            <div class="check"><span class="radio"></span>The lowest grade</div>
+          </div>
+          <div class="field">
+            <span class="label">Passing grade</span>
+            <span class="input filled">3.00</span>
+          </div>
+          <div class="field">
+            <span class="label">Agreement §VII.A threshold</span>
+            <span class="input read">3.50, set by DOST-SEI Central Office</span>
+          </div>
+        </section>
+      </div>
+
+      <div class="actions">
+        <span class="btn primary">Save the settings</span>
+      </div>
+      <p class="note">
+        With these, a grade line can show that it passes, and a term's average whether it
+        meets the threshold. SEIskolar never declares a scholar's standing (FR-ADM-003).
+      </p>
+      <p class="trace">Serves S09.1 to S09.3 · FR-ADM-003</p>
+    </main>
+  </body>
+</html>

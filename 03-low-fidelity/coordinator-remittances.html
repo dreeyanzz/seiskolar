@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="check crediting" />
+    <title>Tuition remittances · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="coordinator" data-nav="coordinator-remittances">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">CIT-U</p>
+          <h1>Tuition remittances</h1>
+          <p class="lead">What DOST sends the school for its scholars' tuition.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <section class="card stack">
+            <div class="card-head">
+              <div>
+                <h2>LDDAP-ADA 2026-10-0412</h2>
+                <p class="small muted">
+                  1st Semester, AY 2026–2027 · sent 3 Oct by DOST-VII
+                </p>
+              </div>
+              <span class="badge wait" data-state="check">Sent</span>
+              <span class="badge wait" data-state="crediting">Received</span>
+            </div>
+            <div class="grid cols-3">
+              <div>
+                <p class="small muted">Amount</p>
+                <p class="label">₱920,000</p>
+              </div>
+              <div>
+                <p class="small muted">Scholars on the list</p>
+                <p class="label">46</p>
+              </div>
+              <div>
+                <p class="small muted">Proof</p>
+                <p class="label"><span class="link">LDDAP-ADA, 2 pages</span></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card stack" data-state="check">
+            <h2>Does it match the school's records?</h2>
+            <p class="small muted">
+              Check the amount, the term and every scholar on the list against the
+              school's billing.
+            </p>
+            <div class="actions">
+              <span class="btn primary">It matches</span>
+              <span class="btn danger">Dispute it</span>
+            </div>
+            <div class="field">
+              <span class="label">Why it doesn't match (needed to dispute)</span>
+              <span class="input area"
+                >e.g. Three scholars on our billing are not on the list.</span
+              >
+            </div>
+          </section>
+
+          <section class="card stack" data-state="crediting">
+            <div class="card-head">
+              <h2>Credit scholars' accounts</h2>
+              <span class="small muted">40 of 46 credited</span>
+            </div>
+            <div>
+              <div class="list-item">
+                <div class="check">
+                  <span class="box on"></span>
+                  <div class="what">
+                    <h3>Jomar Dela Cruz</h3>
+                    <p class="small muted">2024-07-00002</p>
+                  </div>
+                </div>
+                <span class="badge wait">Not yet</span>
+              </div>
+              <div class="list-item">
+                <div class="check">
+                  <span class="box on"></span>
+                  <div class="what">
+                    <h3>Kristine Uy</h3>
+                    <p class="small muted">2024-07-00003</p>
+                  </div>
+                </div>
+                <span class="badge wait">Not yet</span>
+              </div>
+              <div class="list-item">
+                <div class="check">
+                  <span class="box off"></span>
+                  <div class="what">
+                    <h3>Bea Santiago</h3>
+                    <p class="small muted">2024-07-00001</p>
+                  </div>
+                </div>
+                <span class="badge ok">Credited 8 Oct</span>
+              </div>
+            </div>
+            <p class="hint">Showing 3 of 46</p>
+            <div class="actions">
+              <span class="btn">Credit the 2 selected</span>
+              <span class="btn primary">Credit everyone left</span>
+              <span class="btn danger">Dispute it</span>
+            </div>
+          </section>
+
+          <p class="note" data-state="check">
+            Disputing needs a reason. DOST-VII then corrects the remittance and sends it
+            again (S06.4, S06.5).
+          </p>
+          <p class="note" data-state="crediting">
+            Once every scholar on the list is credited, the remittance is settled (S06.9).
+            A mismatch found now can still be disputed (S06.13).
+          </p>
+        </div>
+
+        <aside class="card">
+          <h2>All remittances</h2>
+          <div class="list-item">
+            <div class="what">
+              <h3>2026-10-0412</h3>
+              <p class="small muted">1st Sem, AY 2026–27</p>
+            </div>
+            <span class="badge wait" data-state="check">Sent</span>
+            <span class="badge wait" data-state="crediting">Received</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>2026-06-0187</h3>
+              <p class="small muted">2nd Sem, AY 2025–26</p>
+            </div>
+            <span class="badge ok">Settled</span>
+          </div>
+          <div class="list-item">
+            <div class="what">
+              <h3>2026-01-0033</h3>
+              <p class="small muted">1st Sem, AY 2025–26</p>
+            </div>
+            <span class="badge ok">Settled</span>
+          </div>
+        </aside>
+      </div>
+
+      <p class="trace">Serves S06.3 to S06.11, S06.13 · FR-TUI-002</p>
+    </main>
+  </body>
+</html>

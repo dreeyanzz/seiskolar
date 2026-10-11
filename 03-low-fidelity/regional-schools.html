@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schools · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-schools">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-VII</p>
+          <h1>Schools</h1>
+          <p class="lead">The schools DOST-VII supervises, each with its own portal.</p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="card">
+          <h2>5 schools</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>School</th>
+                <th>Code</th>
+                <th>Portal address</th>
+                <th>Coordinator</th>
+                <th class="num">Scholars</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="School">Cebu Institute of Technology – University</td>
+                <td data-label="Code">CITU</td>
+                <td data-label="Portal address">citu.seiskolar.example.test</td>
+                <td data-label="Coordinator">Ruel Mendoza</td>
+                <td class="num" data-label="Scholars">184</td>
+              </tr>
+              <tr>
+                <td data-label="School">Lapu Science College</td>
+                <td data-label="Code">LSC</td>
+                <td data-label="Portal address">lsc.seiskolar.example.test</td>
+                <td data-label="Coordinator">Dina Flores</td>
+                <td class="num" data-label="Scholars">96</td>
+              </tr>
+              <tr>
+                <td data-label="School">San Isidro Institute of Technology</td>
+                <td data-label="Code">SIIT</td>
+                <td data-label="Portal address">siit.seiskolar.example.test</td>
+                <td data-label="Coordinator">Ramil Ortega</td>
+                <td class="num" data-label="Scholars">52</td>
+              </tr>
+              <tr>
+                <td data-label="School">Mabini State College</td>
+                <td data-label="Code">MSC</td>
+                <td data-label="Portal address">msc.seiskolar.example.test</td>
+                <td data-label="Coordinator">Gina Sison</td>
+                <td class="num" data-label="Scholars">38</td>
+              </tr>
+              <tr>
+                <td data-label="School">Liloan Polytechnic College</td>
+                <td data-label="Code">LPC</td>
+                <td data-label="Portal address">lpc.seiskolar.example.test</td>
+                <td data-label="Coordinator">
+                  <a class="link" href="regional-accounts.html?state=coordinators"
+                    >None yet: add one</a
+                  >
+                </td>
+                <td class="num" data-label="Scholars">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card stack">
+          <h2>Add a school</h2>
+          <div class="field">
+            <span class="label">Name</span>
+            <span class="input">e.g. Liloan Polytechnic College</span>
+          </div>
+          <div class="field">
+            <span class="label">Code</span>
+            <span class="input">e.g. LPC</span>
+          </div>
+          <div class="field">
+            <span class="label">Portal address</span>
+            <span class="input">name.seiskolar.example.test</span>
+            <span class="hint"
+              >Picks the school's screens only, never its data (FR-IAM-002)</span
+            >
+          </div>
+          <div class="field">
+            <span class="label">Region</span>
+            <span class="input read">DOST-VII: this office's own</span>
+          </div>
+          <span class="btn primary">Create the school</span>
+        </section>
+      </div>
+
+      <p class="note">
+        A Regional Office creates schools in its own region only (FR-ADM-001). The
+        school's coordinator then sets up its calendar, requirement names and portal
+        (swimlanes 02 and 09).
+      </p>
+      <p class="trace">Serves S08.4 · FR-ADM-001</p>
+    </main>
+  </body>
+</html>

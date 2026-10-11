@@ -6,9 +6,9 @@ to the next screen its swimlane shows.
 
 ## Rules
 
-- **Same name as its wireframe:** `04-high-fidelity/scholar-dashboard--outstanding.html`
-  finishes `03-low-fidelity/scholar-dashboard--outstanding.html`, with the same content
-  and states. Its PNG sits beside it (`npm run render`).
+- **Same name as its wireframe:** `04-high-fidelity/scholar-requirement.html` finishes
+  `03-low-fidelity/scholar-requirement.html`, with the same content and states. Its
+  pictures, one for each device and state, sit beside it (`npm run render`).
 - **One look.** Every screen uses the shared `_style.css` for colour, type and spacing.
   No colours of your own.
 - **Clickable.** Links and buttons open the screen that comes next in the swimlane.

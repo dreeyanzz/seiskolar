@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Regions · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="admin" data-nav="admin-regions">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">System administration</p>
+          <h1>Regions</h1>
+          <p class="lead">
+            Reference data: the regions, and the office that supervises each.
+          </p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="card">
+          <h2>Regions</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Region</th>
+                <th>Office</th>
+                <th>In use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Code">VII</td>
+                <td data-label="Region">Central Visayas</td>
+                <td data-label="Office">DOST-VII Regional Office</td>
+                <td data-label="In use"><span class="badge ok">Yes</span></td>
+              </tr>
+              <tr>
+                <td data-label="Code">VI</td>
+                <td data-label="Region">Western Visayas</td>
+                <td data-label="Office">DOST-VI Regional Office</td>
+                <td data-label="In use"><span class="badge ok">Yes</span></td>
+              </tr>
+              <tr>
+                <td data-label="Code">X</td>
+                <td data-label="Region">Northern Mindanao</td>
+                <td data-label="Office">DOST-X Regional Office</td>
+                <td data-label="In use"><span class="badge ok">Yes</span></td>
+              </tr>
+              <tr>
+                <td data-label="Code">NCR</td>
+                <td data-label="Region">National Capital Region</td>
+                <td data-label="Office">DOST-NCR Regional Office</td>
+                <td data-label="In use"><span class="badge ok">Yes</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card stack">
+          <h2>Add a region</h2>
+          <div class="grid cols-2">
+            <div class="field">
+              <span class="label">Code</span>
+              <span class="input">e.g. VIII</span>
+            </div>
+            <div class="field">
+              <span class="label">Name</span>
+              <span class="input">e.g. Eastern Visayas</span>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Office name</span>
+            <span class="input">e.g. DOST-VIII Regional Office</span>
+          </div>
+          <div class="field">
+            <span class="label">Office address</span>
+            <span class="input area"></span>
+          </div>
+          <div class="field">
+            <span class="label">Run by</span>
+            <div class="check"><span class="radio on"></span>A DOST Regional Office</div>
+            <div class="check"><span class="radio"></span>An autonomous ministry</div>
+          </div>
+          <div class="grid cols-2">
+            <div class="field">
+              <span class="label">In use from</span>
+              <span class="input">Date</span>
+            </div>
+            <div class="field">
+              <span class="label">Until (optional)</span>
+              <span class="input">Date</span>
+            </div>
+          </div>
+          <span class="btn primary">Save the region</span>
+        </section>
+      </div>
+
+      <p class="note">
+        The fields are the SRS's regions table (§4.3). A region stops being used on its
+        end date.
+      </p>
+      <p class="trace">Serves S08.1 · SRS §4.1 “Maintain Reference Data”</p>
+    </main>
+  </body>
+</html>

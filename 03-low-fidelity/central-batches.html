@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Release batches, Central Office · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="central" data-nav="central-batches">
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">DOST-SEI Central Office</p>
+          <h1>Release batches</h1>
+          <p class="lead">What the Regional Offices send for release.</p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <section class="card">
+          <div class="grid cols-2">
+            <div class="field">
+              <span class="label">Region</span>
+              <span class="input select filled">All regions</span>
+            </div>
+            <div class="field">
+              <span class="label">Status</span>
+              <span class="input select filled">All statuses</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <table class="table wide">
+            <thead>
+              <tr>
+                <th>Batch</th>
+                <th>Region</th>
+                <th>Benefits</th>
+                <th class="num">Scholars</th>
+                <th>Sent</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Batch">VII-2026-014</td>
+                <td data-label="Region">DOST-VII</td>
+                <td data-label="Benefits">Monthly living allowance</td>
+                <td class="num" data-label="Scholars">46</td>
+                <td data-label="Sent">6 Oct</td>
+                <td data-label="Status"><span class="badge wait">Sent</span></td>
+                <td data-label="">
+                  <a class="btn" href="central-batch.html?state=review">Review</a>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="Batch">VI-2026-022</td>
+                <td data-label="Region">DOST-VI</td>
+                <td data-label="Benefits">Monthly living allowance</td>
+                <td class="num" data-label="Scholars">58</td>
+                <td data-label="Sent">3 Oct</td>
+                <td data-label="Status">
+                  <span class="badge wait">Approved 7 Oct</span>
+                </td>
+                <td data-label="">
+                  <a class="btn" href="central-batch.html?state=approved"
+                    >Record the release</a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td data-label="Batch">X-2026-009</td>
+                <td data-label="Region">DOST-X</td>
+                <td data-label="Benefits">Learning materials and connectivity</td>
+                <td class="num" data-label="Scholars">31</td>
+                <td data-label="Sent">30 Sep</td>
+                <td data-label="Status"><span class="badge wait">Sent</span></td>
+                <td data-label=""><span class="btn">Review</span></td>
+              </tr>
+              <tr>
+                <td data-label="Batch">VII-2026-013</td>
+                <td data-label="Region">DOST-VII</td>
+                <td data-label="Benefits">Learning materials and connectivity</td>
+                <td class="num" data-label="Scholars">40</td>
+                <td data-label="Sent">1 Oct</td>
+                <td data-label="Status"><span class="badge bad">Returned 5 Oct</span></td>
+                <td data-label=""><span class="btn">View</span></td>
+              </tr>
+              <tr>
+                <td data-label="Batch">VII-2026-011</td>
+                <td data-label="Region">DOST-VII</td>
+                <td data-label="Benefits">Two benefits</td>
+                <td class="num" data-label="Scholars">52</td>
+                <td data-label="Sent">30 Jun</td>
+                <td data-label="Status"><span class="badge ok">Released 14 Jul</span></td>
+                <td data-label=""><span class="btn">View</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <p class="note">
+          Central Office reads every region's batches (SRS §1.3). Every decision on a
+          batch records who made it and when (FR-REL-002).
+        </p>
+      </div>
+
+      <p class="trace">Serves S05.6 · FR-REL-002</p>
+    </main>
+  </body>
+</html>

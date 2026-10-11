@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="school console wrong-password" />
+    <title>Sign in · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="public">
+    <main class="alone">
+      <div class="panel stack">
+        <div class="row" data-state="school wrong-password">
+          <span class="img logo"></span>
+          <div>
+            <p class="label">Cebu Institute of Technology – University</p>
+            <p class="small muted">Scholar portal · SEIskolar</p>
+          </div>
+        </div>
+        <div class="row" data-state="console">
+          <span class="img logo"></span>
+          <div>
+            <p class="label">SEIskolar</p>
+            <p class="small muted">DOST console</p>
+          </div>
+        </div>
+
+        <section class="card stack">
+          <h1>Sign in</h1>
+          <p class="error" data-state="wrong-password">Wrong email or password.</p>
+          <div class="field">
+            <span class="label">Email</span>
+            <span class="input" data-state="school console">name@example.test</span>
+            <span class="input filled" data-state="wrong-password"
+              >bea.santiago@example.test</span
+            >
+          </div>
+          <div class="field">
+            <span class="label">Password</span>
+            <span class="input">••••••••</span>
+          </div>
+          <span class="btn primary block">Sign in</span>
+        </section>
+
+        <p class="note">
+          The address picks this screen (S01.2): a school's portal address shows that
+          school's portal, and the DOST console's address shows the console. The address
+          grants nothing; the account's role, region and school decide what it sees
+          (FR-IAM-002, FR-IAM-003).
+        </p>
+        <p class="trace">Serves S01.1 to S01.4, S08.8 · FR-IAM-001, FR-IAM-002</p>
+      </div>
+    </main>
+  </body>
+</html>

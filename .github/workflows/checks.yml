@@ -29,13 +29,24 @@ jobs:
       # A commit made without the hooks (a lab PC, the GitHub web editor) still
       # gets its formatting checked here.
       - run: npm run format:check
-      - name: Every drawing has its picture
+      # A swimlane has one picture. A screen has one per device (phone, tablet,
+      # desktop), and one set per state it lists (scripts/render.mjs).
+      - name: Every drawing has its pictures
         run: |
           missing=0
-          for f in $(git ls-files '02-swimlanes/*.html' '03-low-fidelity/*.html' '04-high-fidelity/*.html'); do
+          for f in $(git ls-files '02-swimlanes/*.html'); do
             if [ ! -f "${f%.html}.png" ]; then
               echo "::error file=$f::No ${f%.html}.png. Run: npm run render -- $f, then commit the PNG."
               missing=1
             fi
+          done
+          for f in $(git ls-files '03-low-fidelity/*.html' '04-high-fidelity/*.html'); do
+            base="${f%.html}"
+            for device in phone tablet desktop; do
+              if ! compgen -G "$base.$device.png" >/dev/null && ! compgen -G "$base--*.$device.png" >/dev/null; then
+                echo "::error file=$f::No $device picture. Run: npm run render -- $f, then commit the PNGs."
+                missing=1
+              fi
+            done
           done
           exit $missing

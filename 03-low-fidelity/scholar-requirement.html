@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="not-started returned verified" />
+    <title>A requirement · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="scholar" data-nav="scholar-dashboard">
+    <main class="page">
+      <p class="crumbs">
+        <a href="scholar-dashboard.html">Home</a> › 1st Semester, AY 2026–2027
+      </p>
+      <div class="page-head">
+        <div>
+          <h1>Certified True Copy of Grades</h1>
+          <p class="lead">DOST calls it the Certified Report of Grades · Mandatory</p>
+        </div>
+        <span class="badge off" data-state="not-started">Not started</span>
+        <span class="badge bad" data-state="returned">Returned</span>
+        <span class="badge ok" data-state="verified">Verified</span>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <section class="banner" data-state="returned">
+            <strong>Returned on 20 September: illegible</strong>
+            <p>
+              “The bottom-right corner is cut off, so the last two subjects can't be
+              read.” File a corrected copy. Your first copy stays on record.
+            </p>
+          </section>
+          <section class="banner" data-state="verified">
+            <strong>Verified on 24 September</strong>
+            <p>Nothing more to do for this requirement. It can no longer be changed.</p>
+          </section>
+
+          <section class="card stack" data-state="not-started returned">
+            <h2>The file</h2>
+            <p class="small muted">
+              From CIT-U: ask the Registrar's Office for a certified true copy, then scan
+              or photograph the whole page, with the registrar's signature and dry seal.
+            </p>
+            <div class="dropzone">
+              <p class="label">Choose a file</p>
+              <p class="hint">PDF, JPEG, PNG, HEIC or WebP · up to 10 MB</p>
+            </div>
+          </section>
+
+          <section class="card stack">
+            <div class="card-head">
+              <h2>Your grades, subject by subject</h2>
+              <span class="small muted"
+                >CIT-U's scale: 1.00 to 5.00, higher is better</span
+              >
+            </div>
+            <table class="table keep">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Subject code</th>
+                  <th class="num">Units</th>
+                  <th class="num">Grade</th>
+                  <th>Passes?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="#">1</td>
+                  <td data-label="Subject code">CS 311</td>
+                  <td class="num" data-label="Units">3</td>
+                  <td class="num" data-label="Grade">4.50</td>
+                  <td data-label="Passes?">Yes</td>
+                </tr>
+                <tr>
+                  <td data-label="#">2</td>
+                  <td data-label="Subject code">CS 312</td>
+                  <td class="num" data-label="Units">3</td>
+                  <td class="num" data-label="Grade">4.20</td>
+                  <td data-label="Passes?">Yes</td>
+                </tr>
+                <tr>
+                  <td data-label="#">3</td>
+                  <td data-label="Subject code">MATH 301</td>
+                  <td class="num" data-label="Units">3</td>
+                  <td class="num" data-label="Grade">4.80</td>
+                  <td data-label="Passes?">Yes</td>
+                </tr>
+                <tr>
+                  <td data-label="#">4</td>
+                  <td data-label="Subject code">GE 105</td>
+                  <td class="num" data-label="Units">3</td>
+                  <td class="num" data-label="Grade">4.00</td>
+                  <td data-label="Passes?">Yes</td>
+                </tr>
+              </tbody>
+            </table>
+            <span class="btn" data-state="not-started returned">Add a subject</span>
+            <div class="row spread">
+              <span class="label">Weighted average</span>
+              <span class="label">4.3750 · 12 units</span>
+            </div>
+            <p class="hint">
+              Worked out as you type: each grade times its units, added up, divided by all
+              the units. CIT-U's Agreement §VII.A threshold is 3.50; this average meets
+              it.
+            </p>
+          </section>
+
+          <div class="actions" data-state="not-started returned">
+            <span class="btn primary">File it</span>
+            <a class="btn" href="scholar-dashboard.html">Cancel</a>
+          </div>
+          <p class="note" data-state="not-started returned">
+            Up to 30 lines; units more than 0 and at most 15; grades inside the school's
+            scale (FR-SCH-003). If the file or a line is not allowed, the screen says what
+            to fix (S03.6). A line may show that it passes, and the average whether it
+            meets the threshold, but never a verdict on standing (FR-ADM-003).
+          </p>
+        </div>
+
+        <aside class="stack">
+          <section class="card">
+            <h2>Versions</h2>
+            <p class="small muted" data-state="not-started">Nothing filed yet.</p>
+            <div class="list-item" data-state="returned verified">
+              <div class="what">
+                <h3>Version 1</h3>
+                <p class="small muted">Filed 15 Sep · Returned 20 Sep: illegible</p>
+              </div>
+              <span class="badge bad">Returned</span>
+            </div>
+            <div class="list-item" data-state="verified">
+              <div class="what">
+                <h3>Version 2</h3>
+                <p class="small muted">Filed 21 Sep · Verified 24 Sep</p>
+              </div>
+              <span class="badge ok">Verified</span>
+            </div>
+          </section>
+          <p class="note">
+            Filing never replaces an earlier version (S03.9). The file goes straight to
+            private storage, through a link that lasts five minutes (S03.8).
+          </p>
+        </aside>
+      </div>
+
+      <p class="trace">
+        Serves S01.11, S03.3 to S03.10, S04.10, S04.11, S09.6 · FR-SCH-002, FR-SCH-003,
+        FR-SCH-004, FR-ADM-003
+      </p>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="render-states" content="unclaimed claimed returning" />
+    <title>Check a filing · low-fidelity</title>
+    <link rel="stylesheet" href="_wireframe.css" />
+    <script src="_wireframe.js" defer></script>
+  </head>
+  <body data-role="regional" data-nav="regional-queue">
+    <main class="page">
+      <p class="crumbs"><a href="regional-queue.html">Queue</a> › Bea Santiago</p>
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">CIT-U · 1st Semester, AY 2026–2027</p>
+          <h1>Bea Santiago: Certified Report of Grades</h1>
+          <p class="lead">
+            CIT-U calls it Certified True Copy of Grades · version 1, filed 15 Sep ·
+            2024-07-00001
+          </p>
+        </div>
+        <span class="badge wait" data-state="unclaimed">Submitted</span>
+        <span class="badge wait" data-state="claimed returning"
+          >Under review: claimed by you</span
+        >
+      </div>
+
+      <div class="split">
+        <section class="card stack">
+          <div class="card-head">
+            <h2>The document</h2>
+            <span class="small muted">JPEG · 3.2 MB</span>
+          </div>
+          <div class="doc"></div>
+          <p class="hint">Opened through a link that lasts five minutes (FR-CHK-003).</p>
+        </section>
+
+        <div class="stack">
+          <section class="card stack">
+            <div class="card-head">
+              <h2>What Bea typed</h2>
+              <span class="small muted"
+                >CIT-U's scale: 1.00 to 5.00, higher is better</span
+              >
+            </div>
+            <table class="table keep">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Subject code</th>
+                  <th class="num">Units</th>
+                  <th class="num">Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>CS 311</td>
+                  <td class="num">3</td>
+                  <td class="num">4.50</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>CS 312</td>
+                  <td class="num">3</td>
+                  <td class="num">4.20</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>MATH 301</td>
+                  <td class="num">3</td>
+                  <td class="num">4.80</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>GE 105</td>
+                  <td class="num">3</td>
+                  <td class="num">4.00</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row spread">
+              <span class="label">Weighted average</span>
+              <span class="label">4.3750 · 12 units</span>
+            </div>
+          </section>
+
+          <section class="card stack" data-state="unclaimed">
+            <h2>Claim it to decide</h2>
+            <p class="small muted">
+              Claiming it stops anyone else in the office deciding it at the same time.
+            </p>
+            <a class="btn primary block" href="regional-review.html?state=claimed"
+              >Claim it</a
+            >
+          </section>
+
+          <section class="card stack" data-state="claimed">
+            <h2>Your decision</h2>
+            <p class="small muted">Compare the document with the lines Bea typed.</p>
+            <div class="actions">
+              <span class="btn primary">Verify</span>
+              <a class="btn danger" href="regional-review.html?state=returning"
+                >Return it</a
+              >
+            </div>
+            <span class="link">Release the claim without deciding</span>
+          </section>
+
+          <section class="card stack" data-state="returning">
+            <h2>Return it to Bea</h2>
+            <div class="field">
+              <span class="label">Reason</span>
+              <div class="check"><span class="radio on"></span>Illegible</div>
+              <div class="check"><span class="radio"></span>Wrong document</div>
+              <div class="check"><span class="radio"></span>Incomplete</div>
+              <div class="check"><span class="radio"></span>Wrong term</div>
+              <div class="check"><span class="radio"></span>Not certified</div>
+              <div class="check"><span class="radio"></span>Details don't match</div>
+              <div class="check"><span class="radio"></span>Superseded</div>
+              <div class="check"><span class="radio"></span>Other</div>
+            </div>
+            <div class="field">
+              <span class="label">Remarks</span>
+              <span class="input area filled"
+                >The bottom-right corner is cut off, so the last two subjects can't be
+                read.</span
+              >
+              <span class="hint">Needed for “Other”: 10 characters or more.</span>
+            </div>
+            <div class="actions">
+              <span class="btn primary">Return it</span>
+              <a class="btn" href="regional-review.html?state=claimed">Cancel</a>
+            </div>
+          </section>
+
+          <p class="note" data-state="claimed">
+            Verified is final: no one can change it afterwards (S04.7). Releasing the
+            claim puts the filing back in the queue for anyone (S04.6).
+          </p>
+          <p class="note" data-state="returning">
+            One of the eight reasons in FR-CHK-004. Bea sees the reason and the remarks,
+            and files a corrected copy as version 2; version 1 stays on record (S04.11).
+          </p>
+          <a class="link small" href="record-history.html">History of this filing</a>
+        </div>
+      </div>
+
+      <p class="trace">Serves S04.3 to S04.9 · FR-CHK-002, FR-CHK-003, FR-CHK-004</p>
+    </main>
+  </body>
+</html>
