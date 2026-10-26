@@ -1,0 +1,261 @@
+<!doctype html>
+<!--
+  SEIskolar Bridge: the plugin's window. It holds the network and no Figma
+  API: it long-polls the bridge server on this machine for commands, hands each
+  one to code.js, and posts back what happened. See ../README.md.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        font-family: Inter, system-ui, sans-serif;
+        font-size: 12px;
+        color: var(--figma-color-text, #1e1e1e);
+        background: var(--figma-color-bg, #fff);
+      }
+      body {
+        margin: 0;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 13px;
+        margin: 0 0 8px;
+      }
+      p {
+        margin: 0 0 6px;
+        line-height: 1.4;
+      }
+      .muted {
+        color: var(--figma-color-text-secondary, #757575);
+      }
+      .ok {
+        color: var(--figma-color-text-success, #14ae5c);
+      }
+      .warn {
+        color: var(--figma-color-text-warning, #b86200);
+      }
+      .error {
+        color: var(--figma-color-text-danger, #dc3412);
+      }
+      form {
+        display: flex;
+        gap: 6px;
+        margin: 10px 0;
+      }
+      input {
+        flex: 1;
+        min-width: 0;
+        font: inherit;
+        padding: 4px 6px;
+        color: inherit;
+        background: var(--figma-color-bg-secondary, #f5f5f5);
+        border: 1px solid var(--figma-color-border, #e6e6e6);
+        border-radius: 4px;
+      }
+      button {
+        font: inherit;
+        padding: 4px 10px;
+        color: var(--figma-color-text-onbrand, #fff);
+        background: var(--figma-color-bg-brand, #0d99ff);
+        border: 0;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-family: ui-monospace, monospace;
+        font-size: 11px;
+      }
+      li {
+        padding: 2px 0;
+        border-top: 1px solid var(--figma-color-border, #e6e6e6);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SEIskolar Bridge</h1>
+    <p id="status" class="muted">Starting…</p>
+    <p id="file" class="muted"></p>
+    <form id="token-form">
+      <input
+        id="token"
+        type="password"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="Paste the bridge token"
+        aria-label="Bridge token"
+      />
+      <button type="submit">Save</button>
+    </form>
+    <p class="muted">
+      Keep this window open while agents work. Every command shows below.
+    </p>
+    <ol id="log"></ol>
+
+    <script>
+      // Must match PORT in ../shared.mjs and devAllowedDomains in manifest.json.
+      const BRIDGE = 'http://localhost:4517'
+      const DEFAULT_TIMEOUT_MS = 60000
+      const session = Math.random().toString(36).slice(2) + Date.now().toString(36)
+
+      let token = ''
+      let file = null
+      let introduced = false
+      let poll = null
+      const waiting = new Map()
+
+      const $ = (id) => document.getElementById(id)
+      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+      function setStatus(text, kind) {
+        $('status').textContent = text
+        $('status').className = kind
+      }
+
+      function showFile() {
+        $('file').textContent = file ? `${file.name} · page “${file.page.name}”` : ''
+      }
+
+      function logCommand(command) {
+        const item = document.createElement('li')
+        const time = new Date().toLocaleTimeString()
+        const target = command.params && command.params.id ? ' ' + command.params.id : ''
+        item.textContent = `${time}  ${command.command}${target}`
+        $('log').prepend(item)
+        while ($('log').children.length > 8) $('log').lastChild.remove()
+      }
+
+      function toPlugin(message) {
+        parent.postMessage({ pluginMessage: message }, '*')
+      }
+
+      function call(path, options = {}) {
+        return fetch(BRIDGE + path, {
+          ...options,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+      }
+
+      // Waits as long as the agent does, then moves on. A script that never
+      // finishes keeps running in Figma, but stops blocking the next command.
+      //
+      // While it waits, it nudges code.js once a second. Twice on 2026-10-05 a
+      // script stalled on an await (loading a font) and only resumed when the
+      // next message reached the plugin. The nudge is that next message. It is
+      // a mitigation for a cause we have not proven.
+      function runInPlugin(command) {
+        return new Promise((resolve) => {
+          const nudge = setInterval(() => toPlugin({ type: 'tick' }), 1000)
+          const timer = setTimeout(() => {
+            clearInterval(nudge)
+            waiting.delete(command.id)
+            resolve({
+              id: command.id,
+              ok: false,
+              error: 'The plugin did not finish in time',
+            })
+          }, command.timeoutMs || DEFAULT_TIMEOUT_MS)
+          waiting.set(command.id, (result) => {
+            clearInterval(nudge)
+            clearTimeout(timer)
+            resolve(result)
+          })
+          toPlugin({ type: 'command', command })
+        })
+      }
+
+      async function loop() {
+        for (;;) {
+          if (!token) {
+            setStatus('Paste the bridge token to connect.', 'warn')
+            await sleep(1000)
+            continue
+          }
+          try {
+            if (!introduced) {
+              const hello = await call('/plugin/hello', {
+                method: 'POST',
+                body: JSON.stringify({ session, file }),
+              })
+              if (hello.status === 401) {
+                setStatus(
+                  'The bridge refused this token. Paste the current one.',
+                  'error',
+                )
+                await sleep(3000)
+                continue
+              }
+              if (!hello.ok) throw new Error(`hello: ${hello.status}`)
+              introduced = true
+            }
+            setStatus('Connected. Agents can read and edit this file.', 'ok')
+
+            poll = new AbortController()
+            const res = await call(`/plugin/next?session=${session}`, {
+              signal: poll.signal,
+            })
+            if (res.status === 204) continue
+            if (res.status === 410 || res.status === 401) {
+              introduced = false
+              continue
+            }
+            if (!res.ok) throw new Error(`next: ${res.status}`)
+
+            const command = await res.json()
+            logCommand(command)
+            const { type, ...result } = await runInPlugin(command)
+            await call('/plugin/result', {
+              method: 'POST',
+              body: JSON.stringify({ session, ...result }),
+            })
+          } catch (error) {
+            introduced = false
+            if (error.name !== 'AbortError') {
+              setStatus(
+                'Bridge not running. Any agent command starts it, or run npm run -s figma -- doctor.',
+                'warn',
+              )
+              await sleep(2000)
+            }
+          }
+        }
+      }
+
+      onmessage = (event) => {
+        const message = event.data.pluginMessage
+        if (!message) return
+        if (message.type === 'init') {
+          token = message.token
+          file = message.file
+          $('token').value = token
+          showFile()
+          loop()
+        } else if (message.type === 'file') {
+          file = message.file
+          showFile()
+          introduced = false
+        } else if (message.type === 'result') {
+          const done = waiting.get(message.id)
+          if (done) {
+            waiting.delete(message.id)
+            done(message)
+          }
+        }
+      }
+
+      $('token-form').addEventListener('submit', (event) => {
+        event.preventDefault()
+        token = $('token').value.trim()
+        introduced = false
+        toPlugin({ type: 'save-token', token })
+        if (poll) poll.abort()
+      })
+    </script>
+  </body>
+</html>
