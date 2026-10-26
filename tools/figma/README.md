@@ -32,6 +32,16 @@ source of the design.** Figma holds a copy, drawn from it by these tools.
 - **Positioned, not auto layout; no components yet.** The layers sit where the browser put
   them. Turning repeated parts of the high-fidelity screens (buttons, badges, cards, the
   navigation) into components is done by hand in Figma afterwards, as its own task.
+- **A ring drawn with a shadow's spread clips its box.** The drawings make rings with a
+  CSS `box-shadow` spread: the white ring inside a ticked box or radio in the wireframes,
+  the halo around a swimlane's final step, the rings around the "now" dot. Figma draws a
+  spread only on a frame that clips its content and has a visible fill (Plugin API, type
+  `Effect`), and the first import (26 October 2026) drew them without it. So `build.js`
+  clips a box with a spread when everything it holds lies inside it; when something
+  reaches outside, as the "assumed" tag over a final step's corner, it draws the ring as
+  a shape behind the box instead. It also stacks several shadows the other way round,
+  because CSS paints the first on top and Figma the last. `--dry-run` refuses a spread
+  that Figma would silently leave out.
 - **One frame per PNG, with the PNG's name.** Frame `scholar-requirement--returned.phone`
   is `04-high-fidelity/scholar-requirement--returned.phone.png`. So anyone can go from a
   frame to its drawing, its wireframe, its swimlane steps and its SRS requirements.

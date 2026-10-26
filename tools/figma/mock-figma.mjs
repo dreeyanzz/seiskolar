@@ -4,6 +4,9 @@
 // number, a colour outside 0 to 1, text set before its font is loaded, an unknown enum.
 // It draws nothing; it proves that build.js and an export agree before the real file is
 // touched. It knows only the parts of the API build.js uses.
+//
+// It also throws where Figma takes a value and silently does not draw it: a shadow's
+// spread on a frame that does not clip its content or has no visible fill (checkSpread).
 
 const ENUMS = {
   textAutoResize: ['NONE', 'WIDTH_AND_HEIGHT', 'HEIGHT', 'TRUNCATE'],
@@ -77,6 +80,23 @@ function checkPaints(paints, what) {
   }
 }
 
+// Figma draws a shadow's spread only on a frame that clips its content and has a visible
+// fill (Plugin API, type Effect). On any other frame it keeps the value and draws the
+// shadow without its spread, with no error, so the first import (26 October 2026) lost
+// the rings the drawings make with a spread, such as the white ring in a ticked radio.
+// The stand-in refuses it instead, whichever of the three is set last.
+function checkSpread(node) {
+  const spread = (node.effects || []).some((e) => e.spread)
+  if (!spread || node.type !== 'FRAME') return
+  const visible = (node.fills || []).some(
+    (p) => p.visible !== false && (p.opacity === undefined || p.opacity > 0),
+  )
+  check(
+    node.clipsContent === true && visible,
+    `${node.name}: Figma draws a shadow's spread only on a frame that clips its content and has a visible fill`,
+  )
+}
+
 let nextId = 1
 
 function makeNode(type, state) {
@@ -98,6 +118,18 @@ function makeNode(type, state) {
       child.parent.children.splice(child.parent.children.indexOf(child), 1)
     child.parent = node
     node.children.push(child)
+  }
+  node.insertChild = (index, child) => {
+    check(node.children, `${type} cannot hold children`)
+    check(!node.removed && !child.removed, 'insertChild on a removed node')
+    if (child.parent)
+      child.parent.children.splice(child.parent.children.indexOf(child), 1)
+    check(
+      Number.isInteger(index) && index >= 0 && index <= node.children.length,
+      `insertChild at ${index} of ${node.children.length}`,
+    )
+    child.parent = node
+    node.children.splice(index, 0, child)
   }
   node.remove = () => {
     if (node.parent) node.parent.children.splice(node.parent.children.indexOf(node), 1)
@@ -190,6 +222,8 @@ function makeNode(type, state) {
         }
       }
       target[prop] = value
+      if (prop === 'effects' || prop === 'clipsContent' || prop === 'fills')
+        checkSpread(target)
       return true
     },
   })

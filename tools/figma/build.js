@@ -99,6 +99,43 @@ function size(node, w, h) {
   node.resize(Math.max(w, 0.01), Math.max(h, 0.01))
 }
 
+// Whether everything a box holds lies inside it, so clipping it would cut nothing off.
+function holdsAllInside(n) {
+  for (var i = 0; i < n.children.length; i++) {
+    var c = n.children[i]
+    if (
+      c.x < n.x - 0.5 ||
+      c.y < n.y - 0.5 ||
+      c.x + c.w > n.x + n.w + 0.5 ||
+      c.y + c.h > n.y + n.h + 0.5
+    )
+      return false
+  }
+  return true
+}
+
+// An outer shadow without blur, drawn as a shape of its own just behind its box: the
+// box grown by the spread on every side, its corners rounded by as much more, as CSS
+// draws it.
+function drawRingBehind(n, s, frame, parent, ox, oy) {
+  var ring = figma.createRectangle()
+  parent.insertChild(parent.children.indexOf(frame), ring)
+  ring.name = n.name + ' (shadow)'
+  size(ring, n.w + s.spread * 2, n.h + s.spread * 2)
+  ring.x = n.x - ox - s.spread + s.x
+  ring.y = n.y - oy - s.spread + s.y
+  ring.fills = [solid(s.color)]
+  if (n.radius) {
+    var grow = function (r) {
+      return r > 0 ? r + s.spread : 0
+    }
+    ring.topLeftRadius = grow(n.radius[0])
+    ring.topRightRadius = grow(n.radius[1])
+    ring.bottomRightRadius = grow(n.radius[2])
+    ring.bottomLeftRadius = grow(n.radius[3])
+  }
+}
+
 async function drawBox(n, parent, ox, oy) {
   var frame = figma.createFrame()
   parent.appendChild(frame)
@@ -108,7 +145,38 @@ async function drawBox(n, parent, ox, oy) {
   var fills = n.fills.map(solid)
   if (n.raster && images[n.raster]) fills.push(imagePaint(n.raster))
   frame.fills = fills
-  frame.clipsContent = !!n.clip
+
+  // Figma draws a shadow's spread only on a frame that clips its content and has a
+  // visible fill (Plugin API, type Effect); CSS draws it on any box. The drawings make
+  // rings with a spread: the white ring inside a ticked box or radio in the wireframes,
+  // the halo around a swimlane's final step, the ring around a "now" dot. Unclipped,
+  // the first import (26 October 2026) drew them without it. So a box with a spread
+  // clips, which changes nothing else when all it holds lies inside it. When something
+  // reaches outside, as the "assumed" tag over a final step's corner, clipping would cut
+  // it off: then the box stays unclipped, an outer ring without blur is drawn as a shape
+  // behind it, and any other spread is dropped, with a line in the log.
+  var shadows = n.shadows || []
+  var spread = shadows.some(function (s) {
+    return s.spread
+  })
+  var clip = !!n.clip
+  var behind = []
+  if (spread && fills.length && holdsAllInside(n)) clip = true
+  else if (spread) {
+    shadows = shadows.filter(function (s) {
+      if (s.spread && !s.inset && !s.blur) {
+        behind.push(s)
+        return false
+      }
+      return true
+    })
+    shadows = shadows.map(function (s) {
+      if (!s.spread) return s
+      log(n.name + ': a shadow spread of ' + s.spread + ' cannot be drawn here; dropped')
+      return { x: s.x, y: s.y, blur: s.blur, spread: 0, color: s.color, inset: s.inset }
+    })
+  }
+  frame.clipsContent = clip
   if (n.border && n.border.color) {
     var b = n.border
     frame.strokes = [solid(b.color)]
@@ -125,19 +193,41 @@ async function drawBox(n, parent, ox, oy) {
     frame.bottomRightRadius = n.radius[2]
     frame.bottomLeftRadius = n.radius[3]
   }
-  if (n.shadows) {
-    frame.effects = n.shadows.map(function (s) {
-      return {
-        type: s.inset ? 'INNER_SHADOW' : 'DROP_SHADOW',
-        color: { r: s.color.r, g: s.color.g, b: s.color.b, a: s.color.a },
-        offset: { x: s.x, y: s.y },
-        radius: s.blur,
-        spread: s.spread,
-        visible: true,
-        blendMode: 'NORMAL',
-      }
-    })
+  // CSS draws an inner shadow inside the border; Figma from the frame's edge, under its
+  // stroke. So an inner shadow's spread grows by the border's width, when every side has
+  // the same one, to start where CSS starts it.
+  var edge = 0
+  if (n.border) {
+    var bw = n.border
+    if (bw.top === bw.right && bw.top === bw.bottom && bw.top === bw.left) edge = bw.top
   }
+  // CSS paints the first of several shadows on top; Figma paints the last effect on top.
+  // So the list is turned around: the "now" dot of the wireframes, a white ring over a
+  // dark one, otherwise showed only the dark one.
+  if (shadows.length) {
+    frame.effects = shadows
+      .slice()
+      .reverse()
+      .map(function (s) {
+        return {
+          type: s.inset ? 'INNER_SHADOW' : 'DROP_SHADOW',
+          color: { r: s.color.r, g: s.color.g, b: s.color.b, a: s.color.a },
+          offset: { x: s.x, y: s.y },
+          radius: s.blur,
+          spread: s.inset && s.spread ? s.spread + edge : s.spread,
+          visible: true,
+          blendMode: 'NORMAL',
+        }
+      })
+  }
+  // Each ring goes in just under the box, so over the rings before it: the last CSS
+  // shadow goes in first, and the first ends up on top, as CSS paints it.
+  behind
+    .slice()
+    .reverse()
+    .forEach(function (s) {
+      drawRingBehind(n, s, frame, parent, ox, oy)
+    })
   if (n.opacity !== undefined) frame.opacity = n.opacity
   // A side in another colour than the border, as a banner's thick left edge: a strip
   // inside the box, under its content, cut to its corners because the box clips.
