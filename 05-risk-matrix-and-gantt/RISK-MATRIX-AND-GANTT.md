@@ -1,6 +1,7 @@
 # Project SEIskolar: Software Design Deliverable Package
 
-**Risk matrix, work breakdown structure and Gantt chart, updated on 12 October 2026**
+**Risk matrix, work breakdown structure and Gantt chart, updated on 12 October 2026, and
+for Figma on 26 October 2026**
 
 **Group name:** Asph  
 **Team members:** Adrian Seth Tabotabo (Project Manager) · Genril Theo Soroño · Althea Maeve
@@ -40,6 +41,11 @@ implemented (AGENTS.md, "There is no code here").
 >   with impact 2 scores 6, which is green, not yellow. Both are corrected.
 > - **The team.** Asph has five members. The submitted version listed four, and spelled
 >   Dorothy Biatriz Capao's name as "Beatriz Capao".
+> - **Figma (26 October 2026).** Adrian settled the question risk T2 turned on: the course
+>   needs the design in Figma, as editable layers. The design is copied into a new Figma
+>   file by tools in this repository, `tools/figma/`, and the earlier file is labelled as
+>   the earlier design. T2's mitigation, WBS tasks 4.9 and 4.10, the Gantt chart and
+>   "Still open" say so.
 
 ---
 
@@ -111,6 +117,7 @@ except this package, which plans the work:
 | **Low-fidelity wireframes**             | [`03-low-fidelity/`](../03-low-fidelity/)   | 29 screens with 42 states, each drawn for a phone, a tablet and a desktop, each citing the swimlane steps it serves.                                                                                                                                                    |
 | **High-fidelity screens**               | [`04-high-fidelity/`](../04-high-fidelity/) | The 29 screens finished, as one clickable prototype that meets WCAG 2.1 AA, in the school's colours inside its portal.                                                                                                                                                  |
 | **This package**                        | [`05-risk-matrix-and-gantt/`](./)           | The risk matrix, the work breakdown structure and the Gantt chart.                                                                                                                                                                                                      |
+| **The design in Figma**                 | [`tools/figma/`](../tools/figma/README.md)  | The tools that copy every swimlane, wireframe and screen into the Figma file [SEIskolar – current design (Asph)](https://www.figma.com/design/fsEKjSfF5mPRh5NIwwuign) as editable layers, one frame per PNG. The repository stays the source.                           |
 | **Guide for AI agents and members**     | [`AGENTS.md`](../AGENTS.md)                 | How the repository is worked on: the rules of the chain, writing everything in full, git and pull requests.                                                                                                                                                             |
 
 **Earlier design work, in the archive**, `dreeyanzz/seiskolar-archive`, as it stood on
@@ -141,7 +148,9 @@ except this package, which plans the work:
    - `Risk T2 (Design copies drift apart), new:` this repository holds the current
      swimlanes, wireframes and screens, while the Figma file still holds the earlier ones.
      Anyone who opens Figma, a reviewer or a teammate, sees designs the team no longer
-     presents. This is already the case on 12 October 2026.
+     presents. This is already the case on 12 October 2026. On 26 October 2026 the course
+     was found to need the design in Figma, so the copy must be current, not only labelled
+     (Step 4 says how).
    - `Risk T3 (Cross-tenant data leakage):` a flaw in row-level security lets a scholar or
      another school's or region's staff see or change records that are not theirs.
 2. **People and process risks:**
@@ -248,9 +257,15 @@ Why some higher-scoring risks are not in the top three:
 - **O2 (12)** depends on the Regional Office's practice, which the team does not control.
   The design already allows early checking: the queue never waits for the deadline
   (FR-CHK-001).
-- **T2 (12)** turns on one question, whether the course needs the designs in Figma, which
-  Adrian is checking. Once it is answered, Figma is either updated or labelled as the
-  earlier design.
+- **T2 (12)** turned on one question, whether the course needs the designs in Figma.
+  Adrian settled it on 26 October 2026: it does, as editable layers. The mitigation is
+  in two parts. First, the design is copied into a new file,
+  [SEIskolar – current design (Asph)](https://www.figma.com/design/fsEKjSfF5mPRh5NIwwuign),
+  by tools rather than by hand ([`tools/figma/`](../tools/figma/README.md)): every frame
+  is drawn from its HTML and named as its PNG, so a copy that disagrees with the
+  repository can be redrawn with one command. Second, the earlier file, "Asph –
+  SEIskolar", gets a banner on every page saying it is the earlier design and where the
+  current one is. T2 stays open until both are done (WBS 4.9).
 
 ---
 
@@ -334,7 +349,7 @@ or **plan** (the version submitted on 11 September 2026). Dates are in Philippin
 | 3.3      | Subsystem designs, nine documents                                                     |   2026-08-30   |   2026-09-11   |    git     |      3.1      |   Done, archived   | `docs/design/`                                 |
 | 3.4      | Software design protocol: four artifacts per feature                                  |   2026-08-30   |   2026-08-30   |    git     |       —       |   Done, archived   | `docs/03-software-design-protocol.md`          |
 | 3.5      | Working prototype, to test the design; removed when the repository became design-only |   2026-08-29   |   2026-09-24   |    git     |   3.1, 3.2    |   Done, archived   | Tag `prototype-final`                          |
-| **4.0**  | **UI/UX design**                                                                      | **2026-08-30** | **2026-10-12** |            | **2.0, 3.0**  |      **Done**      | **Swimlanes, wireframes and finished screens** |
+| **4.0**  | **UI/UX design**                                                                      | **2026-08-30** | **2026-11-14** |            | **2.0, 3.0**  |  **In progress**   | **Swimlanes, wireframes and finished screens** |
 | 4.1      | Brand guidelines: colour tokens, type, accessibility                                  |   2026-08-30   |   2026-09-25   |    git     |       —       |   Done, archived   | `docs/02-brand-guidelines.md`                  |
 | 4.2      | First swimlanes and wireframes, in Figma                                              |   2026-09-25   |   2026-10-05   |    git     |      2.3      |     Superseded     | `docs/FIGMA.md` and the Figma file             |
 | 4.3      | First high-fidelity prototype: the scholar portal                                     |   2026-10-05   |   2026-10-05   |    git     |      4.2      |     Superseded     | `docs/hifi/`                                   |
@@ -343,6 +358,8 @@ or **plan** (the version submitted on 11 September 2026). Dates are in Philippin
 | 4.6      | Low-fidelity wireframes: 29 screens, phone, tablet and desktop                        |   2026-10-07   |   2026-10-12   |    git     |      4.5      |        Done        | [`03-low-fidelity/`](../03-low-fidelity/)      |
 | 4.7      | High-fidelity screens: the clickable prototype                                        |   2026-10-07   |   2026-10-12   |    git     |      4.6      |        Done        | [`04-high-fidelity/`](../04-high-fidelity/)    |
 | 4.8      | Every file written in full, for the agents that read it                               |   2026-10-12   |   2026-10-12   |    git     |      4.7      |        Done        | `AGENTS.md`, folder READMEs, screen comments   |
+| 4.9      | The design copied into Figma as editable layers; the earlier file labelled            |   2026-10-26   |   2026-11-01   |    plan    |      4.7      |    In progress     | [`tools/figma/`](../tools/figma/README.md)     |
+| 4.10     | High-fidelity screens' repeated parts made into Figma components                      |   2026-11-02   |   2026-11-14   |    plan    |      4.9      |      Planned       | Components in the Figma file                   |
 | **5.0**  | **Risk analysis and verification planning**                                           | **2026-09-11** | **2026-11-27** |            |    **4.0**    |  **In progress**   | **Risk matrix and verification plans**         |
 | 5.1      | Risk matrix, WBS and Gantt chart: submitted, then updated for the new repository      |   2026-09-11   |   2026-10-12   |    git     |       —       |        Done        | This document                                  |
 | 5.2      | Cross-tenant denial test matrix: who must get zero rows, per role and record          |   2026-11-15   |   2026-11-21   |    plan    |      5.1      |      Planned       | Denial test plan (place not yet decided)       |
@@ -354,14 +371,16 @@ or **plan** (the version submitted on 11 September 2026). Dates are in Philippin
 | 6.3      | Presentation slides and rehearsals                                                    |   2026-12-04   |   2026-12-09   |    plan    |      6.2      |      Planned       | The slide deck                                 |
 | 6.4      | **Final milestone: the Software Design presentation and defence**                     | **2026-12-10** | **2026-12-10** |    plan    |      6.3      |    **Planned**     | **Presentation day**                           |
 
-Nothing is scheduled between 13 October and 14 November 2026: the design work planned for
-that time (submitted tasks 3.1 to 4.4) finished early. The team decides what fills it.
+The design work planned for 13 October to 14 November 2026 (submitted tasks 3.1 to 4.4)
+finished early. Tasks 4.9 and 4.10, added on 26 October 2026 when the course was found to
+need the design in Figma, fill 26 October to 14 November; their dates are a proposal for
+the team to confirm. 13 to 25 October had nothing scheduled.
 
 ### 2. Gantt chart
 
 ```mermaid
 gantt
-    title SEIskolar Software Design (17 Aug – 10 Dec 2026), updated 12 Oct 2026
+    title SEIskolar Software Design (17 Aug – 10 Dec 2026), updated 26 Oct 2026
     dateFormat  YYYY-MM-DD
     axisFormat  %b %d
 
@@ -391,6 +410,8 @@ gantt
     Swimlanes                                   :done, t4_5, 2026-10-07, 2026-10-12
     Low-fidelity wireframes                     :done, t4_6, 2026-10-07, 2026-10-12
     High-fidelity screens                       :done, t4_7, 2026-10-07, 2026-10-12
+    Design copied into Figma                    :active, t4_9, 2026-10-26, 2026-11-01
+    Figma components, high-fidelity             :t4_10, 2026-11-02, 2026-11-14
 
     section 5. Risk and verification
     Risk matrix, WBS and Gantt (submitted)      :done, t5_1a, 2026-09-11, 1d
@@ -412,8 +433,18 @@ gantt
 
 - **The proposed ratings.** The new T2 and E1, and their likelihood and impact, are this
   update's proposals. The team confirms or changes them.
-- **Figma.** Whether the course needs the designs in Figma decides how T2 is closed:
-  update the Figma file, or label it as the earlier design.
+- **Figma, the import itself.** Settled on 26 October 2026: the course needs the design
+  in Figma, as editable layers. The tools are in `tools/figma/` and were checked without
+  Figma (every view exported, previewed and drawn into a stand-in for Figma). The import
+  into the real file needs a Windows or macOS computer with Figma desktop, so a member
+  runs it there (WBS 4.9); its first run is also the builder's first test in Figma.
+- **Figma, components.** Who turns the high-fidelity screens' repeated parts into
+  components (WBS 4.10), and whether the course wants them on the low-fidelity page too.
+- **The SRS's traceability matrix** (§7.2) says designed requirements trace "to the
+  Figma screens". They trace to the swimlanes and screens in this repository, and to
+  their copies in the new Figma file. Changing that line is Adrian's call, in its own
+  pull request (AGENTS.md).
 - **Where the verification plans go.** Tasks 5.2 to 5.4 do not have a place in this
   repository yet.
-- **The empty weeks.** 13 October to 14 November 2026 has nothing scheduled.
+- **The empty weeks.** 13 to 25 October 2026 had nothing scheduled; tasks 4.9 and 4.10
+  now fill 26 October to 14 November, as a proposal.

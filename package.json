@@ -2,7 +2,7 @@
   "name": "seiskolar",
   "version": "0.1.0",
   "private": true,
-  "description": "SEIskolar software design: the SRS, swimlanes, low-fidelity wireframes and high-fidelity screens",
+  "description": "SEIskolar software design: the SRS, swimlanes, low-fidelity wireframes and high-fidelity screens, and the tools that copy them into Figma",
   "engines": {
     "node": ">=24"
   },
@@ -10,6 +10,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "render": "node scripts/render.mjs",
+    "figma": "node tools/figma/cli.mjs",
+    "figma:export": "node tools/figma/export.mjs",
+    "figma:preview": "node tools/figma/preview.mjs",
+    "figma:import": "node tools/figma/import.mjs",
     "prepare": "husky"
   },
   "lint-staged": {

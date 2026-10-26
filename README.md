@@ -9,13 +9,14 @@ Software Design, Cebu Institute of Technology – University. Team **Asph**.
 
 ## What is here
 
-| #   | Deliverable                                                                           | Built from                                      |
-| --- | ------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| 1   | [SRS](01-srs/SRS.md)                                                                  | The baseline                                    |
-| 2   | [Swimlanes](02-swimlanes/)                                                            | The SRS requirements each covers                |
-| 3   | [Low-fidelity wireframes](03-low-fidelity/)                                           | The swimlane steps each serves                  |
-| 4   | [High-fidelity screens](04-high-fidelity/)                                            | The wireframe with the same name                |
-| 5   | [Risk matrix, WBS and Gantt chart](05-risk-matrix-and-gantt/RISK-MATRIX-AND-GANTT.md) | The project's risks and schedule, not the chain |
+| #   | Deliverable                                                                           | Built from                                                        |
+| --- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| 1   | [SRS](01-srs/SRS.md)                                                                  | The baseline                                                      |
+| 2   | [Swimlanes](02-swimlanes/)                                                            | The SRS requirements each covers                                  |
+| 3   | [Low-fidelity wireframes](03-low-fidelity/)                                           | The swimlane steps each serves                                    |
+| 4   | [High-fidelity screens](04-high-fidelity/)                                            | The wireframe with the same name                                  |
+| 5   | [Risk matrix, WBS and Gantt chart](05-risk-matrix-and-gantt/RISK-MATRIX-AND-GANTT.md) | The project's risks and schedule, not the chain                   |
+| 6   | [The design in Figma](https://www.figma.com/design/fsEKjSfF5mPRh5NIwwuign)            | A copy of 2 to 4, made by [`tools/figma/`](tools/figma/README.md) |
 
 The README of each drawing folder, 02 to 04, lists every item, what it is built from, who
 owns it, and whether it is done. There is no application code here: each drawing is an
@@ -58,5 +59,9 @@ Who owns which swimlane and screen is in each folder's index.
 - `npm run render` turns each drawing into its PNGs: a screen into one per device and
   state. Why: the pictures show on GitHub, so anyone can review a drawing without opening
   a browser.
+- `npm run figma:export` and `npm run figma:import` copy every drawing into the team's
+  Figma file as editable layers ([`tools/figma/`](tools/figma/README.md)). Why: the course
+  needs the design in Figma, and copying keeps Figma the same as the repository, which
+  stays the source; a drawing is changed here first, then imported again.
 - [`AGENTS.md`](AGENTS.md) has the rules every member and every AI tool follows. Why:
   this repository is worked on mostly through AI agents, and they read that file first.

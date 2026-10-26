@@ -25,6 +25,16 @@ chain:
    11 September 2026; this is the version updated for this repository, and the submitted
    one is in the archive. Changes to it use the `repo` scope.
 
+And it holds the tools that copy the drawings into Figma, because the course needs the
+design in Figma as editable layers (Adrian, 26 October 2026):
+
+6. [`tools/figma/`](tools/figma/README.md): the exporter, the importer and the bridge
+   that reach the team's Figma file,
+   [SEIskolar – current design (Asph)](https://www.figma.com/design/fsEKjSfF5mPRh5NIwwuign).
+   **Figma holds a copy; the repository stays the source.** A drawing is changed here
+   first, in a pull request, and then imported again. Changes to the tools use the `repo`
+   scope.
+
 Nothing else belongs here.
 
 ## There is no code here
@@ -35,7 +45,9 @@ Nothing else belongs here.
   file with its PNG pictures beside it: one for a swimlane, and one for each device and
   state of a screen (phone, tablet and desktop). The HTML, and the small shared files that style and lay it
   out (such as `02-swimlanes/_swimlane.js`), make a picture you can open in a browser,
-  not the product. The only other code is `scripts/render.mjs`, which takes the pictures.
+  not the product. The only other code is `scripts/render.mjs`, which takes the pictures,
+  and `tools/figma/`, which copies the drawings into Figma. Neither is the product
+  either.
 - **The SRS names things that are not here.** It was written against an earlier
   prototype, so it mentions database functions such as `app.my_scholar_id()`,
   migrations, file paths, test files, ADRs and design documents. None of them exist in

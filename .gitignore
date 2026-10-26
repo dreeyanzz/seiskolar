@@ -16,3 +16,6 @@ Thumbs.db
 
 # logs
 *.log
+
+# what tools/figma writes: exported layer trees, previews, screenshots (tools/figma/README.md)
+tools/figma/.out/
