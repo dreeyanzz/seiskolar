@@ -1,9 +1,10 @@
 # Figma: the current design, copied into Figma
 
 The course needs the design in Figma, as editable layers (Adrian, 26 October 2026). This
-folder copies every drawing in this repository into the team's Figma file, and keeps the
-earlier Figma file from being mistaken for the current design. **The repository stays the
-source of the design.** Figma holds a copy, drawn from it by these tools.
+folder copies every drawing in this repository into the team's Figma file, labels each one
+with its owner, and keeps the earlier Figma file from being mistaken for the current
+design. **The repository stays the source of the design.** Figma holds a copy, drawn from
+it by these tools.
 
 |                         |                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -47,7 +48,9 @@ source of the design.** Figma holds a copy, drawn from it by these tools.
 
 A section is named after its HTML file. Each frame also carries its source file, state
 and device as shared plugin data (namespace `seiskolar`), for any script that needs them.
-A new Figma file starts with an empty `Page 1`; delete it after the first import.
+A new Figma file starts with an empty `Page 1`; delete it after the first import. Then
+`label-owners.mjs` tints and tags each section with its owner, and adds a legend to each
+page ([Labelling the file by owner](#labelling-the-file-by-owner)).
 
 ## Copying the design into Figma
 
@@ -76,7 +79,10 @@ app (Figma has none for Linux). Run from the repository root.
    `npm run -s figma -- screenshot <frame id>`, then open the picture beside the PNG. Fix
    the exporter or the builder, not the frame, when they differ, so the next import is
    right too.
-6. **Label the earlier file,** once: open only the earlier file, run SEIskolar Bridge in
+6. **Label the owners.** `npm run figma:label-owners` tints and tags every section with
+   its owner, from the indexes
+   ([Labelling the file by owner](#labelling-the-file-by-owner)).
+7. **Label the earlier file,** once: open only the earlier file, run SEIskolar Bridge in
    it, and `npm run -s figma -- run tools/figma/label-earlier-design.js --file Asph`. It
    puts a banner above each page saying the design was redrawn, and where the current one
    is. Running it again replaces the banners.
@@ -84,10 +90,82 @@ app (Figma has none for Linux). Run from the repository root.
 ### When a drawing changes
 
 Change the HTML first, in a pull request, as always. After it merges, export that drawing
-and import it with `--replace --only <drawing>`. Redrawing a frame throws away whatever was
-done to it in Figma, including components; so once component work starts on the
-high-fidelity page, re-import only the drawings that changed, and redo their components.
-A frame changed only in Figma disagrees with the repository the course reviews.
+and import it with `--replace --only <drawing>`, then run `npm run figma:label-owners`
+again: an import can move or resize sections, and the owner tags and legends stay where
+they were until the labelling runs. Redrawing a frame throws away whatever was done to it
+in Figma, including components; so once component work starts on the high-fidelity page,
+re-import only the drawings that changed, and redo their components. A frame changed only
+in Figma disagrees with the repository the course reviews.
+
+## Labelling the file by owner
+
+[`label-owners.mjs`](label-owners.mjs) shows in the file whose work each swimlane and
+screen is. On 26 October 2026 Adrian divided the design evenly between the five members,
+whoever drew each part, so the file says who owns what, for the team and for the course.
+The labels were first made that day by a one-off script that was never committed; this
+tool makes the same labels, and can be run again whenever an owner changes. It takes
+everything from the repository, as it is on the branch it runs on: each member's full name
+and handle from the Team table of the root [`README.md`](../../README.md#team), and each
+item's owner from the Owner column of the indexes of
+[`02-swimlanes`](../../02-swimlanes/README.md#index),
+[`03-low-fidelity`](../../03-low-fidelity/README.md#index) and
+[`04-high-fidelity`](../../04-high-fidelity/README.md#index).
+
+```bash
+npm run figma:label-owners -- --dry-run   # no Figma: label a stand-in twice, and check it
+npm run figma:label-owners                # label the team file, through the bridge
+```
+
+To change an owner, change the index in a pull request, and run this from `main` after it
+merges. Run from another branch, it labels the file with that branch's owners. The bridge
+must be ready (`npm run -s figma -- doctor`), as for an import.
+
+| Where                                                                    | What it makes                                                                                                                           |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Each section on `02 Swimlanes`, `03 Low-fidelity` and `04 High-fidelity` | Filled with its owner's tint. It also stores the owner's handle as shared plugin data `seiskolar/owner`, for any script that needs it   |
+| 32 px above each section                                                 | A tag in the owner's strong colour, white Inter Semi Bold 56: "Owner: Genril Theo Soroño (@gnthril)"                                    |
+| 160 px above everything on each of those three pages                     | A white legend as wide as the widest section, "Who owns what on this page": a row per member, with their colour and what they own there |
+| `00 Read me`, 240 px right of the Read me section                        | A white card 2400 px wide, "Who owns what": each member's swimlanes and screens                                                         |
+
+| Member                 | Handle        | Colour | Tint      | Strong (tags and swatches) |
+| ---------------------- | ------------- | ------ | --------- | -------------------------- |
+| Genril Theo Soroño     | `@gnthril`    | blue   | `#DBEAFE` | `#1D4ED8`                  |
+| Dorothy Biatriz Capao  | `@dbeenutsz`  | green  | `#DCFCE7` | `#15803D`                  |
+| Zedric Camilotes       | `@zedric-git` | orange | `#FFEDD5` | `#C2410C`                  |
+| Adrian Seth Tabotabo   | `@dreeyanzz`  | purple | `#EDE9FE` | `#6D28D9`                  |
+| Althea Maeve Kinaadman | `@Tiamporado` | pink   | `#FCE7F3` | `#BE185D`                  |
+
+White text on every strong colour has a contrast of at least 5:1, above the 4.5:1 of WCAG
+AA (SRS NFR-ACC-001). The colours are in `COLOURS` in `label-owners.mjs`.
+
+- **Running it again replaces the labels.** Every label carries shared plugin data
+  `seiskolar/label` = `owner`, and each run first removes every node so marked, on every
+  page, even one dragged into a section or pasted onto another page. So a second run, or
+  a run after a timeout, leaves one set of labels. The whole labelling is one `run`, so
+  one Ctrl+Z in Figma takes it back.
+- **It renames nothing and moves no section.** `import.mjs` finds pages, sections and
+  frames by name, so imports work the same after labelling, and a section keeps its tint,
+  because `build.js` never changes a section's fill. An import can move a section, though,
+  and the tags and legends do not follow it: **run the labelling again after every
+  import.**
+- **It says what it could not label.** A section whose name is in no index is left
+  untagged, and listed; if an earlier run had tinted it, it goes back to white, Figma's
+  colour for a new section. An index row with no section in Figma is listed, and left off
+  the legend until it is imported. A missing page or Read me section is listed, and the
+  run exits with code 1.
+- **It stops before touching Figma** when an owner is not in the Team table, when a
+  member has no colour in `COLOURS` (a new member needs one), when a wireframe and its
+  high-fidelity screen have different owners (a screen has one owner at both fidelities,
+  and the legends say so), or when one index lists a drawing twice.
+- **The words follow the indexes.** The legends count how many swimlanes and screens each
+  member owns. While the indexes divide the work as evenly as Adrian did (no member more
+  than one swimlane or one screen ahead of another), they say the work was divided evenly
+  on 26 October 2026; otherwise they say only that each item has one owner.
+- **`--dry-run`** makes pages and sections in [`mock-figma.mjs`](mock-figma.mjs) as
+  `import.mjs` would, one per index row, labels them twice, and checks every rule above:
+  one legend per page, one tag 32 px above each section, the tints, the handles, and that
+  the second run removed exactly what the first made and drew the same labels in the
+  same places.
 
 ## The files
 
@@ -97,7 +175,8 @@ A frame changed only in Figma disagrees with the repository the course reviews.
 | [`preview.mjs`](preview.mjs)                                                                                                   | Draws exported trees back in the browser, to check an export without Figma                                                         |
 | [`build.js`](build.js)                                                                                                         | Runs inside Figma through the bridge: draws one exported view as a frame, in its page and section                                  |
 | [`import.mjs`](import.mjs)                                                                                                     | Lays out the pages and sections, and sends each view to `build.js` through the bridge, or to the stand-in with `--dry-run`         |
-| [`mock-figma.mjs`](mock-figma.mjs)                                                                                             | The stand-in for Figma's Plugin API that `--dry-run` uses                                                                          |
+| [`mock-figma.mjs`](mock-figma.mjs)                                                                                             | The stand-in for Figma's Plugin API that the `--dry-run` of `import.mjs` and of `label-owners.mjs` uses                            |
+| [`label-owners.mjs`](label-owners.mjs)                                                                                         | Labels the file by owner, from the Team table and the indexes: tints and tags each section, and adds the legends and the card      |
 | [`label-earlier-design.js`](label-earlier-design.js)                                                                           | Runs inside Figma: labels the earlier file's pages as the earlier design                                                           |
 | [`cli.mjs`](cli.mjs), [`client.mjs`](client.mjs), [`server.mjs`](server.mjs), [`shared.mjs`](shared.mjs), [`plugin/`](plugin/) | The bridge, below                                                                                                                  |
 

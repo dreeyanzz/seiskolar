@@ -1,15 +1,20 @@
-// A stand-in for Figma's Plugin API, for `npm run figma:import -- --dry-run`. It runs
-// build.js in Node, as the bridge's plugin would (plugin/code.js, the `run` command), and
-// throws where Figma would refuse a value: a size of zero, a position that is not a
-// number, a colour outside 0 to 1, text set before its font is loaded, an unknown enum.
-// It draws nothing; it proves that build.js and an export agree before the real file is
-// touched. It knows only the parts of the API build.js uses.
+// A stand-in for Figma's Plugin API, for the `--dry-run` of `npm run figma:import` and
+// `npm run figma:label-owners`. It runs build.js or label-owners.mjs's script in Node, as
+// the bridge's plugin would (plugin/code.js, the `run` command), and throws where Figma
+// would refuse a value: a size of zero, a position that is not a number, a colour outside
+// 0 to 1, text set before its font is loaded, an unknown enum, a layer set to hug that
+// has no auto layout, or one set to fill a parent that has none. It draws nothing; it
+// proves that a script and its data agree before the real file is touched. It knows only
+// the parts of the API those two scripts use.
 
 const ENUMS = {
   textAutoResize: ['NONE', 'WIDTH_AND_HEIGHT', 'HEIGHT', 'TRUNCATE'],
   textAlignHorizontal: ['LEFT', 'CENTER', 'RIGHT', 'JUSTIFIED'],
   textAlignVertical: ['TOP', 'CENTER', 'BOTTOM'],
   strokeAlign: ['INSIDE', 'OUTSIDE', 'CENTER'],
+  layoutMode: ['NONE', 'HORIZONTAL', 'VERTICAL', 'GRID'],
+  layoutSizingHorizontal: ['FIXED', 'HUG', 'FILL'],
+  layoutSizingVertical: ['FIXED', 'HUG', 'FILL'],
 }
 const NUMBERS = [
   'x',
@@ -25,7 +30,16 @@ const NUMBERS = [
   'topRightRadius',
   'bottomRightRadius',
   'bottomLeftRadius',
+  'itemSpacing',
+  'paddingLeft',
+  'paddingRight',
+  'paddingTop',
+  'paddingBottom',
+  'fontSize',
 ]
+// Text properties that change how the text is laid out, which Figma refuses to set until
+// the text's font is loaded.
+const NEEDS_FONT = ['characters', 'fontSize', 'lineHeight']
 const FONTS = ['Inter', 'Roboto Mono'].flatMap((family) =>
   [
     'Thin',
@@ -79,6 +93,30 @@ function checkPaints(paints, what) {
 
 let nextId = 1
 
+// Shared plugin data is kept per namespace, and Figma asks for a namespace of at least
+// three letters, digits, underscores or full stops.
+function checkNamespace(namespace) {
+  check(
+    typeof namespace === 'string' && /^[A-Za-z0-9_.]{3,}$/.test(namespace),
+    `shared plugin data namespace "${namespace}" is not at least 3 letters or digits`,
+  )
+}
+
+// Does `node` match a findAllWithCriteria search? `types` lists node types;
+// `sharedPluginData` matches a node that has data under its namespace, under any of its
+// `keys` if it names some.
+function matches(node, criteria) {
+  if (criteria.types && !criteria.types.includes(node.type)) return false
+  const shared = criteria.sharedPluginData
+  if (shared) {
+    checkNamespace(shared.namespace)
+    const keys = node.getSharedPluginDataKeys(shared.namespace)
+    if (!keys.length) return false
+    if (shared.keys && !shared.keys.some((k) => keys.includes(k))) return false
+  }
+  return true
+}
+
 function makeNode(type, state) {
   const node = {
     id: `${nextId}:${nextId++}`,
@@ -90,6 +128,8 @@ function makeNode(type, state) {
     removed: false,
     data: {},
   }
+  // A new layer starts at 0, 0, as in Figma. Pages and the document have no position.
+  if (!['PAGE', 'DOCUMENT'].includes(type)) Object.assign(node, { x: 0, y: 0 })
   if (['PAGE', 'FRAME', 'SECTION', 'DOCUMENT'].includes(type)) node.children = []
   node.appendChild = (child) => {
     check(node.children, `${type} cannot hold children`)
@@ -99,8 +139,16 @@ function makeNode(type, state) {
     child.parent = node
     node.children.push(child)
   }
+  // A parent holds its children's proxies, not this raw object, so find this node by id:
+  // indexOf(node) would be -1, and splice(-1, 1) would remove the parent's last child.
   node.remove = () => {
-    if (node.parent) node.parent.children.splice(node.parent.children.indexOf(node), 1)
+    if (node.parent) {
+      const siblings = node.parent.children
+      siblings.splice(
+        siblings.findIndex((c) => c.id === node.id),
+        1,
+      )
+    }
     node.removed = true
   }
   node.resize = (w, h) => {
@@ -112,7 +160,40 @@ function makeNode(type, state) {
   }
   node.resizeWithoutConstraints = node.resize
   node.setPluginData = (k, v) => (node.data[k] = String(v))
-  node.setSharedPluginData = (ns, k, v) => (node.data[`${ns}.${k}`] = String(v))
+  // As in Figma, storing an empty string deletes the key, and a missing key reads as ''.
+  node.setSharedPluginData = (ns, k, v) => {
+    checkNamespace(ns)
+    if (String(v) === '') delete node.data[`${ns}.${k}`]
+    else node.data[`${ns}.${k}`] = String(v)
+  }
+  node.getSharedPluginData = (ns, k) => {
+    checkNamespace(ns)
+    return node.data[`${ns}.${k}`] || ''
+  }
+  node.getSharedPluginDataKeys = (ns) => {
+    checkNamespace(ns)
+    return Object.keys(node.data)
+      .filter((key) => key.startsWith(`${ns}.`))
+      .map((key) => key.slice(ns.length + 1))
+  }
+  // Every node below this one (not this one) that matches, as Figma's findAllWithCriteria.
+  if (node.children) {
+    node.findAllWithCriteria = (criteria) => {
+      check(
+        criteria && typeof criteria === 'object',
+        'findAllWithCriteria needs criteria',
+      )
+      const found = []
+      const walk = (parent) => {
+        for (const child of parent.children || []) {
+          if (matches(child, criteria)) found.push(child)
+          walk(child)
+        }
+      }
+      walk(node)
+      return found
+    }
+  }
   node.loadAsync = async () => {}
   if (type === 'TEXT') {
     node.fontName = { family: 'Inter', style: 'Regular' }
@@ -171,13 +252,33 @@ function makeNode(type, state) {
           `font ${value.family} ${value.style} not loaded`,
         )
       }
-      if (prop === 'characters') {
+      if (target.type === 'TEXT' && NEEDS_FONT.includes(prop)) {
         const f = target.fontName
         check(
           state.loaded.has(`${f.family}|${f.style}`),
-          `characters set before ${f.family} ${f.style} was loaded`,
+          `${prop} set before ${f.family} ${f.style} was loaded`,
         )
+      }
+      if (prop === 'characters') {
         check(typeof value === 'string', 'characters must be a string')
+      }
+      if (prop === 'fontSize') check(value >= 1, `font size ${value}`)
+      // Figma lets a layer hug its content only if it has auto layout (or is text), and
+      // fill its parent only if the parent has auto layout. Set FILL after appendChild.
+      if (prop === 'layoutSizingHorizontal' || prop === 'layoutSizingVertical') {
+        const auto = (n) => Boolean(n && n.layoutMode && n.layoutMode !== 'NONE')
+        if (value === 'HUG') {
+          check(
+            target.type === 'TEXT' || auto(target),
+            `${prop} HUG on a ${target.type} without auto layout`,
+          )
+        }
+        if (value === 'FILL') {
+          check(auto(target.parent), `${prop} FILL in a parent without auto layout`)
+        }
+      }
+      if (prop === 'strokesIncludedInLayout') {
+        check(typeof value === 'boolean', 'strokesIncludedInLayout must be true or false')
       }
       if (prop === 'lineHeight' && value.unit === 'PIXELS')
         finite(value.value, 'line height')
@@ -209,7 +310,9 @@ function summary(value) {
 export function mockFigma() {
   const state = { loaded: new Set(), nodes: 0 }
   const root = makeNode('DOCUMENT', state)
+  // A new Figma file has one empty page, "Page 1" (README.md, "What the import makes").
   const firstPage = makeNode('PAGE', state)
+  firstPage.name = 'Page 1'
   root.appendChild(firstPage)
   const count = (type) => {
     state.nodes++
