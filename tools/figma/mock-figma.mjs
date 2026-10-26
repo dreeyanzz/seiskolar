@@ -1,7 +1,8 @@
 // A stand-in for Figma's Plugin API, for `npm run figma:import -- --dry-run`. It runs
 // build.js in Node, as the bridge's plugin would (plugin/code.js, the `run` command), and
 // throws where Figma would refuse a value: a size of zero, a position that is not a
-// number, a colour outside 0 to 1, text set before its font is loaded, an unknown enum.
+// number, a colour outside 0 to 1, text set before its font is loaded, an unknown enum,
+// a picture more than 4,096 pixels wide or tall.
 // It draws nothing; it proves that build.js and an export agree before the real file is
 // touched. It knows only the parts of the API build.js uses.
 
@@ -234,8 +235,18 @@ export function mockFigma() {
     },
     createImage: (bytes) => {
       check(
-        bytes.length > 8 && bytes[0] === 0x89 && bytes[1] === 0x50,
+        bytes.length > 24 && bytes[0] === 0x89 && bytes[1] === 0x50,
         'createImage: not a PNG',
+      )
+      // Figma refuses a picture over 4,096 pixels on either side, with "Image is too
+      // large". The first import of a swimlane stopped there on 26 October 2026, after a
+      // dry run that had passed, so the stand-in refuses it too. A PNG keeps its width and
+      // height in bytes 16 to 23.
+      const width = bytes.readUInt32BE(16)
+      const height = bytes.readUInt32BE(20)
+      check(
+        width <= 4096 && height <= 4096,
+        `createImage: Image is too large (${width} x ${height} pixels; Figma takes at most 4096 on a side)`,
       )
       return { hash: `img${bytes.length}` }
     },

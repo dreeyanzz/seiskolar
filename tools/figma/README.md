@@ -20,10 +20,16 @@ source of the design.** Figma holds a copy, drawn from it by these tools.
   [`05-risk-matrix-and-gantt`](../../05-risk-matrix-and-gantt/RISK-MATRIX-AND-GANTT.md)).
   So `export.mjs` reads each drawing out of the browser, and `build.js` draws it in Figma.
 - **Editable, not pictures.** Text is Figma text, boxes are frames with their fills,
-  borders, corners and shadows, icons and arrows are vectors. Only what Figma cannot draw
-  as a layer is a picture inside its layer: a background image or gradient (the lined
-  placeholders in the wireframes, the arrow on a select), and checkboxes and radio
-  buttons.
+  borders, corners and shadows, icons and arrows are vectors. A background of
+  hard-edged stripes is a frame per stripe: the shaded name column of a swimlane lane and
+  the rule beside it, and the brand band across the top of the sign-in screens. Only what
+  Figma cannot draw as a layer is a picture inside its layer: a background image or a
+  soft, diagonal or repeating gradient (the lined placeholders and crossed image boxes in
+  the wireframes, the arrow on a select), and checkboxes and radio buttons. **Figma
+  refuses a picture over 4,096 pixels on a side,** and pictures are taken at double
+  scale, so anything wider than 2,048 pixels must not be a picture. A whole lane was,
+  until the first import stopped on it (26 October 2026); `--dry-run` now refuses such a
+  picture too.
 - **Inter, not the system font.** The drawings ask for Segoe UI, which Figma has only on
   a Windows computer that has it installed. Inter and Roboto Mono are built into Figma, so
   the file looks the same to every member and to the course. The page is measured in

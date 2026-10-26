@@ -23,8 +23,11 @@
 // - ::before and ::after are turned into real elements first, so the dots on badges, the
 //   "assumed" tags and the like have a box to measure.
 // - What has no editable Figma equivalent becomes a small picture inside its layer:
-//   a background image or gradient, and native controls such as checkboxes and radio
-//   buttons. Everything else stays editable.
+//   a background image or a soft, diagonal or repeating gradient, and native controls
+//   such as checkboxes and radio buttons. Everything else stays editable. A background of
+//   hard-edged stripes, as a swimlane lane's shaded name column, is drawn as one box per
+//   stripe instead (stripes(), below): Figma can draw it, and as a picture a lane is too
+//   large for Figma.
 // - The layers are drawn positioned, not with auto layout, and nothing is a component.
 //   Turning repeated parts into components is done by hand in Figma afterwards.
 //
@@ -317,6 +320,172 @@ function collect() {
     return out
   }
 
+  // Splits a computed list on its top-level commas only, not the ones inside rgb() or a
+  // gradient: "linear-gradient(red 0px, blue 5px), none" is two background layers.
+  function topLevel(list) {
+    const out = []
+    let depth = 0
+    let start = 0
+    for (let i = 0; i < list.length; i++) {
+      if (list[i] === '(') depth++
+      else if (list[i] === ')') depth--
+      else if (list[i] === ',' && depth === 0) {
+        out.push(list.slice(start, i).trim())
+        start = i + 1
+      }
+    }
+    out.push(list.slice(start).trim())
+    return out
+  }
+
+  // A background made only of hard-edged stripes along one side of its box: the shaded
+  // name column of a swimlane's lane and the rule beside it, or the brand band across the
+  // top of the sign-in screens. Figma can draw each stripe as a layer of its own, so it
+  // does: the stripe stays editable and is never a picture. A picture would also fail for
+  // a lane: pictures are taken at double scale, so a lane 3,122 pixels wide became a
+  // picture 6,244 pixels wide, and Figma refuses any picture over 4,096 pixels on a side
+  // (the first import of 01-sign-in stopped there on 26 October 2026).
+  //
+  // Returns the stripes as boxes in page pixels, behind everything else in the box, or
+  // null for any other background, which stays a picture: a soft or diagonal gradient, a
+  // repeating one, an image, more than one layer, a background sized or placed by hand,
+  // or a box with rounded corners (a stripe would not be cut to the corners).
+  function stripes(el, cs, rect) {
+    const layers = topLevel(cs.backgroundImage)
+    const used = layers.filter((l) => l !== 'none')
+    if (used.length !== 1) return null
+    const gradient = used[0].match(/^linear-gradient\((.*)\)$/)
+    if (!gradient) return null
+    const which = layers.indexOf(used[0])
+    const ofLayer = (list) => {
+      const all = topLevel(list)
+      return all[which] || all[0]
+    }
+    if (!/^auto( auto)?$/.test(ofLayer(cs.backgroundSize))) return null
+    if (ofLayer(cs.backgroundPosition) !== '0% 0%') return null
+    if (ofLayer(cs.backgroundOrigin) !== 'padding-box') return null
+    if (!/^(border-box|padding-box)$/.test(ofLayer(cs.backgroundClip))) return null
+    const corners = [
+      cs.borderTopLeftRadius,
+      cs.borderTopRightRadius,
+      cs.borderBottomRightRadius,
+      cs.borderBottomLeftRadius,
+    ]
+    if (corners.some((r) => parseFloat(r) > 0)) return null
+
+    // The gradient fills the padding box. CSS also paints it under the borders, but a
+    // border covers it there, so the stripes stop at the borders: they never cover one.
+    const left = parseFloat(cs.borderLeftWidth) || 0
+    const top = parseFloat(cs.borderTopWidth) || 0
+    const box = {
+      left: rect.left + left,
+      top: rect.top + top,
+      width: rect.width - left - (parseFloat(cs.borderRightWidth) || 0),
+      height: rect.height - top - (parseFloat(cs.borderBottomWidth) || 0),
+    }
+    if (box.width <= 0 || box.height <= 0) return null
+
+    // The direction: a side ("to right") or a right angle ("90deg"). None means "to
+    // bottom". A corner ("to top right") or any other angle is diagonal.
+    const args = topLevel(gradient[1])
+    const SIDES = { 'to top': 0, 'to right': 90, 'to bottom': 180, 'to left': 270 }
+    let angle = 180
+    if (/^to /.test(args[0])) {
+      if (!(args[0] in SIDES)) return null
+      angle = SIDES[args.shift()]
+    } else if (/^-?[\d.]+(deg|turn)$/.test(args[0])) {
+      const value = args.shift()
+      angle = value.endsWith('turn') ? parseFloat(value) * 360 : parseFloat(value)
+    }
+    angle = ((angle % 360) + 360) % 360
+    if (angle % 90 !== 0) return null
+    const sideways = angle === 90 || angle === 270 // stripes side by side, full height
+    const backwards = angle === 0 || angle === 270 // the gradient runs up, or leftwards
+    const length = sideways ? box.width : box.height
+
+    // The stops. The computed value gives each stop at most one position, in px or %; a
+    // colour hint or a calc() position means a blend, which no stripe can draw.
+    const stops = []
+    for (const arg of args) {
+      const m = arg.match(
+        /^((?:rgba?|color)\([^)]*\)|transparent)((?:\s+-?[\d.]+(?:px|%))*)$/,
+      )
+      if (!m) return null
+      const c = color(m[1])
+      if (!c) return null
+      const positions = m[2].trim() ? m[2].trim().split(/\s+/) : []
+      if (!positions.length) stops.push({ c, at: null })
+      for (const p of positions) stops.push({ c, at: px(p, length) })
+    }
+    if (stops.length < 2) return null
+    // Positions as CSS fixes them: the first defaults to the start and the last to the
+    // end, a stop placed before an earlier one moves up to it, and a stop with no
+    // position sits evenly between its neighbours.
+    if (stops[0].at === null) stops[0].at = 0
+    if (stops[stops.length - 1].at === null) stops[stops.length - 1].at = length
+    let furthest = -Infinity
+    for (const s of stops) {
+      if (s.at === null) continue
+      s.at = Math.max(s.at, furthest)
+      furthest = s.at
+    }
+    for (let i = 1; i < stops.length - 1; i++) {
+      if (stops[i].at !== null) continue
+      let j = i
+      while (stops[j].at === null) j++
+      const from = stops[i - 1].at
+      const to = stops[j].at
+      for (let k = i; k < j; k++)
+        stops[k].at = from + ((to - from) * (k - i + 1)) / (j - i + 1)
+    }
+
+    // Between two stops the colour is one colour, or the gradient blends: then it is not
+    // stripes. Before the first stop and after the last, the end colours carry on.
+    const same = (a, b) =>
+      (!visible(a) && !visible(b)) ||
+      (Math.abs(a.r - b.r) < 0.002 &&
+        Math.abs(a.g - b.g) < 0.002 &&
+        Math.abs(a.b - b.b) < 0.002 &&
+        Math.abs(a.a - b.a) < 0.002)
+    const spans = [{ from: -Infinity, to: stops[0].at, c: stops[0].c }]
+    for (let i = 0; i + 1 < stops.length; i++) {
+      const a = stops[i]
+      const b = stops[i + 1]
+      if (b.at - a.at <= 0.01) continue
+      if (!same(a.c, b.c)) return null
+      spans.push({ from: a.at, to: b.at, c: a.c })
+    }
+    const last = stops[stops.length - 1]
+    spans.push({ from: last.at, to: Infinity, c: last.c })
+
+    // The visible spans inside the box, with neighbours of the same colour joined.
+    const shown = []
+    for (const s of spans) {
+      const from = Math.max(0, s.from)
+      const to = Math.min(length, s.to)
+      if (to - from <= 0.01 || !visible(s.c)) continue
+      const prev = shown[shown.length - 1]
+      if (prev && same(prev.c, s.c) && Math.abs(prev.to - from) <= 0.01) prev.to = to
+      else shown.push({ from, to, c: s.c })
+    }
+    return shown.map((s, i) => {
+      const start = backwards ? length - s.to : s.from
+      const size = s.to - s.from
+      return {
+        type: 'box',
+        name: `${nameOf(el)} (background${shown.length > 1 ? ` ${i + 1}` : ''})`,
+        x: sideways ? box.left + start : box.left,
+        y: sideways ? box.top : box.top + start,
+        w: sideways ? size : box.width,
+        h: sideways ? box.height : size,
+        fills: [s.c],
+        children: [],
+        // Below everything else the box holds, as a background is.
+        order: -1e9,
+      }
+    })
+  }
+
   function boxOf(el, cs, rect) {
     const node = {
       type: 'box',
@@ -358,14 +527,18 @@ function collect() {
       }
     }
     if (cs.backgroundImage && cs.backgroundImage !== 'none') {
-      const id = String(nextId++)
-      el.setAttribute('data-fig-raster', id)
-      rasters.push({
-        id,
-        mode: 'background',
-        rect: [rect.left, rect.top, rect.width, rect.height],
-      })
-      node.raster = id
+      const flat = stripes(el, cs, rect)
+      if (flat) node.children.push(...flat)
+      else {
+        const id = String(nextId++)
+        el.setAttribute('data-fig-raster', id)
+        rasters.push({
+          id,
+          mode: 'background',
+          rect: [rect.left, rect.top, rect.width, rect.height],
+        })
+        node.raster = id
+      }
     }
     return node
   }
@@ -896,6 +1069,7 @@ function collect() {
       const box = boxOf(el, cs, rect)
       if (!shown) {
         box.fills = []
+        box.children = []
         delete box.border
         delete box.shadows
         delete box.outline
