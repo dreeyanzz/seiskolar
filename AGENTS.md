@@ -35,6 +35,14 @@ design in Figma as editable layers (Adrian, 26 October 2026):
    first, in a pull request, and then imported again. Changes to the tools use the `repo`
    scope.
 
+And it holds the Software Design Document, a course deliverable (Activity 1, "From SRS
+to Software Design") that turns the SRS into components, classes, processes and
+traceability, as the base for the UML models:
+
+7. [`06-software-design-document/`](06-software-design-document/SOFTWARE-DESIGN-DOCUMENT.md):
+   built from the SRS and the swimlanes, in the course's template. It plans the design;
+   no drawing is built from it yet. Changes to it use the `repo` scope.
+
 Nothing else belongs here.
 
 ## There is no code here

@@ -17,6 +17,7 @@ Software Design, Cebu Institute of Technology – University. Team **Asph**.
 | 4   | [High-fidelity screens](04-high-fidelity/)                                            | The wireframe with the same name                                  |
 | 5   | [Risk matrix, WBS and Gantt chart](05-risk-matrix-and-gantt/RISK-MATRIX-AND-GANTT.md) | The project's risks and schedule, not the chain                   |
 | 6   | [The design in Figma](https://www.figma.com/design/fsEKjSfF5mPRh5NIwwuign)            | A copy of 2 to 4, made by [`tools/figma/`](tools/figma/README.md) |
+| 7   | [Software Design Document](06-software-design-document/SOFTWARE-DESIGN-DOCUMENT.md)   | The SRS and the swimlanes, in the course's SDD template           |
 
 The README of each drawing folder, 02 to 04, lists every item, what it is built from, who
 owns it, and whether it is done. There is no application code here: each drawing is an
