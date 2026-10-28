@@ -14,6 +14,7 @@
     "figma:export": "node tools/figma/export.mjs",
     "figma:preview": "node tools/figma/preview.mjs",
     "figma:import": "node tools/figma/import.mjs",
+    "figma:label-owners": "node tools/figma/label-owners.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
