@@ -6,6 +6,8 @@
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Project / System Name | SEIskolar: a system for DOST-SEI undergraduate scholars to file the per-term Periodic Report, and for everyone to see what is outstanding, released and settled         |
 | Group / Team Members  | Team **Asph**: Adrian Seth Tabotabo (Project Manager), Genril Theo Soroño, Althea Maeve Kinaadman, Zedric Camilotes, Dorothy Biatriz Capao                              |
+| Course & Section      | Software Design, Cebu Institute of Technology – University (CIT-U)                                                                                                      |
+| Instructor            | Engr. Mervin John Tampus                                                                                                                                                |
 | Date                  | 28 October 2026                                                                                                                                                         |
 | Built from            | [`01-srs/SRS.md`](../01-srs/SRS.md), document version 2.2, and the ten swimlanes in [`02-swimlanes/`](../02-swimlanes/README.md), whose step numbers (`S03.4`) it cites |
 
