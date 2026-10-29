@@ -1227,24 +1227,26 @@ row-level security on every table (NFR-SEC-001), transition and append-only trig
 (FR-SCH-004, FR-CHK-004), and audit triggers (NFR-SEC-003).
 
 ```text
-┌───────────────────────────── Presentation Layer ─────────────────────────────┐
-│ P1 Scholar Portal · P2 Coordinator Workspace · P3 DOST Regional Console       │
-│ P4 DOST Central Office Console · P5 Administration Console                    │
-│ (one school portal per subdomain; the address picks the layout, never data)   │
-└───────────────────────────────────────┬───────────────────────────────────────┘
-                                        │ actions and reads, with the session token
-┌─────────────────────────── Business Logic Layer ─────────────────────────────┐
-│ B1 Identity & Access · B2 Term & Requirement Setup · B3 Periodic Submission   │
-│ B4 Document Storage · B5 Review · B6 Compliance Monitoring                    │
-│ B7 Release Pipeline · B8 Tuition Settlement · B9 Benefit Administration       │
-│ B10 School & Account Administration · B11 Audit                               │
-└───────────────────────────────────────┬───────────────────────────────────────┘
-                                        │ scoped queries; signed file links
-┌──────────────────────────────── Data Layer ──────────────────────────────────┐
-│ D1 Compliance Database (row-level security, transitions, views)               │
-│ D2 Document Store (private bucket, path-scoped, never overwritten)            │
-│ D3 Audit Log Store (append-only)                                              │
-└───────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────── Presentation Layer ──────────────────────┐
+│ P1 Scholar Portal · P2 Coordinator Workspace                   │
+│ P3 DOST Regional Console · P4 DOST Central Office Console      │
+│ P5 Administration Console                                      │
+│ (one portal per subdomain; address picks layout, not data)     │
+└───────────────────────────────┬────────────────────────────────┘
+                                │ session token actions & reads
+┌───────────────────── Business Logic Layer ─────────────────────┐
+│ B1 Identity & Access · B2 Term & Requirement Setup             │
+│ B3 Periodic Submission · B4 Document Storage · B5 Review       │
+│ B6 Compliance Monitoring · B7 Release Pipeline                 │
+│ B8 Tuition Settlement · B9 Benefit Administration              │
+│ B10 School & Account Administration · B11 Audit                │
+└───────────────────────────────┬────────────────────────────────┘
+                                │ scoped queries & signed links
+┌────────────────────────── Data Layer ──────────────────────────┐
+│ D1 Compliance Database (row-level security, state transitions) │
+│ D2 Document Store (private bucket, never overwritten)          │
+│ D3 Audit Log Store (append-only audit history)                 │
+└────────────────────────────────────────────────────────────────┘
 ```
 
 In the SRS's environment (§2.1), the presentation layer and the actions run on the web

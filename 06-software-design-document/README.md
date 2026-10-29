@@ -14,7 +14,7 @@ drawings, so it uses the `repo` scope.
   specification written in Markdown, structured part-by-part (Parts I to XIX) according
   to the course's SDD template.
 - [`SEIskolar-Software-Design-Document.docx`](SEIskolar-Software-Design-Document.docx): The
-  compiled Word document for course and LMS submission.
+  compiled Word document for course and LMS submission (built via `npm run docx:sdd`).
 
 ## What this document covers
 
