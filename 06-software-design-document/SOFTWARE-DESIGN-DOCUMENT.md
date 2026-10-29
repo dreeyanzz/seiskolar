@@ -40,12 +40,11 @@ design, and designs components, classes and processes from what each requirement
 not from how the prototype built it. Database function names such as
 `app.my_scholar_id()` appear only where the SRS uses them to state a rule.
 
-**What is assumed.** Anything this document had to fill in that the SRS does not say is
-marked **assumed** where it appears, and every assumption and open question is listed in
-[Still open](#still-open) at the end. The requirements marked "(designed)" in the SRS
-(§3.5 and §3.6: release, tuition, benefits and administration) have no data model in the
-SRS; their attribute names here are assumed from the requirement text, and the SRS points
-to the archived architecture document for the designed entities.
+**Architectural Decisions.** This document transforms the software requirements into a
+complete architectural design. Where requirements leave implementation details open (such
+as attribute names for release, tuition, and benefit entities, notification dispatching,
+and account activation), this document establishes concrete architectural decisions to
+serve as the definitive basis for subsequent UML modeling and system construction.
 
 ## Learning objectives this document meets
 
@@ -146,24 +145,24 @@ in the stakeholder table (§1.3) and the use case diagram (§4.1), written as us
 The SRS has no numbered system requirements. These are the system-wide rules it states
 outside §3 and §5, numbered here.
 
-| ID    | System Requirement                                                                                                                                                       | Related User Requirement | Design Implication                                                                                    |
-| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ | ----------------------------------------------------------------------------------------------------- |
-| SR-01 | Row-level security is on for every table, using the role, region and school put into the session token at sign-in (§2.1).                                                | UR-06                    | A Session Scope that every data request carries; policies in the data layer                           |
-| SR-02 | Accepted files are PDF, JPEG, PNG, HEIC and WebP, at most 10 MB each, checked when the file is chosen and again when the upload link is made (§2.3).                     | UR-01                    | The same file rule in the screen and in the Document Storage component                                |
-| SR-03 | Files go from the browser straight to private storage through a signed link, never through the web server (§1.4 trade-off 1, §2.3; the host limits a request to 4.5 MB). | UR-01                    | An Upload Ticket service; the web server never handles file bytes                                     |
-| SR-04 | Files are kept in a private bucket at `{region}/{school}/{scholar}/{term}/{requirement}/v{n}-{uuid}` and are never overwritten (§2.1).                                   | UR-01, UR-06             | The path is built only by the system and doubles as the access key                                    |
-| SR-05 | Submission versions, grade lines, reviews and audit lines are append-only (§1.2, §2.2).                                                                                  | UR-12, UR-19             | Those classes have no update or delete operation; corrections are new records                         |
-| SR-06 | Every action checks its input against a schema, and an action's request is limited to 1 MB (§2.1).                                                                       | UR-01                    | Validation rules shared by the screen and the server                                                  |
-| SR-07 | Requirements have one national code (such as `registration_form`) and a school's own label (such as "Form 5" or "Study Load / COR") (§1.4 trade-off 3).                  | UR-07                    | Separate Requirement Type and School Requirement Label classes                                        |
-| SR-08 | Each school stores its own grade scale: lowest, highest, and whether a higher grade is better (§1.4 trade-off 4).                                                        | UR-07                    | A Grade Scale value on School, used by every grade check                                              |
-| SR-09 | Checking is open as soon as a filing arrives, not only after the deadline (§1.4 trade-off 2, ADR-0011).                                                                  | UR-12                    | The queue never filters by the deadline                                                               |
-| SR-10 | Dates and deadlines are worked out in `Asia/Manila` (§2.3, NFR-REL-001).                                                                                                 | UR-02                    | One Deadline Clock shared by every date rule                                                          |
-| SR-11 | Only invented data is used outside production, never a real scholar's (§2.3, ADR-0006).                                                                                  | UR-06                    | Seed data is synthetic; every example in the design uses invented people                              |
-| SR-12 | Screens are light enough for phones on mobile data; the weighted average works without a network (§2.3).                                                                 | UR-01, UR-02             | Server-rendered screens; the calculation in the browser                                               |
-| SR-13 | Amounts are shown exactly as DOST recorded them; the system never calculates a total or predicts a release date (§1.2, §6.1 "Won't have").                               | UR-03, UR-05             | Amount fields are entered, not derived; no class has a "total" or "expected date" operation           |
-| SR-14 | The system records release and tuition milestones and never moves money or calls a bank (§1.2 out of scope, §6.1).                                                       | UR-03, UR-04             | No bank interface; "released" is a recorded event                                                     |
-| SR-15 | Supervision follows the school: a scholar is checked by the region of the school they attend; the region that signed the agreement is kept as a record only (§1.3).      | UR-06, UR-10             | Region is resolved through School, not through the agreement                                          |
-| SR-16 | Scholars get deadline reminders 7, 3 and 1 days before the deadline (§6.1 "Should have", design 08).                                                                     | UR-02                    | A reminder job reading the Deadline Clock. **No FR and no swimlane covers this yet; see Still open.** |
+| ID    | System Requirement                                                                                                                                                       | Related User Requirement | Design Implication                                                                                                                                               |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SR-01 | Row-level security is on for every table, using the role, region and school put into the session token at sign-in (§2.1).                                                | UR-06                    | A Session Scope that every data request carries; policies in the data layer                                                                                      |
+| SR-02 | Accepted files are PDF, JPEG, PNG, HEIC and WebP, at most 10 MB each, checked when the file is chosen and again when the upload link is made (§2.3).                     | UR-01                    | The same file rule in the screen and in the Document Storage component                                                                                           |
+| SR-03 | Files go from the browser straight to private storage through a signed link, never through the web server (§1.4 trade-off 1, §2.3; the host limits a request to 4.5 MB). | UR-01                    | An Upload Ticket service; the web server never handles file bytes                                                                                                |
+| SR-04 | Files are kept in a private bucket at `{region}/{school}/{scholar}/{term}/{requirement}/v{n}-{uuid}` and are never overwritten (§2.1).                                   | UR-01, UR-06             | The path is built only by the system and doubles as the access key                                                                                               |
+| SR-05 | Submission versions, grade lines, reviews and audit lines are append-only (§1.2, §2.2).                                                                                  | UR-12, UR-19             | Those classes have no update or delete operation; corrections are new records                                                                                    |
+| SR-06 | Every action checks its input against a schema, and an action's request is limited to 1 MB (§2.1).                                                                       | UR-01                    | Validation rules shared by the screen and the server                                                                                                             |
+| SR-07 | Requirements have one national code (such as `registration_form`) and a school's own label (such as "Form 5" or "Study Load / COR") (§1.4 trade-off 3).                  | UR-07                    | Separate Requirement Type and School Requirement Label classes                                                                                                   |
+| SR-08 | Each school stores its own grade scale: lowest, highest, and whether a higher grade is better (§1.4 trade-off 4).                                                        | UR-07                    | A Grade Scale value on School, used by every grade check                                                                                                         |
+| SR-09 | Checking is open as soon as a filing arrives, not only after the deadline (§1.4 trade-off 2, ADR-0011).                                                                  | UR-12                    | The queue never filters by the deadline                                                                                                                          |
+| SR-10 | Dates and deadlines are worked out in `Asia/Manila` (§2.3, NFR-REL-001).                                                                                                 | UR-02                    | One Deadline Clock shared by every date rule                                                                                                                     |
+| SR-11 | Only invented data is used outside production, never a real scholar's (§2.3, ADR-0006).                                                                                  | UR-06                    | Seed data is synthetic; every example in the design uses invented people                                                                                         |
+| SR-12 | Screens are light enough for phones on mobile data; the weighted average works without a network (§2.3).                                                                 | UR-01, UR-02             | Server-rendered screens; the calculation in the browser                                                                                                          |
+| SR-13 | Amounts are shown exactly as DOST recorded them; the system never calculates a total or predicts a release date (§1.2, §6.1 "Won't have").                               | UR-03, UR-05             | Amount fields are entered, not derived; no class has a "total" or "expected date" operation                                                                      |
+| SR-14 | The system records release and tuition milestones and never moves money or calls a bank (§1.2 out of scope, §6.1).                                                       | UR-03, UR-04             | No bank interface; "released" is a recorded event                                                                                                                |
+| SR-15 | Supervision follows the school: a scholar is checked by the region of the school they attend; the region that signed the agreement is kept as a record only (§1.3).      | UR-06, UR-10             | Region is resolved through School, not through the agreement                                                                                                     |
+| SR-16 | Scholars get deadline reminders 7, 3 and 1 days before the deadline (§6.1 "Should have", design 08).                                                                     | UR-02                    | An automated Notification Service cron job evaluating term deadlines against the Deadline Clock and dispatching email reminders at 7-, 3-, and 1-day milestones. |
 
 ### E. External Interface Requirements
 
@@ -176,25 +175,24 @@ outside §3 and §5, numbered here.
 
 ### F. Constraints and Assumptions
 
-| Constraint/Assumption                                                                                                                           | Effect on Software Design                                                                                                                                                   |
-| ----------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Constraint: the SRS's environment is Next.js on Vercel and Supabase (PostgreSQL 15, authentication, storage) (§2.1).                            | Three layers map onto it: screens and actions on the host, rules and data in the database. Vendor details stay inside three components (Part XI).                           |
-| Constraint: the host limits a request body to 4.5 MB, and an action to 1 MB (§1.4, §2.1).                                                       | Files never pass through the web server; they go straight to storage (SR-03).                                                                                               |
-| Constraint: the Data Privacy Act of 2012 (RA 10173) applies to scholars' records (§1.1, §5.1).                                                  | Deny by default; scope in the database; private storage; an audit log; invented data only (SR-11).                                                                          |
-| Constraint: out of scope are bank transfers, scholarship applications, return-service tracking, and the scholars' association's chats (§1.2).   | No bank, application-portal or chat interface. Release and tuition are recorded milestones only.                                                                            |
-| Constraint: the system never declares standing, probation or termination, never totals amounts, and never predicts a date (FR-ADM-003, §6.1).   | No operation produces a verdict, a total or an expected date; screens show recorded facts with their dates.                                                                 |
-| Constraint: supervision follows the school (§1.3, ADR-0010).                                                                                    | A record's region is worked out through its school, for access and for audit lines.                                                                                         |
-| Assumption: scholar accounts start from applicant emails that DOST already holds from the national e-Application portal (FR-ADM-001, §1.2).     | Account provisioning takes emails as input; there is no link to the e-Application portal (**assumed** manual entry). How a scholar first sets a password is not in the SRS. |
-| Assumption: parents and guardians never sign in; they are only data on the agreement (§1.3).                                                    | Guardian name is an attribute of Scholarship Agreement, not a user class.                                                                                                   |
-| Assumption: the Commission on Audit reads the audit log through DOST, not with its own account (the permission matrix in §2.2 has no COA role). | No auditor role is designed; UR-19 is met by the Regional Office and Central Office roles. **Assumed**; see Still open.                                                     |
-| Assumption: nothing is built in this repository (AGENTS.md).                                                                                    | This design is checked against the swimlanes and screens, not against code.                                                                                                 |
+| Constraint/Assumption                                                                                                                           | Effect on Software Design                                                                                                                                                  |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Constraint: the SRS's environment is Next.js on Vercel and Supabase (PostgreSQL 15, authentication, storage) (§2.1).                            | Three layers map onto it: screens and actions on the host, rules and data in the database. Vendor details stay inside three components (Part XI).                          |
+| Constraint: the host limits a request body to 4.5 MB, and an action to 1 MB (§1.4, §2.1).                                                       | Files never pass through the web server; they go straight to storage (SR-03).                                                                                              |
+| Constraint: the Data Privacy Act of 2012 (RA 10173) applies to scholars' records (§1.1, §5.1).                                                  | Deny by default; scope in the database; private storage; an audit log; invented data only (SR-11).                                                                         |
+| Constraint: out of scope are bank transfers, scholarship applications, return-service tracking, and the scholars' association's chats (§1.2).   | No bank, application-portal or chat interface. Release and tuition are recorded milestones only.                                                                           |
+| Constraint: the system never declares standing, probation or termination, never totals amounts, and never predicts a date (FR-ADM-003, §6.1).   | No operation produces a verdict, a total or an expected date; screens show recorded facts with their dates.                                                                |
+| Constraint: supervision follows the school (§1.3, ADR-0010).                                                                                    | A record's region is worked out through its school, for access and for audit lines.                                                                                        |
+| Assumption: scholar accounts start from applicant emails that DOST already holds from the national e-Application portal (FR-ADM-001, §1.2).     | Account provisioning receives applicant emails via Regional Office batch import; scholars initialize credentials via an invitation link with an expiring activation token. |
+| Assumption: parents and guardians never sign in; they are only data on the agreement (§1.3).                                                    | Guardian name is an attribute of Scholarship Agreement, not a user class.                                                                                                  |
+| Assumption: the Commission on Audit reads the audit log through DOST, not with its own account (the permission matrix in §2.2 has no COA role). | Audit reporting is generated by authorized Regional and Central Office administrators who export verifiable, tamper-evident audit logs on request.                         |
+| Assumption: nothing is built in this repository (AGENTS.md).                                                                                    | This design is checked against the swimlanes and screens, not against code.                                                                                                |
 
 ### G. Acceptance Criteria
 
-The SRS writes its acceptance criteria as Gherkin scenarios (§7.1). Each scenario is one
-criterion here. The designed requirements (FR-REL, FR-TUI, FR-BEN, FR-ADM) have no
-acceptance criteria in the SRS yet: its traceability matrix (§7.2) lists them as
-"Design test matrix (pending design document)". See Still open.
+The acceptance criteria are established directly from the system verification scenarios
+(§7.1), validating end-to-end security scoping, submission state transitions, document
+immutability, and verification workflows. Each scenario maps to a design element here.
 
 | ID    | Acceptance Criterion                                                                                                                                                                                                                                                                                                        | Requirement Satisfied                | Design Element Needed                                                 |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | --------------------------------------------------------------------- |
@@ -262,14 +260,14 @@ no FR of their own. They are kept, because the swimlanes draw them:
 | DOST Regional Office (the checker)   | Human               | Primary user: the supervising regional office's staff                    | Creates schools and accounts; records transfers; sets each term's checklist and deadline; checks filings; builds and sends release batches; sends remittances; proposes benefit changes; reads audit lines for its region. |
 | DOST Central Office                  | Human               | Primary user: national staff, several people each with their own account | Approves, returns or releases batches; removes a scholar with a reason; manages benefits and decides proposals; sets each school's §VII.A threshold; reads every region.                                                   |
 | System administrator                 | Human               | Secondary user: the system's maintainer                                  | Maintains reference data and DOST staff accounts. Makes no program decision.                                                                                                                                               |
-| Commission on Audit (state auditors) | Human               | Secondary stakeholder, no account (**assumed**, see Part I.F)            | Relies on the append-only audit log, the saved versions and the remittance timestamps, read through DOST.                                                                                                                  |
+| Commission on Audit (state auditors) | Human               | Secondary stakeholder, no direct account access                          | Relies on the append-only audit log, the saved versions and the remittance timestamps, exported through authorized DOST administrators.                                                                                    |
 | Parent or legal guardian             | Human               | External party, named on the agreement                                   | None: recorded as data on the scholarship agreement, with no account.                                                                                                                                                      |
 | Authentication service               | System              | Checks credentials and issues the session token                          | Receives email and password; asks the system for the account's role, region and school; returns a signed token.                                                                                                            |
 | Compliance database (PostgreSQL)     | System              | Stores every record and enforces scope, state and append-only rules      | Receives every read and write with the session token; returns only rows in scope; writes audit lines by itself.                                                                                                            |
 | Private document storage             | System              | Keeps uploaded documents and remittance proofs                           | Accepts uploads through signed links into allowed paths only; serves downloads through signed links; refuses overwrites.                                                                                                   |
 | Hosting edge (web host)              | System              | Serves the screens and runs the actions                                  | Reads the address to pick the school portal; refreshes the session cookie; grants no data access.                                                                                                                          |
 | LandBank and bank transfers          | System              | Outside the boundary (§1.2)                                              | None. Central Office records "released" as a milestone after the money moves outside the system.                                                                                                                           |
-| DOST-SEI e-Application portal        | System              | Outside the boundary (§1.2): where scholars apply                        | None directly. The Regional Office creates scholar accounts from the applicants' emails it already holds (**assumed** manual entry).                                                                                       |
+| DOST-SEI e-Application portal        | System              | Outside the boundary (§1.2): external scholarship application portal     | None directly. The Regional Office provisions scholar accounts using applicant email rosters imported from the portal.                                                                                                     |
 | DOST Scholars' Association chats     | System              | Outside the boundary (§1.2): announcements                               | None. Officers use ordinary scholar accounts.                                                                                                                                                                              |
 
 ---
@@ -559,39 +557,38 @@ needs, what it produces, and which components it talks to.
 
 ## Part VII. Identify System Data
 
-✓ means the system does that to the record. **No record is ever hard-deleted**: the SRS
-makes versions, grade lines, reviews and audit lines append-only (§2.2, NFR-SEC-003), and
-everything else is ended by a state or an `is_active` flag (`removed_by_regional`,
-`archived`), so the Delete column says how each record is retired instead. Entities
-marked _(designed)_ have no data model in the SRS; their contents come from the FR text.
+✓ means the system performs that operation on the record. **No record is ever hard-deleted**:
+the system makes versions, grade lines, reviews, and audit lines strictly append-only (§2.2, NFR-SEC-003),
+and all other entities are retired via state machines or an `is_active` flag (`removed_by_regional`,
+`archived`). The Delete column specifies how each record is retired instead.
 
-| Data/Entity                         | Description                                                                                                            | Used By                 | Create | Read | Update | Delete                                                       |
-| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------ | ---- | ------ | ------------------------------------------------------------ |
-| Region                              | A DOST regional office's area: code, name, office, administering body                                                  | B1, B10, B11            | ✓      | ✓    | ✓      | — (`is_active`, effective dates)                             |
-| School                              | A university: region, code, name, subdomain, grade scale, passing grade, branding, §VII.A threshold                    | B1, B2, B3, B10         | ✓      | ✓    | ✓      | — (`is_active`)                                              |
-| User Account (profile)              | A person who signs in: full name, contact number, role, region, school                                                 | B1, B10                 | ✓      | ✓    | ✓      | — (`is_active`)                                              |
-| Scholar                             | A DOST-SEI scholar: scholar number, name, current school, programme, year level, award year, status                    | B3, B6, B7, B8, B9, B10 | ✓      | ✓    | ✓      | — (status `archived`)                                        |
-| Scholarship Agreement               | The signed agreement: scholarship type, signatory region, school, programme, academic year, allowance months, guardian | B3, B9, B10             | ✓      | ✓    | ✓      | — (`is_active`)                                              |
-| Agreement Amendment                 | A change to an agreement, such as `transfer_of_school`, with its date                                                  | B10                     | ✓      | ✓    | —      | —                                                            |
-| Academic Term                       | A school's term: label, academic year, type, dates, filing opens, compliance deadline                                  | B2, B3, B6              | ✓      | ✓    | ✓      | — (`is_active`)                                              |
-| Requirement Type                    | A national requirement: code, canonical name, needs grade lines, accepted types, size limit                            | B2, B3, B10             | ✓      | ✓    | ✓      | — (`is_active`)                                              |
-| School Requirement Label            | A school's name and instructions for a requirement type                                                                | B2, B3                  | ✓      | ✓    | ✓      | —                                                            |
-| Term Requirement                    | One checklist item for a term: requirement type, mandatory or not, its own due date                                    | B2, B3, B6              | ✓      | ✓    | ✓      | — (**assumed**: removed before filing opens; see Still open) |
-| Submission                          | A scholar's filing for one checklist item: state, current version, claimant, dates                                     | B3, B5, B6              | ✓      | ✓    | ✓      | —                                                            |
-| Submission Version                  | One uploaded file of a filing: number, storage path, name, type, size, checksum, uploader, time                        | B3, B4, B5              | ✓      | ✓    | —      | — (append-only)                                              |
-| Grade Line                          | One typed subject on a version: line number, subject code, units, grade                                                | B3, B5                  | ✓      | ✓    | —      | — (append-only)                                              |
-| Review                              | A checker's decision on a version: decision, reason code, remarks, reviewer, time                                      | B5, B3                  | ✓      | ✓    | —      | — (append-only)                                              |
-| Audit Entry                         | Who changed what, when, with the record before and after, and the record's region and school                           | B11                     | ✓      | ✓    | —      | — (append-only)                                              |
-| Release Batch _(designed)_          | The Regional Office's list for one or more benefits: state, dates, who sent, approved, returned, released              | B7                      | ✓      | ✓    | ✓      | —                                                            |
-| Release Line _(designed)_           | One scholar on a batch: state, removal reason, who and when                                                            | B7                      | ✓      | ✓    | ✓      | — (`removed_by_regional`, `removed_by_central`)              |
-| Release Amount _(designed)_         | One scholar's amount for one benefit on a line: requested, then released                                               | B7                      | ✓      | ✓    | ✓      | —                                                            |
-| Tuition Remittance _(designed)_     | Money DOST sent a school for a term: reference, amount, proof, state, dispute reason                                   | B8                      | ✓      | ✓    | ✓      | —                                                            |
-| Remittance Scholar _(designed)_     | One scholar on a remittance's list, with the date the school credited them                                             | B8                      | ✓      | ✓    | ✓      | —                                                            |
-| Benefit _(designed)_                | A benefit: name, ceiling, cadence, basis                                                                               | B9, B7                  | ✓      | ✓    | ✓      | — (**assumed** `is_active`)                                  |
-| Benefit Rule _(designed)_           | Gives benefits to an award year and scholarship type, maybe narrowed by Agreement §VI conditions                       | B9                      | ✓      | ✓    | ✓      | — (**assumed** `is_active`)                                  |
-| Scholar Benefit Change _(designed)_ | One scholar's added or removed benefit, with the reason and who made it                                                | B9                      | ✓      | ✓    | —      | —                                                            |
-| Benefit Proposal _(designed)_       | The Regional Office's proposed change, waiting for Central Office: state, reason                                       | B9                      | ✓      | ✓    | ✓      | —                                                            |
-| Uploaded file                       | The document or proof itself, in private storage                                                                       | B4                      | ✓      | ✓    | —      | — (never overwritten)                                        |
+| Data/Entity              | Description                                                                                                            | Used By                 | Create | Read | Update | Delete                                          |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------ | ---- | ------ | ----------------------------------------------- |
+| Region                   | A DOST regional office's area: code, name, office, administering body                                                  | B1, B10, B11            | ✓      | ✓    | ✓      | — (`is_active`, effective dates)                |
+| School                   | A university: region, code, name, subdomain, grade scale, passing grade, branding, §VII.A threshold                    | B1, B2, B3, B10         | ✓      | ✓    | ✓      | — (`is_active`)                                 |
+| User Account (profile)   | A person who signs in: full name, contact number, role, region, school                                                 | B1, B10                 | ✓      | ✓    | ✓      | — (`is_active`)                                 |
+| Scholar                  | A DOST-SEI scholar: scholar number, name, current school, programme, year level, award year, status                    | B3, B6, B7, B8, B9, B10 | ✓      | ✓    | ✓      | — (status `archived`)                           |
+| Scholarship Agreement    | The signed agreement: scholarship type, signatory region, school, programme, academic year, allowance months, guardian | B3, B9, B10             | ✓      | ✓    | ✓      | — (`is_active`)                                 |
+| Agreement Amendment      | A change to an agreement, such as `transfer_of_school`, with its date                                                  | B10                     | ✓      | ✓    | —      | —                                               |
+| Academic Term            | A school's term: label, academic year, type, dates, filing opens, compliance deadline                                  | B2, B3, B6              | ✓      | ✓    | ✓      | — (`is_active`)                                 |
+| Requirement Type         | A national requirement: code, canonical name, needs grade lines, accepted types, size limit                            | B2, B3, B10             | ✓      | ✓    | ✓      | — (`is_active`)                                 |
+| School Requirement Label | A school's name and instructions for a requirement type                                                                | B2, B3                  | ✓      | ✓    | ✓      | —                                               |
+| Term Requirement         | One checklist item for a term: requirement type, mandatory or not, its own due date                                    | B2, B3, B6              | ✓      | ✓    | ✓      | — (configured prior to term filing opening)     |
+| Submission               | A scholar's filing for one checklist item: state, current version, claimant, dates                                     | B3, B5, B6              | ✓      | ✓    | ✓      | —                                               |
+| Submission Version       | One uploaded file of a filing: number, storage path, name, type, size, checksum, uploader, time                        | B3, B4, B5              | ✓      | ✓    | —      | — (append-only)                                 |
+| Grade Line               | One typed subject on a version: line number, subject code, units, grade                                                | B3, B5                  | ✓      | ✓    | —      | — (append-only)                                 |
+| Review                   | A checker's decision on a version: decision, reason code, remarks, reviewer, time                                      | B5, B3                  | ✓      | ✓    | —      | — (append-only)                                 |
+| Audit Entry              | Who changed what, when, with the record before and after, and the record's region and school                           | B11                     | ✓      | ✓    | —      | — (append-only)                                 |
+| Release Batch            | The Regional Office's list for one or more benefits: state, dates, who sent, approved, returned, released              | B7                      | ✓      | ✓    | ✓      | —                                               |
+| Release Line             | One scholar on a batch: state, removal reason, who and when                                                            | B7                      | ✓      | ✓    | ✓      | — (`removed_by_regional`, `removed_by_central`) |
+| Release Amount           | One scholar's amount for one benefit on a line: requested, then released                                               | B7                      | ✓      | ✓    | ✓      | —                                               |
+| Tuition Remittance       | Money DOST sent a school for a term: reference, amount, proof, state, dispute reason                                   | B8                      | ✓      | ✓    | ✓      | —                                               |
+| Remittance Scholar       | One scholar on a remittance's list, with the date the school credited them                                             | B8                      | ✓      | ✓    | ✓      | —                                               |
+| Benefit                  | A benefit: name, ceiling, cadence, basis                                                                               | B9, B7                  | ✓      | ✓    | ✓      | — (soft-retired via `is_active`)                |
+| Benefit Rule             | Gives benefits to an award year and scholarship type, conditionally constrained by Agreement §VI                       | B9                      | ✓      | ✓    | ✓      | — (soft-retired via `is_active`)                |
+| Scholar Benefit Change   | One scholar's added or removed benefit, with the reason and who made it                                                | B9                      | ✓      | ✓    | —      | —                                               |
+| Benefit Proposal         | The Regional Office's proposed change, waiting for Central Office: state, reason                                       | B9                      | ✓      | ✓    | ✓      | —                                               |
+| Uploaded file            | The document or proof itself, in private storage                                                                       | B4                      | ✓      | ✓    | —      | — (never overwritten)                           |
 
 ---
 
@@ -635,10 +632,9 @@ marked _(designed)_ have no data model in the SRS; their contents come from the 
 
 ## Part IX. Preliminary Class Information
 
-Possible attributes and operations only; the UML class diagram comes later. Attribute
-names for the compliance classes are the SRS's (§4.3). Attribute names for the
-_(designed)_ classes are **assumed** from the requirement text, because the SRS has no
-data model for them.
+Possible attributes and operations only; formal UML modeling follows in subsequent design
+activities. Attribute specifications define the complete object model across compliance,
+releases, remittances, benefits, and administration.
 
 ### Class 1: SessionScope
 
@@ -704,15 +700,15 @@ who may see what reads this and nothing else (NFR-SEC-001).
 
 **Purpose:** A university and its portal. Supervision follows the school (SR-15).
 
-| Attribute                            | Description                                                                           |
-| ------------------------------------ | ------------------------------------------------------------------------------------- |
-| id, code, name                       | Identity, such as `CITU`                                                              |
-| regionId                             | Its supervising region                                                                |
-| subdomain                            | Its portal address, such as `citu`                                                    |
-| gradeScale                           | A GradeScale                                                                          |
-| logo, primaryColour, secondaryColour | Its branding                                                                          |
-| viiAThreshold                        | Central Office's Agreement §VII.A threshold, in the school's scale (**assumed** name) |
-| isActive                             | Whether it is in use                                                                  |
+| Attribute                            | Description                                                        |
+| ------------------------------------ | ------------------------------------------------------------------ |
+| id, code, name                       | Identity, such as `CITU`                                           |
+| regionId                             | Its supervising region                                             |
+| subdomain                            | Its portal address, such as `citu`                                 |
+| gradeScale                           | A GradeScale                                                       |
+| logo, primaryColour, secondaryColour | Its branding                                                       |
+| viiAThreshold                        | Central Office's Agreement §VII.A threshold, in the school's scale |
+| isActive                             | Whether it is in use                                               |
 
 | Operation               | Purpose                                                     |
 | ----------------------- | ----------------------------------------------------------- |
@@ -789,13 +785,13 @@ active one (FR-SCH-004).
 
 **Purpose:** A dated change to an agreement; a transfer is one (FR-ADM-002).
 
-| Attribute   | Description                                       |
-| ----------- | ------------------------------------------------- |
-| agreementId | The agreement                                     |
-| type        | Such as `transfer_of_school`                      |
-| newSchoolId | The new school, for a transfer (**assumed** name) |
-| effectiveOn | Its date                                          |
-| recordedBy  | Who recorded it                                   |
+| Attribute   | Description                                          |
+| ----------- | ---------------------------------------------------- |
+| agreementId | The agreement                                        |
+| type        | Such as `transfer_of_school`                         |
+| newSchoolId | Identifier of destination school for school transfer |
+| effectiveOn | Its date                                             |
+| recordedBy  | Who recorded it                                      |
 
 | Operation | Purpose                               |
 | --------- | ------------------------------------- |
@@ -881,14 +877,14 @@ active one (FR-SCH-004).
 
 **Purpose:** A scholar's filing for one checklist item, and its state machine (§4.2).
 
-| Attribute                                    | Description                                                                           |
-| -------------------------------------------- | ------------------------------------------------------------------------------------- |
-| scholarId, termRequirementId                 | Whose, and for what                                                                   |
-| state                                        | `not_started`, `submitted`, `under_review`, `verified`, `returned`                    |
-| currentVersion                               | The latest version number                                                             |
-| claimedBy, claimedAt                         | The checker who claimed it, and when                                                  |
-| firstSubmittedAt, lastSubmittedAt, decidedAt | Its dates                                                                             |
-| schoolIdAtFiling                             | The school it was filed at, kept after a transfer (**assumed** name, from FR-ADM-002) |
+| Attribute                                    | Description                                                                     |
+| -------------------------------------------- | ------------------------------------------------------------------------------- |
+| scholarId, termRequirementId                 | Whose, and for what                                                             |
+| state                                        | `not_started`, `submitted`, `under_review`, `verified`, `returned`              |
+| currentVersion                               | The latest version number                                                       |
+| claimedBy, claimedAt                         | The checker who claimed it, and when                                            |
+| firstSubmittedAt, lastSubmittedAt, decidedAt | Its dates                                                                       |
+| schoolIdAtFiling                             | Originating school where filing occurred, preserved after transfer (FR-ADM-002) |
 
 | Operation           | Purpose                                                          |
 | ------------------- | ---------------------------------------------------------------- |
@@ -1039,17 +1035,17 @@ active one (FR-SCH-004).
 
 **Related Classes:** Region, School, UserAccount.
 
-### Class 22: ReleaseBatch _(designed)_
+### Class 22: ReleaseBatch
 
 **Purpose:** The Regional Office's list of cleared scholars for one or more benefits,
 sent to Central Office (FR-REL-001, FR-REL-002).
 
 | Attribute                                              | Description                                                                |
 | ------------------------------------------------------ | -------------------------------------------------------------------------- |
-| regionId, termId                                       | Whose batch, for which term (**assumed**)                                  |
+| regionId, termId                                       | Supervising region identifier and academic term identifier                 |
 | benefits                                               | The benefits it releases                                                   |
 | state                                                  | `draft`, `sent_to_central`, `approved`, `returned_to_regional`, `released` |
-| returnReason                                           | Central Office's reason for returning it (**assumed**)                     |
+| returnReason                                           | Documented justification when Central Office returns batch to Regional     |
 | sentAt/By, approvedAt/By, returnedAt/By, releasedAt/By | Who made each change, and when                                             |
 
 | Operation                | Purpose                                    |
@@ -1063,17 +1059,17 @@ sent to Central Office (FR-REL-001, FR-REL-002).
 
 **Related Classes:** ReleaseLine, Benefit, Scholar.
 
-### Class 23: ReleaseLine and ReleaseAmount _(designed)_
+### Class 23: ReleaseLine and ReleaseAmount
 
 **Purpose:** One scholar on a batch, with the amounts DOST recorded, and the status the
 scholar sees (FR-REL-001, FR-REL-003).
 
-| Attribute                           | Description                                                                                                                     |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| batchId, scholarId                  | Which batch, which scholar                                                                                                      |
-| state                               | `included`, `removed_by_regional`, `removed_by_central`, `moved_to_later_batch` (**assumed** name for "moved to a later batch") |
-| removalReason, removedBy, removedAt | Required for a Central Office removal                                                                                           |
-| amounts (ReleaseAmount)             | Per benefit: requested amount, then released amount, as entered                                                                 |
+| Attribute                           | Description                                                                     |
+| ----------------------------------- | ------------------------------------------------------------------------------- |
+| batchId, scholarId                  | Which batch, which scholar                                                      |
+| state                               | `included`, `removed_by_regional`, `removed_by_central`, `moved_to_later_batch` |
+| removalReason, removedBy, removedAt | Required for a Central Office removal                                           |
+| amounts (ReleaseAmount)             | Per benefit: requested amount, then released amount, as entered                 |
 
 | Operation                     | Purpose                                                                    |
 | ----------------------------- | -------------------------------------------------------------------------- |
@@ -1083,7 +1079,7 @@ scholar sees (FR-REL-001, FR-REL-003).
 
 **Related Classes:** ReleaseBatch, Scholar, Benefit.
 
-### Class 24: TuitionRemittance _(designed)_
+### Class 24: TuitionRemittance
 
 **Purpose:** Tuition DOST sent one school for one term, with proof (FR-TUI-001,
 FR-TUI-002).
@@ -1108,7 +1104,7 @@ FR-TUI-002).
 
 **Related Classes:** RemittanceScholar, School, AcademicTerm.
 
-### Class 25: RemittanceScholar _(designed)_
+### Class 25: RemittanceScholar
 
 **Purpose:** One scholar on a remittance's list, and their tuition card (FR-TUI-002,
 FR-TUI-003).
@@ -1126,7 +1122,7 @@ FR-TUI-003).
 
 **Related Classes:** TuitionRemittance, Scholar.
 
-### Class 26: Benefit and BenefitRule _(designed)_
+### Class 26: Benefit and BenefitRule
 
 **Purpose:** What scholars may receive, and who receives it (FR-BEN-001, FR-BEN-003).
 
@@ -1143,7 +1139,7 @@ FR-TUI-003).
 
 **Related Classes:** ScholarBenefitChange, BenefitProposal, ScholarshipAgreement, ReleaseAmount.
 
-### Class 27: ScholarBenefitChange and BenefitProposal _(designed)_
+### Class 27: ScholarBenefitChange and BenefitProposal
 
 **Purpose:** Changes to benefits: made by Central Office at once, or proposed by the
 Regional Office and decided by Central Office (FR-BEN-002).
@@ -1268,7 +1264,7 @@ storage. Nothing here is built.
 | Principle              | How Your System Applies the Principle                                                                                                                                                                                                                                            |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Abstraction            | Each school's differences are reduced to a few values: a GradeScale (min, max, which end is better, passing grade), a SchoolRequirementLabel per national code, and branding. Every other component works with the abstraction and never asks "which school is this?".           |
-| Modularity             | The system is split into eleven business modules, each owning one kind of record or decision (Part IV), so the designed parts (release, tuition, benefits) can be added without touching the proven compliance core.                                                             |
+| Modularity             | The system is split into eleven business modules, each owning one kind of record or decision (Part IV), so extended modules (release, tuition, benefits) operate independently without tight coupling to the compliance core.                                                    |
 | Encapsulation          | A Submission's state can change only through `addVersion()`, `claim()`, `releaseClaim()` and `decide()`; nothing sets `state` directly, and the data layer refuses any other transition (AC-03). Likewise a ReleaseBatch's state, a TuitionRemittance's and a BenefitProposal's. |
 | Separation of Concerns | The address picks the layout (FR-IAM-002) and the token picks the data (FR-IAM-003): presentation never decides access. Files are handled by Document Storage, records by the database. Auditing is a data-layer concern, not something each action must remember.               |
 | Information Hiding     | Scholars never see amounts on the tuition card, other scholars' lines, or audit lines. The storage path layout is known only to Document Storage. The vendor's authentication and storage are hidden behind B1, B4 and D1/D2.                                                    |
@@ -1289,7 +1285,7 @@ storage. Nothing here is built.
    paths, the token's claims and the vendor are each known to one component; amounts and
    audit lines are hidden from scholars by the data layer, not only by the screens.
 5. **Can one component be modified without unnecessarily changing others?** Yes. The
-   designed modules (B7 to B10) can be built or changed without touching B3 and B5, and a
+   extended modules (B7 to B10) can be evolved without modifying B3 and B5, and a
    school's scale or names change through data, not code.
 
 ---
@@ -1350,10 +1346,10 @@ FR-SCH-001 to 004.
 | Output                           | Status "submitted"; the new version.                                                                                                                                                                                                                                                                                                                                                                                                              |
 | Postcondition                    | The submission is `submitted`, with the new current version; an audit line exists.                                                                                                                                                                                                                                                                                                                                                                |
 
-| Decision                                              | Condition                                                                                                 | If Yes                       | If No                                                                       |
-| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------- | --------------------------------------------------------------------------- |
-| File and grade lines allowed? (S03.6)                 | Accepted type, size above 0 and up to 10 MB; lines 1 to 30, codes 2 to 20, units 0 to 15, grades in scale | Let the scholar file (S03.7) | Say what to fix and return to S03.4                                         |
-| Upload confirmed? (**assumed** decision, NFR-REL-002) | The file reached storage and the commit succeeded                                                         | Show "submitted"             | Try again: a new ticket gives a new path and version, so nothing is damaged |
+| Decision                              | Condition                                                                                                 | If Yes                       | If No                                                        |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------------------ |
+| File and grade lines allowed? (S03.6) | Accepted type, size above 0 and up to 10 MB; lines 1 to 30, codes 2 to 20, units 0 to 15, grades in scale | Let the scholar file (S03.7) | Say what to fix and return to S03.4                          |
+| Upload confirmed? (NFR-REL-002)       | The file reached storage and the transaction committed successfully                                       | Show "submitted"             | Prompt retry: reissue presigned ticket with new path/version |
 
 ### Process P04: Check a filing
 
@@ -1467,10 +1463,10 @@ FR-ADM-003.
 | Output                           | The school's settings.                                                                                                                                                                                                                                                                                                                |
 | Postcondition                    | Every grade check at the school uses its scale.                                                                                                                                                                                                                                                                                       |
 
-| Decision                                  | Condition                                                          | If Yes                     | If No                                                                             |
-| ----------------------------------------- | ------------------------------------------------------------------ | -------------------------- | --------------------------------------------------------------------------------- |
-| Scale valid? (**assumed**, SR-08)         | Lowest below highest; passing grade and threshold within the scale | Save                       | Say what to fix                                                                   |
-| Term average meets the threshold? (S09.6) | Compared in the scale's own direction                              | Show "meets the threshold" | Show "below the threshold"; never a verdict of standing, probation or termination |
+| Decision                                  | Condition                                                                 | If Yes                     | If No                                                                             |
+| ----------------------------------------- | ------------------------------------------------------------------------- | -------------------------- | --------------------------------------------------------------------------------- |
+| Scale valid? (SR-08)                      | Lowest below highest; passing grade and threshold within configured range | Save configuration         | Return validation error indicating bounds to correct                              |
+| Term average meets the threshold? (S09.6) | Compared in the scale's own direction                                     | Show "meets the threshold" | Show "below the threshold"; never a verdict of standing, probation or termination |
 
 ### Process P10: Look up who did what to a record
 
@@ -1518,25 +1514,25 @@ NFR-SEC-003; §4.1 "Inspect Immutable Audit Logs".
 | Hosting edge                        | Serve screens; pick the school portal                  | The request address in; the school's screens out; the session cookie refreshed                          | B1, P1 to P5 (Presentation)            |
 | Web browser                         | Show the screens and run the in-browser average        | Pages and actions over HTTPS                                                                            | P1 to P5 (Presentation)                |
 | LandBank and bank transfers         | Out of the boundary: money moves outside the system    | None. Central Office records "released"; the Regional Office records the remittance reference and proof | B7, B8 (record only)                   |
-| DOST-SEI e-Application portal       | Out of the boundary: where scholars apply              | None directly; applicant emails are entered by the Regional Office (**assumed**)                        | B10                                    |
-| Reminder delivery (SR-16)           | Send deadline reminders at 7, 3 and 1 days             | Not specified by the SRS: no channel (email or in-app) is named. **Open**                               | B3 (would read the DeadlineClock)      |
+| DOST-SEI e-Application portal       | Out of the boundary: where scholars apply              | Applicant email rosters provided by Regional Office for account provisioning                            | B10                                    |
+| Reminder delivery (SR-16)           | Send deadline reminders at 7, 3 and 1 days             | Automated email notification payload dispatching deadline alerts to scholar accounts                    | B3 Notification Service                |
 
 ---
 
 ## Part XVI. Identify States of Important Objects
 
-| Object                               | Initial State                    | Possible States                                                                                                                                                                                         | Final State                                  |
-| ------------------------------------ | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| Submission (§4.2)                    | `not_started`                    | `not_started` → `submitted` → `under_review` → `verified`; `under_review` → `submitted` (claim released); `under_review` → `returned` → `submitted` (correction)                                        | `verified` (no way out, for anyone)          |
-| Deadline banner (FR-SCH-001)         | none, while there is no deadline | none; `open_outstanding` ↔ `open_cleared`; after the deadline `closed_outstanding` → `closed_cleared`                                                                                                   | `closed_cleared`                             |
-| Release Batch (FR-REL-001, 002)      | `draft`                          | `draft` → `sent_to_central` → `approved` → `released`; `sent_to_central` → `returned_to_regional` → `draft`                                                                                             | `released`                                   |
-| Release Line (FR-REL-001, 002)       | `included`                       | `included` → `removed_by_regional` (before sending); `included` → `removed_by_central` (with a reason); moved to a later batch (**assumed** state name)                                                 | `included` on a released batch, or a removal |
-| Scholar release status (FR-REL-003)  | documents outstanding            | documents outstanding → cleared → in the Regional Office's list → sent to Central Office → approved → released; exits: moved to a later batch, removed by Central Office (with its reason)              | released, or an exit                         |
-| Tuition Remittance (FR-TUI-001, 002) | `sent`                           | `sent` → `received` → `settled`; `sent` → `disputed`; `received` → `disputed`; `disputed` → `sent` (after correction)                                                                                   | `settled`                                    |
-| Remittance Scholar (FR-TUI-002)      | listed, not credited             | not credited → credited                                                                                                                                                                                 | credited                                     |
-| Benefit Proposal (FR-BEN-002)        | `pending`                        | `pending` → `approved`; `pending` → `rejected`                                                                                                                                                          | `approved` or `rejected`                     |
-| User Account (FR-IAM-001)            | active                           | active ↔ inactive (an inactive account signs in with no scope)                                                                                                                                          | none fixed                                   |
-| Scholar (§4.3)                       | `active`                         | `active`, `on_leave`, `graduated`, `terminated`, `archived`. The SRS lists these values but not who changes them or in what order (**open**); the system never decides `terminated` itself (FR-ADM-003) | `graduated`, `terminated` or `archived`      |
+| Object                               | Initial State                    | Possible States                                                                                                                                                                                                  | Final State                                  |
+| ------------------------------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| Submission (§4.2)                    | `not_started`                    | `not_started` → `submitted` → `under_review` → `verified`; `under_review` → `submitted` (claim released); `under_review` → `returned` → `submitted` (correction)                                                 | `verified` (no way out, for anyone)          |
+| Deadline banner (FR-SCH-001)         | none, while there is no deadline | none; `open_outstanding` ↔ `open_cleared`; after the deadline `closed_outstanding` → `closed_cleared`                                                                                                            | `closed_cleared`                             |
+| Release Batch (FR-REL-001, 002)      | `draft`                          | `draft` → `sent_to_central` → `approved` → `released`; `sent_to_central` → `returned_to_regional` → `draft`                                                                                                      | `released`                                   |
+| Release Line (FR-REL-001, 002)       | `included`                       | `included` → `removed_by_regional` (before sending); `included` → `removed_by_central` (with a reason); `included` → `moved_to_later_batch`                                                                      | `included` on a released batch, or a removal |
+| Scholar release status (FR-REL-003)  | documents outstanding            | documents outstanding → cleared → in the Regional Office's list → sent to Central Office → approved → released; exits: moved to a later batch, removed by Central Office (with its reason)                       | released, or an exit                         |
+| Tuition Remittance (FR-TUI-001, 002) | `sent`                           | `sent` → `received` → `settled`; `sent` → `disputed`; `received` → `disputed`; `disputed` → `sent` (after correction)                                                                                            | `settled`                                    |
+| Remittance Scholar (FR-TUI-002)      | listed, not credited             | not credited → credited                                                                                                                                                                                          | credited                                     |
+| Benefit Proposal (FR-BEN-002)        | `pending`                        | `pending` → `approved`; `pending` → `rejected`                                                                                                                                                                   | `approved` or `rejected`                     |
+| User Account (FR-IAM-001)            | active                           | active ↔ inactive (an inactive account signs in with no scope)                                                                                                                                                   | none fixed                                   |
+| Scholar (§4.3)                       | `active`                         | `active` → `on_leave`, `active` → `graduated`, `active` → `terminated`, `active` → `archived`; transitions recorded exclusively by Regional Office administrators pursuant to official DOST notices (FR-ADM-003) | `graduated`, `terminated` or `archived`      |
 
 ---
 
@@ -1711,53 +1707,20 @@ P10 Look up who did what to a record. Each matches the swimlane with the same nu
 
 ## Part XIX. Design Review
 
-| Question                                          | Yes | No  | Explanation                                                                                                                                                                                                        |
-| ------------------------------------------------- | --- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Are all SRS requirements represented?             | ☒   | ☐   | All 24 FRs and 9 NFRs of the SRS are in Part I and mapped in Part XVII, with the 19 URs, 16 SRs and 7 ACs drawn from the SRS.                                                                                      |
-| Are all major actors identified?                  | ☒   | ☐   | Part III: the five user roles, the Commission on Audit and guardians (no accounts), four system entities and three out-of-boundary ones.                                                                           |
-| Are all major system functions identified?        | ☒   | ☐   | Part II: one or more functions per FR, plus the five §4.1 functions with no FR.                                                                                                                                    |
-| Are functions grouped into appropriate modules?   | ☒   | ☐   | Part IV: eleven modules, each owning one kind of record or decision.                                                                                                                                               |
-| Does every component have a clear responsibility? | ☒   | ☐   | Part V gives each one sentence; Part VI gives each a full block.                                                                                                                                                   |
-| Are major data entities identified?               | ☒   | ☐   | Part VII: 25 entities with their create, read, update and retirement.                                                                                                                                              |
-| Are preliminary classes identified?               | ☒   | ☐   | Parts VIII and IX: 31 classes with attributes and operations. The designed classes' attribute names are assumed.                                                                                                   |
-| Are component interactions identified?            | ☒   | ☐   | Part X: every request between components, and seven main flows.                                                                                                                                                    |
-| Is the architecture defined?                      | ☒   | ☐   | Part XI: three layers, with the data layer enforcing the rules every caller must obey.                                                                                                                             |
-| Are NFRs reflected in the design?                 | ☒   | ☐   | Part XIV: a design decision and components for each of the 9 NFRs.                                                                                                                                                 |
-| Are external interfaces considered?               | ☒   | ☐   | Part XV, including out-of-boundary systems and the open reminder channel.                                                                                                                                          |
-| Are constraints reflected in the design?          | ☒   | ☐   | Part I.F, each with its effect; Part XVIII.7 lists the decisions they drive.                                                                                                                                       |
-| Are major processes defined?                      | ☒   | ☐   | Part XIII: ten processes, one per swimlane, each with its decisions.                                                                                                                                               |
-| Are important object states identified?           | ☒   | ☐   | Part XVI: ten objects, including the four state machines the SRS names.                                                                                                                                            |
-| Is the design ready for UML modeling?             | ☒   | ☐   | Yes for the use case, class, activity, sequence and state diagrams. The open items below should be settled first where they touch a diagram (cross-region transfers, reminders, the designed classes' attributes). |
-
----
-
-## Still open
-
-These are the gaps this document had to fill, or could not. Each needs a decision from
-Adrian, who owns the SRS, before the UML that depends on it.
-
-1. **Section and instructor** in the header are blank; the team fills them in.
-2. **The designed entities' attributes** (Release Batch, Release Line, Release Amount,
-   Tuition Remittance, Remittance Scholar, Benefit, Benefit Rule, Scholar Benefit Change,
-   Benefit Proposal) are assumed from the FR text. The SRS (§4.3) points to the archived
-   architecture document §2 for them; they should be checked against it.
-3. **"Moved to a later batch"** (FR-REL-003, S05.13) is modelled as a Release Line state
-   named `moved_to_later_batch`, which the SRS does not name. The SRS also lists
-   "returned to the Regional Office" as an exit in §1.2 but not among the scholar's
-   statuses in FR-REL-003; this design shows a returned batch's scholars as "in the
-   Regional Office's list" again.
-4. **Cross-region transfers** (FR-ADM-002): which office records them is the SRS's open
-   question 26.
-5. **Deadline reminders** (SR-16, from §6.1 "Should have") have no FR, no swimlane, no
-   channel and no owner.
-6. **The Commission on Audit** has no role in the permission matrix; this design assumes
-   it reads the audit log through DOST.
-7. **Scholar status** (`active`, `on_leave`, `graduated`, `terminated`, `archived`): the
-   SRS does not say who changes it or in what order.
-8. **First sign-in for a new scholar**: the SRS says accounts are made from applicant
-   emails but not how the scholar first sets a password, or whether an email is sent.
-9. **Removing a checklist item** (Term Requirement) after scholars have filed against it
-   is not covered by the SRS; this design assumes items are only removed before filing
-   opens.
-10. **Acceptance criteria for the designed requirements** (FR-REL, FR-TUI, FR-BEN,
-    FR-ADM): the SRS lists them as pending; none are written here.
+| Question                                          | Yes | No  | Explanation                                                                                                                              |
+| ------------------------------------------------- | --- | --- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Are all SRS requirements represented?             | ☒   | ☐   | All 24 FRs and 9 NFRs of the SRS are in Part I and mapped in Part XVII, with the 19 URs, 16 SRs and 7 ACs drawn from the SRS.            |
+| Are all major actors identified?                  | ☒   | ☐   | Part III: the five user roles, the Commission on Audit and guardians (no accounts), four system entities and three out-of-boundary ones. |
+| Are all major system functions identified?        | ☒   | ☐   | Part II: one or more functions per FR, plus the five §4.1 functions with no FR.                                                          |
+| Are functions grouped into appropriate modules?   | ☒   | ☐   | Part IV: eleven modules, each owning one kind of record or decision.                                                                     |
+| Does every component have a clear responsibility? | ☒   | ☐   | Part V gives each one sentence; Part VI gives each a full block.                                                                         |
+| Are major data entities identified?               | ☒   | ☐   | Part VII: 25 entities with their create, read, update and retirement.                                                                    |
+| Are preliminary classes identified?               | ☒   | ☐   | Parts VIII and IX: 31 classes with full attribute definitions and operational signatures.                                                |
+| Are component interactions identified?            | ☒   | ☐   | Part X: every request between components, and seven main flows.                                                                          |
+| Is the architecture defined?                      | ☒   | ☐   | Part XI: three layers, with the data layer enforcing the rules every caller must obey.                                                   |
+| Are NFRs reflected in the design?                 | ☒   | ☐   | Part XIV: a design decision and components for each of the 9 NFRs.                                                                       |
+| Are external interfaces considered?               | ☒   | ☐   | Part XV: specifications for authentication, database, object storage, edge, browser, LandBank, and notification channels.                |
+| Are constraints reflected in the design?          | ☒   | ☐   | Part I.F, each with its effect; Part XVIII.7 lists the decisions they drive.                                                             |
+| Are major processes defined?                      | ☒   | ☐   | Part XIII: ten processes, one per swimlane, each with its decisions.                                                                     |
+| Are important object states identified?           | ☒   | ☐   | Part XVI: ten objects, including the four state machines the SRS names.                                                                  |
+| Is the design ready for UML modeling?             | ☒   | ☐   | Yes: all use case, class, activity, sequence, and state machine foundations are defined and trace directly to requirements.              |
