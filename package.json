@@ -15,7 +15,6 @@
     "figma:preview": "node tools/figma/preview.mjs",
     "figma:import": "node tools/figma/import.mjs",
     "figma:label-owners": "node tools/figma/label-owners.mjs",
-    "docx:sdd": "node scripts/build-docx.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -23,7 +22,6 @@
   },
   "devDependencies": {
     "husky": "9.1.7",
-    "jszip": "3.10.2",
     "lint-staged": "17.6.0",
     "playwright-core": "1.63.0",
     "prettier": "3.9.9"
