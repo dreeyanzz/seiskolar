@@ -1,0 +1,818 @@
+/* SEIskolar's look, for the app.
+
+   The approved source is this repository's 04-high-fidelity/_style.css: the colours,
+   type, spacing and parts below are copied from it, with the same names, so a screen built
+   from the design finds what it expects. Only what today's screens use is here; bring more
+   across as more screens are built, and change the design first.
+
+   Added on top of the source, each for a reason:
+   - --brand-ink: the brand colour made safe for text, because a school may choose a light
+     one (lib/portal/brand.ts).
+   - .alone-band and .alone-body replace .alone's background gradient. The gradient ended at
+     38% of the page wherever the card happened to be, so on a very tall screen the white
+     school name ran off the coloured band and could not be read. Now the card always
+     overlaps the band by the same amount. At the design's own sizes it looks the same.
+   - States the source had no need to draw: loading, field errors, the password toggle.
+   - .brand's min-height: the design's own home link is 36 px tall, under its 44 px rule.
+   - .demo: the panels that exist only while the data is mock. They are not part of the
+     design, and their dashed border says so, as the wireframes' NOTE boxes do.
+
+   A phone is narrower than 600 px, a tablet is 600 to 1023 px, a desktop 1024 px or wider. */
+
+:root {
+  --ink: #17202b;
+  --ink-2: #3c4655;
+  --ink-3: #5a6472;
+  --line: #d8dde4;
+  --line-strong: #848e9c;
+  --surface: #f3f5f8;
+  --card: #ffffff;
+
+  /* SEIskolar, in the DOST console. A school's portal replaces these (brandTokens). */
+  --brand: #16365c;
+  --brand-strong: #0e2540;
+  --brand-tint: #e7eef7;
+  --brand-ink: #16365c;
+  --on-brand: #ffffff;
+  --on-brand-soft: #c9d6e6;
+  --accent: #f2b705;
+
+  --bad-bg: #fde6e4;
+  --bad-ink: #9b1b13;
+  --bad-dot: #d4382a;
+  --info-bg: #e5efff;
+  --info-ink: #164a8a;
+  --info-dot: #2d6fd2;
+
+  --focus: #1f6feb;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --gap: 16px;
+  --shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 2px 8px rgb(16 24 40 / 6%);
+
+  /* Quick to start and gentle to land: for state changes only, never for decoration. */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font:
+    15px/1.5 'Segoe UI Variable Text',
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brand-ink) 18%, white);
+  color: var(--ink);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+a {
+  color: var(--brand-ink);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* A heading that receives focus from code, so a screen reader reads it, needs no ring. */
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---- The frame ---------------------------------------------------------------- */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 60px;
+  padding: 0 20px;
+  border-bottom: 3px solid var(--accent);
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+/* The blue ring is lost on a brand colour, so on the bar it takes the bar's text colour. */
+.topbar :focus-visible {
+  outline-color: var(--on-brand);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 44px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.mark {
+  display: block;
+  flex: none;
+  width: 36px;
+  height: 36px;
+}
+
+.mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.brand-text,
+.user-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.brand-name {
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.brand-sub,
+.user-role {
+  color: var(--on-brand-soft);
+  font-size: 12px;
+}
+
+.brand-name .short {
+  display: none;
+}
+
+.user {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-text {
+  text-align: right;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--brand-ink);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 150ms var(--ease);
+}
+
+.icon-btn:hover {
+  background: color-mix(in srgb, var(--on-brand) 14%, transparent);
+}
+
+.page {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 32px 36px 56px;
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  .page {
+    padding: 24px 24px 44px;
+  }
+}
+
+@media (max-width: 599px) {
+  body {
+    font-size: 16px;
+  }
+
+  .topbar {
+    height: 56px;
+    padding: 0 8px 0 14px;
+  }
+
+  .brand-name .long,
+  .user-text {
+    display: none;
+  }
+
+  .brand-name .short {
+    display: inline;
+  }
+
+  .mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .page {
+    padding: 20px 16px 40px;
+  }
+
+  h1 {
+    font-size: 23px;
+  }
+}
+
+/* ---- Layout ------------------------------------------------------------------- */
+
+.lead {
+  margin-top: 6px;
+  color: var(--ink-2);
+  font-size: 16px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.narrow {
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+/* ---- Parts -------------------------------------------------------------------- */
+
+.card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 599px) {
+  .card {
+    padding: 16px;
+  }
+}
+
+.card > h2 {
+  margin-bottom: 12px;
+}
+
+.muted {
+  color: var(--ink-3);
+}
+
+.small {
+  font-size: 13.5px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 150ms var(--ease),
+    border-color 150ms var(--ease);
+}
+
+.btn:hover {
+  border-color: var(--ink-3);
+  background: var(--surface);
+}
+
+.btn.primary {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+.btn.primary:hover {
+  border-color: var(--brand-strong);
+  background: var(--brand-strong);
+}
+
+.btn.block {
+  width: 100%;
+}
+
+/* While a form is on its way: it still takes focus, and says what it is doing. */
+.btn[aria-disabled='true'] {
+  cursor: progress;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.badge::before {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  content: '';
+}
+
+.badge.info {
+  background: var(--info-bg);
+  color: var(--info-ink);
+}
+
+.badge.info::before {
+  background: var(--info-dot);
+}
+
+.list-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 14px 0;
+}
+
+.list-item + .list-item {
+  border-top: 1px solid var(--line);
+}
+
+/* A session's facts, as label and value rows. */
+.facts {
+  margin: 0;
+}
+
+.facts dt {
+  color: var(--ink-3);
+}
+
+.facts dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Forms -------------------------------------------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+  caret-color: var(--brand-ink);
+  transition: border-color 150ms var(--ease);
+}
+
+.input::placeholder {
+  color: var(--ink-3);
+  opacity: 1;
+}
+
+.input:hover {
+  border-color: var(--ink-3);
+}
+
+.input:focus {
+  border-color: var(--brand-ink);
+  outline: 3px solid color-mix(in srgb, var(--focus) 35%, transparent);
+  outline-offset: 0;
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--bad-dot);
+}
+
+@media (max-width: 599px) {
+  /* 16 px stops a phone zooming the page when a field takes focus. */
+  .input {
+    font-size: 16px;
+  }
+}
+
+.hint {
+  color: var(--ink-3);
+  font-size: 13px;
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bad-bg);
+  color: var(--bad-ink);
+  font-size: 14px;
+  font-weight: 600;
+  animation: arrive 200ms var(--ease);
+}
+
+.field-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  color: var(--bad-ink);
+  font-size: 13.5px;
+  font-weight: 600;
+  animation: arrive 200ms var(--ease);
+}
+
+.field-error .icon {
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+
+/* A password field, with its show and hide button inside the box. */
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap .input {
+  padding-right: 52px;
+}
+
+/* Edge draws its own eye in a password box, which would sit under ours. */
+.input-wrap .input::-ms-reveal,
+.input-wrap .input::-ms-clear {
+  display: none;
+}
+
+.reveal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: color 150ms var(--ease);
+}
+
+.reveal:hover,
+.reveal[aria-pressed='true'] {
+  color: var(--ink);
+}
+
+.reveal:focus-visible {
+  outline-offset: -3px;
+}
+
+/* A line under a form. The padding makes the link a full 44 px target without moving the
+   text around it. */
+.card-foot {
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+.card-foot a {
+  display: inline-block;
+  margin: -12px 0;
+  padding: 12px 0;
+  font-weight: 600;
+}
+
+/* ---- Sign-in and other screens without the frame ------------------------------ */
+
+.alone {
+  --straddle: 22px;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--surface);
+}
+
+.alone-band {
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 38vh;
+  min-height: 38svh;
+  padding: 32px 16px calc(var(--straddle) + 18px);
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+.alone-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.alone-brand .mark {
+  width: 48px;
+  height: 48px;
+}
+
+.alone-brand .brand-name {
+  overflow: visible;
+  font-size: 18px;
+  white-space: normal;
+}
+
+.alone-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: calc(var(--straddle) * -1);
+  padding: 0 16px 32px;
+}
+
+.alone-body > * {
+  width: 100%;
+  max-width: 440px;
+}
+
+.alone .card {
+  padding: 28px;
+}
+
+@media (max-width: 599px) {
+  .alone .card {
+    padding: 20px;
+  }
+}
+
+/* ---- Only while the data is mock ---------------------------------------------- */
+
+.demo {
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--card);
+  font-size: 14px;
+}
+
+.demo summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.demo summary::-webkit-details-marker {
+  display: none;
+}
+
+.demo-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.demo summary .icon {
+  color: var(--ink-3);
+  transition: transform 200ms var(--ease);
+}
+
+.demo[open] summary .icon {
+  transform: rotate(180deg);
+}
+
+.demo-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 2px 14px 14px;
+}
+
+/* A panel with no heading to press: it is always open. */
+.demo-body.demo-open {
+  gap: 10px;
+  padding-top: 14px;
+}
+
+.demo-label {
+  margin-bottom: 2px;
+  color: var(--ink-3);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.demo-list {
+  margin: 0 -8px;
+  padding: 0;
+  list-style: none;
+}
+
+.demo-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 150ms var(--ease);
+}
+
+.demo-item:hover {
+  background: var(--surface);
+}
+
+.demo-name {
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-duration: 0.01ms !important;
+  }
+
+  /* Still a sign of waiting, just not a moving one. */
+  .spinner {
+    border-right-color: currentColor;
+    opacity: 0.6;
+  }
+}
