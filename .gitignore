@@ -19,3 +19,12 @@ Thumbs.db
 
 # what tools/figma writes: exported layer trees, previews, screenshots (tools/figma/README.md)
 tools/figma/.out/
+
+# what the app in 07-app builds and writes when it runs (07-app/README.md)
+07-app/.next/
+07-app/next-env.d.ts
+07-app/*.tsbuildinfo
+07-app/test-results/
+07-app/playwright-report/
+07-app/.impeccable/
+07-app/.claude/
